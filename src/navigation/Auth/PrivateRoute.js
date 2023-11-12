@@ -1,33 +1,33 @@
 // A wrapper for <Route> that redirects to the login
 
 import React, { createContext, useContext, useState } from "react";
-import { Navigate, Route } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import { useAuth } from "./ProvideAuth";
 
 // screen if you're not yet authenticated.
 function PrivateRoute({ children, ...rest }) {
-  let auth = useAuth();
-  return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        auth.user ? (
-          <>
-          {children}
-          <br />
-          <div>This is a protected route</div>
-          </>
-        ) : (
-          <Navigate
-            to={{
-              pathname: "/login",
-              state: { from: location },
-            }}
-          />
-        )
-      }
-    />
-  );
+    let auth = useAuth();
+    return (
+        <Route
+            {...rest}
+            render={({ location }) =>
+                auth.user ? (
+                    <>
+                        {children}
+                        <br />
+                        <div>This is a protected route</div>
+                    </>
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: "/login",
+                            state: { from: location },
+                        }}
+                    />
+                )
+            }
+        />
+    );
 }
 export default PrivateRoute;
 

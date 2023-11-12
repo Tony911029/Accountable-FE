@@ -24,12 +24,10 @@ function App() {
   };
 
   return (
+      <>
+        <div>
           <Provider store={store}>
             <ThemeProvider theme={darkState ? dark() : light()}>
-              <ThemeSwitch
-                  darkState={darkState}
-                  handleThemeChange={handleThemeChange}
-              />
               <ProvideAuth>
                 <BrowserRouter>
                   <RouterConfig />
@@ -37,6 +35,8 @@ function App() {
               </ProvideAuth>
             </ThemeProvider>
           </Provider>
+        </div>
+      </>
   );
 }
 
