@@ -4,10 +4,26 @@ import * as AiIcons from 'react-icons/ai';
 import {Link} from "react-router-dom";
 import {SidebarData} from "./SideBarData";
 import './NavBar.css'
+import { makeStyles } from "tss-react/mui";
 
 function NavBar({children}){
     const [sidebar, setSideBar] = useState(false)
     const [title, setTitle] = useState("Home")
+
+    const useStyles = makeStyles()((theme) => ({
+        title: {
+            marginLeft: "15px",
+            marginBottom: "5px",
+            fontSize: "2rem",
+            color :"#fff",
+        },
+        span:{
+            marginLeft: "16px"
+        }
+    }));
+
+    const{classes} =useStyles()
+
 
     const showSideBar = ()=> setSideBar(!sidebar)
     const updateTitle = (title)=> {
@@ -19,7 +35,7 @@ function NavBar({children}){
                 <Link to="#" className='menu-bars'>
                     <FaIcons.FaBars onClick={showSideBar}/>
                 </Link>
-                <h2>{title}</h2>
+                <h2 className={classes.title}>{title}</h2>
             </div>
             <div>
                 <nav className={sidebar ? 'nav-menu active' : "nav-menu"}>

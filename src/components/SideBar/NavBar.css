@@ -39,7 +39,7 @@
     height: 60px;
 }
 
-.nav-text.span{
+.nav-text span{
     margin-left: 16px;
 }
 
@@ -72,18 +72,11 @@
     align-items: center;
 }
 
-li span {
-    margin-left: 16px;
-}
-
-h2{
-    margin-left: 15px;
-    margin-bottom: 5px;
-    font-size: 2rem;
-    color:white;
-}
-
-.content_no_side_bar{
+.content_no_side_bar {
     margin-left: +260px;
     transition: 350ms;
 }
+
+/*
+TODO: NavBar contains the main content so if there is something going on with the main content area, it is probably affected from here
+ */

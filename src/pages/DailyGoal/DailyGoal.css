@@ -1,0 +1,39 @@
+ul {
+    list-style-position: outside;
+}
+
+.introduction{
+    font-size: 30px;
+    margin-left: 30px;
+}
+
+.introduction li{
+    margin-top: 20px;
+}
+
+.fs-25{
+    font-size: 25px;
+}
+
+.container{
+    margin-top: 10px;
+}
+
+.sub-container{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+}
+
+.end{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.mb-5{
+    margin-bottom: 5px;
+}
+
+.pt-3{
+    padding-top: 5px;
+}
