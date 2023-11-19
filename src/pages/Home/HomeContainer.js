@@ -12,12 +12,13 @@ import { FaInstagram } from "react-icons/fa";
 import Background from '../../assets/images/HomePageBackground.png';
 import Footer from "../../components/AppLayout/Footer";
 
+// TODO: remove redundant css and remove fixed height and replaced with dynamic height
 export function HomeContainer() {
   return (
       <AppLayout>
           <IconContext.Provider value={{color: "#FF9900", size:"45px" }}>
               <div>
-                  <div className="container">
+                  <div className="home-container">
                       <div className="home-section1" style={{ background: "url(" + Background+ ")"}}>
                           <h1>Elevate Your English with Accountable Learning :) </h1>
                           <div className="home-p1">
@@ -32,6 +33,7 @@ export function HomeContainer() {
 
                       <div className="home-section2">
                           <h1>
+                              {/*Here is a bit off*/}
                               Why Choose Us
                           </h1>
                           <div className="three-icons">

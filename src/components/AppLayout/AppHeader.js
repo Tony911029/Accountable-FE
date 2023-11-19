@@ -1,14 +1,19 @@
 import React, {useState} from "react"
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {SidebarData} from "./SideBarData";
 import './AppHeader.css'
 import {Button} from "@material-ui/core";
 import { CgProfile } from "react-icons/cg";
 import {makeStyles} from "tss-react/mui";
-import {ROOT} from "../../navigation/CONSTANTS";
+import {LOGIN, ROOT} from "../../navigation/CONSTANTS";
 
 function AppHeader(){
     let iconStyles = { backgroundColor: "FF9900", color: "#fff", fontSize: "1.2rem", borderRadius: '50%'};
+
+    const history = useHistory();
+    const handleLogin = () => {
+        history.push(LOGIN);
+    };
 
     const useStyles = makeStyles()(() => ({
         customButton: {
@@ -43,6 +48,7 @@ function AppHeader(){
                     classes={classes.customButton}
                     startIcon={<CgProfile style={iconStyles}/>}
                     variant="contained"
+                    onClick={handleLogin}
                 >
                     Login/Register
                 </Button>

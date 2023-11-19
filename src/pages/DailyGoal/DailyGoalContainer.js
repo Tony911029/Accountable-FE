@@ -45,7 +45,7 @@ function DailyGoalContainer() {
 
     return (
         <AppLayout>
-            <div className="container">
+            <div className="assignment-container">
                 <div className="assignment-section1">
                     <h1>Daily Assignment Zone </h1>
                     <div className="p1">

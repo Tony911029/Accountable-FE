@@ -1,3 +1,10 @@
+.home-container{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
 .home-section1 h1{
     font-size: 40px;
     font-weight: 700;
@@ -5,15 +12,6 @@
     color: #FF9900;
     margin-bottom: 45px;
 }
-
-.container{
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 900px;
-    text-align: center;
-}
-
 
 .home-section1{
     height: 900px;
@@ -123,7 +121,7 @@
     margin-top: 10px;
 }
 
-.form{
+.contact-form-container .form{
     display: flex;
     flex-direction: column;
     gap: 20px;
