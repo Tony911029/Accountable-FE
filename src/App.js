@@ -15,6 +15,7 @@ import { ProvideAuth } from "navigation/Auth/ProvideAuth";
 // Redux
 import { Provider } from "react-redux";
 import {store} from "redux/store";
+import AppHeader from "./components/AppLayout/AppHeader";
 
 function App() {
   const [darkState, setDarkState] = useState(false);

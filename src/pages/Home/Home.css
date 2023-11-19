@@ -1,0 +1,139 @@
+h1{
+    font-size: 40px;
+    font-weight: 700;
+    height: 72px;
+    color: #FF9900;
+    margin-bottom: 45px;
+}
+
+.container{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 900px;
+    text-align: center;
+}
+
+
+.section1{
+    height: 900px;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.section2{
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    text-align: center;
+    justify-content: center;
+    background: #FFF7EA;
+    padding: 10px
+}
+
+.section3{
+    height: 700px;
+    display: flex;
+    background: #fff;
+    text-align: center;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+.section4{
+    height: 150px;
+    display: flex;
+    background: #FFF7EA;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.section5{
+    height: 150px;
+    display: flex;
+    background: #FFF;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+
+
+.three-icons{
+    display: flex;
+    justify-content: space-around;
+    margin:0;
+    padding:0;
+}
+
+.p1{
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 42px;
+    letter-spacing: 0;
+    text-align: center;
+    width: 900px;
+    margin-bottom: 42px;
+}
+
+.p2{
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 36px;
+    letter-spacing: 0;
+    text-align: center;
+    width: 250px;
+}
+
+.icon-section{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.ft-30{
+    color: #FF9900;
+    font-size: 30px;
+}
+
+.about-us > div{
+    width: 300px;
+    margin-bottom: 40px;
+}
+
+.contact-form-container{
+    background: #FFF7EA;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 450px;
+    height: 500px;
+    margin-top: 10px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form > div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+
+

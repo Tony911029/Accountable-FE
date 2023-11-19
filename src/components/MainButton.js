@@ -15,8 +15,11 @@ const useStyles = makeStyles()(() => ({
         "&:hover": {
             boxShadow: " 0px 5px 5px rgba(0, 0, 0, 0.3)",
         },
-        background: "#74A3F8FF !important",
-        backgroundColor: "#74a3f8"
+        background: "#FF9900 !important",
+        backgroundColor: "#FF9900",
+        fontFamily: 'Poppins, sans-serif',
+        fontWeight: "700 !important",
+        color: '#fff !important',
     },
 }));
 

@@ -1,9 +1,13 @@
 import React from "react";
+import {AppLayout} from "../../components/AppLayout/AppLayout";
  function ProgressContainer() {
     return (
-        <div className='progress'>
-            <h1>Progress</h1>
-        </div>
+        <AppLayout>
+            <div className='progress'>
+                <h1>Progress</h1>
+            </div>
+        </AppLayout>
+
     );
 }
 

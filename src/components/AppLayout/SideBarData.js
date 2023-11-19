@@ -5,27 +5,31 @@ import * as IoIcons from 'react-icons/io';
 
 export const SidebarData = [
     {
-        title: 'Home',
+        title: 'HOME',
         path: '/',
         icon: <AiIcons.AiFillHome />,
-        cName: 'nav-text'
+        cName: 'nav-text home',
+        isMain: true
     },
     {
-        title: 'Daily Goal',
-        path: '/daily_goal',
+        title: 'Assignment',
+        path: '/assignment',
         icon: <AiIcons.AiFillHome />,
-        cName: 'nav-text'
+        cName: 'nav-text',
+        isMain: true
     },
     {
         title: 'Progress',
         path: '/progress',
         icon: <AiIcons.AiFillHome />,
-        cName: 'nav-text'
+        cName: 'nav-text',
+        isMain: true
     },
     {
         title: 'Leaderboard',
         path: '/leaderboard',
         icon: <AiIcons.AiFillHome />,
-        cName: 'nav-text'
+        cName: 'nav-text',
+        isMain: false
     }
 ]

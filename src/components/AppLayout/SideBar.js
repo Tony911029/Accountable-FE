@@ -3,10 +3,10 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import {Link} from "react-router-dom";
 import {SidebarData} from "./SideBarData";
-import './NavBar.css'
+import './SideBar.css'
 import { makeStyles } from "tss-react/mui";
 
-function NavBar({children}){
+function SideBar(){
     const [sidebar, setSideBar] = useState(false)
     const [title, setTitle] = useState("Home")
 
@@ -22,7 +22,7 @@ function NavBar({children}){
         }
     }));
 
-    const{classes} =useStyles()
+    const{classes} =useStyles();
 
 
     const showSideBar = ()=> setSideBar(!sidebar)
@@ -60,12 +60,8 @@ function NavBar({children}){
                     </ul>
                 </nav>
             </div>
-            {/*main content is here*/}
-            <main className={sidebar ? "content_no_side_bar": "content"}>
-                {children}
-            </main>
         </>
     )
 }
 
-export default NavBar
+export default SideBar
