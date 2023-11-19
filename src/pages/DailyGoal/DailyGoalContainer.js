@@ -18,16 +18,6 @@ function DailyGoalContainer() {
     const [count, setCount] = useState(0)
     const [question, setQuestion] = useState("")
 
-    const useStyles = makeStyles({
-        whiteBackground: {
-            '& .MuiInputBase-root': {
-                backgroundColor: '#fff7ea !important',
-            },
-        },
-    });
-
-
-    const classes = useStyles();
 
     const handleFetchingQuestion = () =>{
         setAttempt(attempt+1);
@@ -65,7 +55,7 @@ function DailyGoalContainer() {
 
                 <div className="assignment-section2">
                     <div className={"outer-padding"}>
-                        <div>
+                        <div className={"full-w align-left"}>
                             <h1>Question</h1>
                             <TextField
                                 id="question-input"
@@ -73,6 +63,8 @@ function DailyGoalContainer() {
                                 type="text"
                                 multiline
                                 rows={2}
+                                disabled
+                                fullWidth
                             />
                         </div>
                     </div>
@@ -84,14 +76,16 @@ function DailyGoalContainer() {
 
                 <div className="assignment-section2">
                     <div className={"outer-padding"}>
-                        <div>
+                        <div className={"full-w align-left"}>
                             <h1>Answer</h1>
                             <TextField
                                 id="question-input"
-                                label="Question"
+                                label="Answer"
                                 type="text"
                                 multiline
                                 rows={2}
+                                fullWidth
+                                disabled
                             />
                         </div>
                     </div>
