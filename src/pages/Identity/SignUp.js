@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {signUp} from "../../navigation/Auth/UserPool";
-import DailyGoalContainer from "../../pages/DailyGoal/DailyGoalContainer";
+import DailyGoalContainer from "../DailyGoal/DailyGoalContainer";
 
 function SignUp() {
   const [username, setUsername] = useState("")

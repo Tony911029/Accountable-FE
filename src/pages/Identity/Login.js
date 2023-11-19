@@ -1,6 +1,8 @@
+import React from "react";
 import {useContext, useState} from "react"
 import {AuthContext} from "../../navigation/Auth/ProvideAuth";
 import {Route} from "react-router-dom";
+import {AppLayout} from "../../components/AppLayout/AppLayout";
 
 export default function Login() {
     const [username, setUsername] = useState("")
@@ -32,24 +34,8 @@ export default function Login() {
     }
 
     return (
-        <div>
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button type="submit">Login</button>
-            </form>
-            {error && <p>{error}</p>}
-        </div>
+        <AppLayout>
+            Hello World
+        </AppLayout>
     )
 }

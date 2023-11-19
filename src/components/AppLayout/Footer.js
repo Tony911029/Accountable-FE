@@ -6,14 +6,14 @@ import {makeStyles} from "tss-react/mui";
 function Footer() {
 
     return (
-        <div className="footer">
+        <footer className="footer">
             <div className={"footerText"}>
                 ACCOUNTABLE
             </div>
             <div>
                 Copyright <LuCopyright size={'13px'} style={{color: "#0"}}/> 2023 Accountable
             </div>
-        </div>
+        </footer>
     );
 }
 

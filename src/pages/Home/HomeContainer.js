@@ -9,7 +9,7 @@ import {IconContext} from "react-icons";
 import ContactUs from "./components/ContactUs";
 import { FaTwitterSquare } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
-import {LuCopyright} from "react-icons/lu";
+import Background from '../../assets/images/HomePageBackground.png';
 import Footer from "../../components/AppLayout/Footer";
 
 export function HomeContainer() {
@@ -18,9 +18,9 @@ export function HomeContainer() {
           <IconContext.Provider value={{color: "#FF9900", size:"45px" }}>
               <div>
                   <div className="container">
-                      <div className="section1">
+                      <div className="home-section1" style={{ background: "url(" + Background+ ")"}}>
                           <h1>Elevate Your English with Accountable Learning :) </h1>
-                          <div className="p1">
+                          <div className="home-p1">
                               At ACCOUNTABLE, we're not just an English learning platform;
                               we're your partners in progress. Embrace a personalized journey
                               with accountability fueling your growth.
@@ -30,7 +30,7 @@ export function HomeContainer() {
                           />
                       </div>
 
-                      <div className="section2">
+                      <div className="home-section2">
                           <h1>
                               Why Choose Us
                           </h1>
@@ -40,7 +40,7 @@ export function HomeContainer() {
                                   <span className="ft-30">
                                         Personalized Approach
                                   </span>
-                                  <span className={"p2"}>
+                                  <span className={"home-p2"}>
                                       Tailoring your learning experience to your unique pace and preferences.
                                   </span>
                               </div>
@@ -66,7 +66,7 @@ export function HomeContainer() {
                               </div>
                           </div>
                       </div>
-                      <div className="section3">
+                      <div className="home-section3">
                           <div className="about-us" >
                               <div>
                                   <div className="ft-30">
@@ -98,11 +98,12 @@ export function HomeContainer() {
                               </div>
                           </div>
                       </div>
-                      <div className="section4">
+                      <div className="home-section4">
                           <FaTwitterSquare />
                           <FaInstagram />
                           <FaFacebookSquare />
                       </div>
+                      <Footer/>
                   </div>
               </div>
           </IconContext.Provider>
