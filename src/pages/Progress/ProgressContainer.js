@@ -4,7 +4,7 @@ import {AppLayout} from "../../components/AppLayout/AppLayout";
     return (
         <AppLayout>
             <div className='progress'>
-                <h1>Progress</h1>
+                <h1>I am still adding this page, be patient!!!!</h1>
             </div>
         </AppLayout>
 

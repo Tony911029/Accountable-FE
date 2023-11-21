@@ -6,9 +6,10 @@
 }
 
 .home-section1 h1{
+    display: flex;
+    justify-content: center;
     font-size: 40px;
     font-weight: 700;
-    height: 72px;
     color: #FF9900;
     margin-bottom: 45px;
 }
@@ -24,14 +25,13 @@
 }
 
 .home-section2{
-    height: 400px;
     display: flex;
     flex-direction: column;
     align-content: center;
     text-align: center;
     justify-content: center;
     background: #FFF7EA;
-    padding: 10px
+    padding: 60px
 }
 
 .home-section3{
@@ -63,7 +63,6 @@
     align-items: center;
     gap: 20px;
 }
-
 
 
 .three-icons{
@@ -130,6 +129,10 @@
 .form > div {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.mb-30{
+    margin-bottom: 50px;
 }
 
 

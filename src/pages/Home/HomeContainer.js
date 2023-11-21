@@ -32,7 +32,7 @@ export function HomeContainer() {
                       </div>
 
                       <div className="home-section2">
-                          <h1>
+                          <h1 className={"mb-30"}>
                               {/*Here is a bit off*/}
                               Why Choose Us
                           </h1>
@@ -52,7 +52,7 @@ export function HomeContainer() {
                                   <span className="ft-30">
                                       Accountability
                                   </span>
-                                  <span className={"p2"}>
+                                  <span className={"home-p2"}>
                                       We stand by you, guiding your growth and progress every step of the way.
                                   </span>
                               </div>
@@ -62,7 +62,7 @@ export function HomeContainer() {
                                   <span className="ft-30">
                                       Engaging Learning
                                   </span>
-                                  <span className={"p2"}>
+                                  <span className={"home-p2"}>
                                       Experience dynamic lessons and interactive challenges.
                                   </span>
                               </div>

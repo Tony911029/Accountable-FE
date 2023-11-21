@@ -32,3 +32,16 @@
     margin-top: 10px;
     gap: 20px;
 }
+
+.password-format{
+    padding-left: 30px;
+}
+
+
+.good{
+    color: #bbe68a !important;
+}
+
+.bad{
+    color: red !important;
+}
