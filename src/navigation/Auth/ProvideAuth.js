@@ -3,7 +3,6 @@
  * I am keeping everything related to the authentication and PrivateRoute in this one file.
  */
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import { useProvideAuth } from './useProvideAuth';
 import * as auth from "./UserPool"
 
 // Context API used for Auth related information and methods.
@@ -12,7 +11,9 @@ export const AuthContext = createContext();
 // Context Provider to wrap the whole app within and make auth information (user) available.
 export function ProvideAuth({ children }) {
   const [user, setUser] = useState(null)
+  const [username, setUsername] = useState("")
   const [isLoading, setIsLoading] = useState(true)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   const getCurrentUser = async () => {
     try {
@@ -32,9 +33,9 @@ export function ProvideAuth({ children }) {
   }, [])
 
   const signIn = async (username, password) => {
-    debugger
     await auth.signIn(username, password)
     await getCurrentUser()
+    setIsAuthenticated(true)
   }
 
   const signOut = async () => {
@@ -42,9 +43,17 @@ export function ProvideAuth({ children }) {
     setUser(null)
   }
 
+  const signUp = async (username, email, password) => {
+    await auth.signUp(username, email, password)
+    setUsername(username);
+  }
+
   const authValue = {
     user,
+    username,
     isLoading,
+    isAuthenticated,
+    signUp,
     signIn,
     signOut,
   }
@@ -53,3 +62,8 @@ export function ProvideAuth({ children }) {
       <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>
   )
 }
+
+export function useAuth() {
+  return useContext(AuthContext);
+}
+

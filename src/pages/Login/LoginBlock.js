@@ -1,29 +1,36 @@
 import React, {useContext, useState} from "react";
 import "./Login.css"
-import {TextField} from "@mui/material";
+import {IconButton, InputAdornment, TextField} from "@mui/material";
 import MainButton from "../../components/MainButton";
 import {Link, useHistory} from "react-router-dom";
-import {AuthContext} from "../../navigation/Auth/ProvideAuth";
+import {useAuth} from "../../navigation/Auth/ProvideAuth";
 import {ASSIGNMENT} from "../../navigation/CONSTANTS";
+import {Controller, useForm} from "react-hook-form";
+import {Visibility, VisibilityOff} from "@material-ui/icons";
 function LoginBlock() {
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
-    const [error, setError] = useState("")
+    const { control, handleSubmit, setError, formState: { errors }, watch} = useForm();
     const history = useHistory();
-    const { user, signIn } = useContext(AuthContext)
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        setError("")
+    const [signInErr, setSignInErr] = useState("")
+    const { user, signIn, isAuthenticated, isLoading } = useAuth()
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+    };
+
+    const onSubmit = async (userData) => {
+        const { username, password} = userData;
         try {
             await signIn(username, password)
         } catch (err) {
-            setError(err.message)
+            console.log(err.message)
+            setSignInErr("Invalid credential")
         }
     }
 
     // If the user is logged in, don't show the login form
-    if (user) {
+    if (isAuthenticated) {
         history.push(ASSIGNMENT)
     }
 
@@ -31,19 +38,54 @@ function LoginBlock() {
         <div className="login-container">
             <div className={"colored-border"}>
                 <h1>Login</h1>
-                <form className="login-form" onSubmit={handleSubmit}>
-                    <TextField
-                        label="Email/Username"
-                        type="text"
+                <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+                    <Controller
+                        name="username"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: '* User name / Email is required' }}
+                        render={({ field }) => (
+                        <TextField
+                            label="Email/Username"
+                            type="text"
+                            {...field}
+                            error={!!errors.username}
+                            helperText={errors.username?.message}
+                        />)}
                     />
-                    <TextField
-                        label="Password"
-                        type="password"
-                        autoComplete="current-password"
+                    <Controller
+                        name="password"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: '* Password is required' }}
+                        render={({ field }) => (
+                            <TextField
+                                label="Password"
+                                type={showPassword ? "text" : "password"}
+                                autoComplete="current-password"
+                                {...field}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                            >
+                                                {showPassword ? <Visibility /> : <VisibilityOff />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
+                                }}
+                                error={!!errors.passWord}
+                                helperText={errors.passWord?.message}
+                            />
+                        )}
                     />
                     <Link>Forget Password?</Link>
-                    <MainButton type="submit" btnLabel={"Login"}/>
+                    <MainButton type="submit" btnLabel={"Login"} isLoading={isLoading}/>
                 </form>
+                {signInErr? <div className={"bad"}>* The email/user name or password you entered does not exist</div> : <></>}
             </div>
         </div>
     );

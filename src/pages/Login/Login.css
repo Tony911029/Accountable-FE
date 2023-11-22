@@ -6,8 +6,9 @@
     margin: 5px 10px 5px 10px;
 }
 
-.login-container div{
+.login-container h3{
     color: #FF9900;
+    font-weight: bold;
 }
 
 .colored-border {
@@ -40,6 +41,10 @@
 
 .ft-20{
     font-size: 20px;
+}
+
+.gap-1{
+    gap: 1rem;
 }
 
 

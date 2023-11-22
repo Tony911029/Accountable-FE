@@ -11,7 +11,7 @@ import { RxCross2 } from "react-icons/rx";
 import {List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import {passWordCondData} from "./PassWordCondData";
 import {CONFIRM_SIGNUP, LOGIN} from "../../navigation/CONSTANTS";
-import {AuthContext} from "../../navigation/Auth/ProvideAuth";
+import {useAuth} from "../../navigation/Auth/ProvideAuth";
 
 
 function CheckIcon() {
@@ -28,10 +28,12 @@ function SignUp() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [submitErr, setSubmitErr] = useState("");
+    const {signUp} = useAuth()
     const passwordValue = watch('password', '');
     const [isLoading, setIsLoading] = useState(false)
-    const [success, setSuccess] = useState(false)
+
     const history = useHistory();
+
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
     const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
@@ -68,11 +70,11 @@ function SignUp() {
         try {
             await signUp(userName, email, password)
             setIsLoading(false)
-            setSuccess(true)
             history.push(CONFIRM_SIGNUP);
         } catch (err) {
             setSubmitErr("The User name or email is already taken!");
             setIsLoading(false)
+            console.log(err)
         }
     }
 

@@ -7,12 +7,16 @@ import {TextField} from "@mui/material";
 import MainButton from "../../components/MainButton";
 import ReactCodeInput from "react-code-input";
 import { MdEmail } from "react-icons/md";
+import {useAuth} from "../../navigation/Auth/ProvideAuth";
+import SuccessfulConfirmation from "../../navigation/Auth/SuccessfulConfirmation";
 
+// TODO: Make this private route: only after you signup or you leave the page and want to verify again (after trying to sign in)
+// TODO: OR simply add a link to the user email so you don't have to figure out which page to show and worry about page getting lost
 export default function ConfirmSignUp() {
-    const [username, setUsername] = useState("")
     const [code, setCode] = useState("")
     const [error, setError] = useState("")
     const [success, setSuccess] = useState(false)
+    const {username} = useAuth()
 
     const inputProps = {
         inputStyle: {
@@ -24,7 +28,7 @@ export default function ConfirmSignUp() {
             height: '3rem',
             paddingLeft: '7px',
             color: '#000',
-            border: '1px solid lightskyblue'
+            border: '1px solid #ff9900'
         }
     }
 
@@ -49,10 +53,7 @@ export default function ConfirmSignUp() {
 
     if (success) {
         return (
-            <div>
-                <h2>Confirmation successful!</h2>
-                <p>You can now log in with your credentials. Go rock that app!</p>
-            </div>
+            <SuccessfulConfirmation/>
         )
     }
 
@@ -60,7 +61,7 @@ export default function ConfirmSignUp() {
         <AppLayout>
             <div className="login-container colored-border">
                 <MdEmail size={"5rem"} color={"#FF9900"}/>
-                <div className={"ft-30"}>Verify Your Email</div>
+                <h3 className={"ft-30"}>Verify Your Email</h3>
                 <span>We have sent a verification code to your email, please enter the code below.</span>
                 <form onSubmit={handleSubmit} className="login-form">
                     <ReactCodeInput

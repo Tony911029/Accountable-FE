@@ -1,36 +1,28 @@
 // A wrapper for <Route> that redirects to the login
 
-import React, { createContext, useContext, useState } from "react";
+import React, {createContext, useContext, useMemo, useState} from "react";
 import { Redirect, Route } from "react-router-dom";
 import { useAuth } from "./ProvideAuth";
-import {ROOT, ASSIGNMENT, PROGRESS, LEADERBOARD, SIGNUP, LOGIN} from "navigation/CONSTANTS";
 
 // screen if you're not yet authenticated.
-function PrivateRoute({ children, ...rest }) {
-    let {user, isLoading} = useAuth();
-    if (isLoading){
-        // TODO: render loading page
-        return <></>
-    }
+function PrivateRoute({ children, component: Component, redirectPath = "/login", ...rest }) {
+    let {user, isLoading, isAuthenticated} = useAuth();
 
-    if (!user){
-        return <Route to= "/" />
-    }
+    // if (isLoading){
+    //     // TODO: render loading page
+    //     return <></>
+    // }
 
     return (
         <Route
             {...rest}
             render={({ location }) =>
-                user ? (
-                    <>
-                        {children}
-                        <br />
-                        <div>This is a protected route</div>
-                    </>
+                isAuthenticated ? (
+                    <>{Component ? <Component /> : children}</>
                 ) : (
                     <Redirect
                         to={{
-                            pathname: "/login",
+                            pathname: redirectPath,
                             state: { from: location },
                         }}
                     />
