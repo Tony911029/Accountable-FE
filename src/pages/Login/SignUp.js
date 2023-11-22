@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, {useContext, useState} from "react";
 import {signUp} from "../../navigation/Auth/UserPool";
 import {IconButton, InputAdornment, InputLabel, OutlinedInput, TextField} from "@mui/material";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import MainButton from "../../components/MainButton";
-import { useForm, Controller } from 'react-hook-form';
+import {useForm, Controller, set} from 'react-hook-form';
 import "./Login.css"
 import {Visibility, VisibilityOff} from "@material-ui/icons";
 import { BsCheck2 } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import {List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import {passWordCondData} from "./PassWordCondData";
+import {CONFIRM_SIGNUP, LOGIN} from "../../navigation/CONSTANTS";
+import {AuthContext} from "../../navigation/Auth/ProvideAuth";
 
 
 function CheckIcon() {
@@ -23,6 +25,18 @@ function ClearIcon() {
 function SignUp() {
     const { control, handleSubmit, setError, formState: { errors }, watch} = useForm();
     const [requirements, setRequirements] = useState([]);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [submitErr, setSubmitErr] = useState("");
+    const passwordValue = watch('password', '');
+    const [isLoading, setIsLoading] = useState(false)
+    const [success, setSuccess] = useState(false)
+    const history = useHistory();
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
+    const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+    };
     const verifyInput = (password) =>{
         const hasUppercase = /[A-Z]/.test(password);
         const hasLowercase = /[a-z]/.test(password);
@@ -37,52 +51,30 @@ function SignUp() {
             hasMinLength,
         ])
     }
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-    const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
-
-    const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-    };
-
-    const passwordValue = watch('password', '');
     const isValidConfirmPassword = (value) => {
         if (value !== passwordValue) {
             return "* The passwords don't match";
         }
         return true
     };
-
     const isValidEmail = (value) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(value)? false: "* Email is invalid";
+        return emailRegex.test(value)? true: "* Email is invalid";
+
     };
-
-
-
     const onSubmit = async (userData) => {
-        // double-check the password is good
-        if (!isValidConfirmPassword()){
-            return;
-        }
+        setIsLoading(true)
         const { userName, email, password, confirmPassword } = userData;
         try {
-          // await signUp(userName, email, password)
+            await signUp(userName, email, password)
+            setIsLoading(false)
+            setSuccess(true)
+            history.push(CONFIRM_SIGNUP);
         } catch (err) {
-
+            setSubmitErr("The User name or email is already taken!");
+            setIsLoading(false)
         }
     }
-
-    // if (success) {
-    //   return (
-    //       <div>
-    //         <h2>SignUp successful!</h2>
-    //         <p>Please check your email for the confirmation code.</p>
-    //       </div>
-    //   )
-    // }
-
 
 
     return (
@@ -197,7 +189,8 @@ function SignUp() {
                             }
                         </List>
                     </div>
-                    <MainButton type="submit" btnLabel="Register"/>
+                    <MainButton type="submit" btnLabel="Register" isLoading={isLoading}/>
+                    {submitErr ? <div className={"bad"}>{submitErr}</div> : <></>}
                 </form>
             </div>
         </div>

@@ -17,6 +17,6 @@ export const passWordCondData = [
         description: "Contains at least 1 special character",
     },
     {
-        description: "Has a minimum length of 8 characters",
+        description: "Contains a minimum length of 8 characters",
     }
 ]

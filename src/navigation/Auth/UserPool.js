@@ -11,7 +11,7 @@ const userPool = new CognitoUserPool({
 })
 
 /*Sign up user with username, email and password*/
-// TODO: Add more fields
+// user name and email should be unique
 export function signUp(username, email, password) {
     return new Promise((resolve, reject) => {
         userPool.signUp(

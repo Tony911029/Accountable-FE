@@ -1,5 +1,6 @@
 export const ROOT = "/";
 export const SIGNUP = "/signup";
+export const CONFIRM_SIGNUP = "/confirm"
 export const LOGIN = "/login";
 export const DASHBOARD = "/dashboard";
 export const PAGE1 = "/page1";

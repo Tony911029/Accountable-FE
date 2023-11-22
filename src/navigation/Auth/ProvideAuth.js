@@ -36,6 +36,7 @@ export function ProvideAuth({ children }) {
     await auth.signIn(username, password)
     await getCurrentUser()
   }
+
   const signOut = async () => {
     await auth.signOut()
     setUser(null)
@@ -51,10 +52,4 @@ export function ProvideAuth({ children }) {
   return (
       <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>
   )
-}
-
-// Custom hook to access auth related data and methods.
-// Most important hook to be used throughout
-export function useAuth() {
-  return useContext(AuthContext);
 }
