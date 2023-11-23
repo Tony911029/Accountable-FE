@@ -10,6 +10,7 @@ export const AuthContext = createContext();
 
 // Context Provider to wrap the whole app within and make auth information (user) available.
 export function ProvideAuth({ children }) {
+  // Here are essentially the "store" for the user
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState("")
   const [isLoading, setIsLoading] = useState(true)

@@ -22,7 +22,8 @@ export const RouterConfig = () => {
                     <Route exact path={SIGNUP} component={SignUp} />
                     <Route exact path={ROOT} component={Home}/>
 
-                    <Route exact path={CONFIRM_SIGNUP} component={ConfirmSignUp} />
+                    {/* For testing purpose*/}
+                    {/*<Route exact path={CONFIRM_SIGNUP} component={ConfirmSignUp} />*/}
                     {/*<Route exact path={ROOT} component={Home} />*/}
                     {/*<Route exact path={ASSIGNMENT} component={DailyGoalContainer} />*/}
                     {/*<Route exact path={PROGRESS} component={ProgressContainer} />*/}
@@ -32,7 +33,7 @@ export const RouterConfig = () => {
                     <PrivateRoute exact path={ASSIGNMENT} component={DailyGoalContainer}/>
                     <PrivateRoute exact path={PROGRESS} component={ProgressContainer}/>
                     <PrivateRoute exact path={LEADERBOARD} component={LeaderboardContainer}/>
-                    {/*<PrivateRoute exact path={CONFIRM_SIGNUP} component={ConfirmSignUp}/>*/}
+                    <PrivateRoute exact path={CONFIRM_SIGNUP} component={ConfirmSignUp}/>
 
                     <Route path="*">
                         <NotFound />

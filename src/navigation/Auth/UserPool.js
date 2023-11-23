@@ -12,6 +12,7 @@ const userPool = new CognitoUserPool({
 
 /*Sign up user with username, email and password*/
 // user name and email should be unique
+// TODO: Figure out how to store user presistenly (like refresh shouldn't log user out)
 export function signUp(username, email, password) {
     return new Promise((resolve, reject) => {
         userPool.signUp(
