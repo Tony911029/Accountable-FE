@@ -13,7 +13,7 @@ const useStyles = makeStyles()(() => ({
         boxShadow: " 0px 2px 2px rgba(0, 0, 0, 0.1)",
         borderRadius: "4px",
         "&:hover": {
-            boxShadow: " 0px 5px 5px rgba(0, 0, 0, 0.3)",
+            boxShadow: "0px 10px 30.5px 0px #FF99004A",
         },
         background: "#FF9900 !important",
         backgroundColor: "#FF9900",

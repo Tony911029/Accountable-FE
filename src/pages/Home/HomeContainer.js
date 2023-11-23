@@ -19,7 +19,8 @@ export function HomeContainer() {
           <IconContext.Provider value={{color: "#FF9900", size:"45px" }}>
               <div>
                   <div className="home-container">
-                      <div className="home-section1" style={{ background: "url(" + Background+ ")"}}>
+                      {/*background not working */}
+                      <div className="home-section1" /*style={{ background: "url(" + Background+ ")" }}*/>
                           <h1>Elevate Your English with Accountable Learning :) </h1>
                           <div className="home-p1">
                               At ACCOUNTABLE, we're not just an English learning platform;
