@@ -183,7 +183,7 @@ function SignUp() {
                                 passWordCondData.map((item,index) => {
                                 const isGood = requirements[index] ? "good" : "bad"
                                 return(
-                                    <ListItem className={isGood}>
+                                    <ListItem className={isGood} key={index}>
                                         <ListItemIcon className={isGood}>{requirements[index] ? <CheckIcon /> : <ClearIcon />}</ListItemIcon>
                                         <ListItemText primary={item.description} className={isGood}/>
                                     </ListItem>

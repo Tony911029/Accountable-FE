@@ -85,16 +85,18 @@
 .dropDownProfile{
     display: flex;
     flex-direction: column;
-    border-radius: 3px;
+    border-radius: 5px;
     width: 11.2rem;
     padding: 17px 20px 20px 10px !important;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
     gap: 2rem !important;
     align-self: baseline;
+    z-index: 2; /* Higher z-index value */
 }
 
 .dropDownProfile:hover{
     box-shadow: 0 10px 30px 0 #FF99004A !important;
+    cursor: pointer;
 }
 
 .dropDownProfile ul{
@@ -106,8 +108,12 @@
 .dropDownProfile li{
     display: flex;
     align-items: center;
-    height: 1rem;
+    height: 2rem;
     gap: 1rem
+}
+
+.dropDownProfile li:hover{
+
 }
 
 .hideDropDown{

@@ -11,10 +11,15 @@ import { MdLogout } from "react-icons/md";
 
 function AppHeader(){
     let iconStyles = { backgroundColor: "FF9900", color: "#fff", fontSize: "1.2rem", borderRadius: '50%'};
-    const {username, isAuthenticated} = useAuth()
+    const {user, signOut} = useAuth()
     const history = useHistory();
     const handleLogin = () => {
         history.push(LOGIN);
+    };
+
+
+    const handleSignOut = () => {
+        signOut()
     };
 
     const [profile, setProfile] = useState(false)
@@ -52,18 +57,19 @@ function AppHeader(){
 
 
     const profileDropDown= (
+        // TODO: Fixed the username overflow
         <ul className={"dropDownProfile"}>
             <li
                  onClick={toggleProfile}>
-                <CgProfile style={iconStyles} size={"1.5rem"}/> Hello, Tony123
+                <CgProfile style={iconStyles} size={"1.7rem"}/> Hello, Tony123
             </li>
-            <li className={!profile && "hideDropDown"}
+            <li className={profile ? "" : "hideDropDown"}
                 onClick={toggleProfile}>
-                <CgProfile style={iconStyles} size={"1.5rem"}/> My Account
+                <CgProfile style={iconStyles} size={"1.7rem"}/> My Account
             </li>
-            <li className={!profile && "hideDropDown"}
-                onClick={toggleProfile}>
-                <MdLogout style={iconStyles} size={"1.5rem"}/> Log Out
+            <li className={profile ? "" : "hideDropDown"}
+                onClick={handleSignOut}>
+                <MdLogout style={iconStyles} size={"1.7rem"}/> Log Out
             </li>
         </ul>
     )
@@ -88,7 +94,7 @@ function AppHeader(){
                         )
                     })}
                 </ul>
-                {isAuthenticated?profileDropDown:loginButton}
+                {user? profileDropDown: loginButton}
             </div>
         </nav>
     )

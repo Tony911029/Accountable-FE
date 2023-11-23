@@ -19,15 +19,8 @@ export const RouterConfig = () => {
                 <Switch>
                     {/* List all public routes here */}
                     <Route exact path={LOGIN} component={LoginPageContainer} />
-                    <Route exact path={SIGNUP} component={SignUp} />
+                    {/*<Route exact path={SIGNUP} component={SignUp} />*/}
                     <Route exact path={ROOT} component={Home}/>
-
-                    {/* For testing purpose*/}
-                    {/*<Route exact path={CONFIRM_SIGNUP} component={ConfirmSignUp} />*/}
-                    {/*<Route exact path={ROOT} component={Home} />*/}
-                    {/*<Route exact path={ASSIGNMENT} component={DailyGoalContainer} />*/}
-                    {/*<Route exact path={PROGRESS} component={ProgressContainer} />*/}
-                    {/*<Route exact path={LEADERBOARD} component={LeaderboardContainer} />*/}
 
                     {/* List all private/auth routes here */}
                     <PrivateRoute exact path={ASSIGNMENT} component={DailyGoalContainer}/>

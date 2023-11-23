@@ -2,9 +2,9 @@ import React, {useContext, useState} from "react";
 import "./Login.css"
 import {IconButton, InputAdornment, TextField} from "@mui/material";
 import MainButton from "../../components/MainButton";
-import {Link, useHistory} from "react-router-dom";
+import {Link, Redirect, Route, useHistory} from "react-router-dom";
 import {useAuth} from "../../navigation/Auth/ProvideAuth";
-import {ASSIGNMENT} from "../../navigation/CONSTANTS";
+import {ASSIGNMENT, ROOT} from "../../navigation/CONSTANTS";
 import {Controller, useForm} from "react-hook-form";
 import {Visibility, VisibilityOff} from "@material-ui/icons";
 function LoginBlock() {
@@ -12,7 +12,7 @@ function LoginBlock() {
     const history = useHistory();
 
     const [signInErr, setSignInErr] = useState("")
-    const { user, signIn, isAuthenticated, isLoading } = useAuth()
+    const {signIn, isLoading } = useAuth()
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
@@ -23,16 +23,15 @@ function LoginBlock() {
         const { username, password} = userData;
         try {
             await signIn(username, password)
+            history.push(ASSIGNMENT)
         } catch (err) {
             console.log(err.message)
             setSignInErr("Invalid credential")
         }
     }
 
-    // If the user is logged in, don't show the login form
-    if (isAuthenticated) {
-        history.push(ASSIGNMENT)
-    }
+
+
 
     return (
         <div className="login-container">

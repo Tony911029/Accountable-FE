@@ -91,7 +91,6 @@ export function signOut() {
 export async function getCurrentUser() {
     return new Promise((resolve, reject) => {
         const cognitoUser = userPool.getCurrentUser()
-
         if (!cognitoUser) {
             reject(new Error("No user found"))
             return
@@ -112,7 +111,7 @@ export async function getCurrentUser() {
                     return acc
                 }, {})
 
-                resolve({ ...userData, username: cognitoUser.username })
+                resolve({ ...userData, username: cognitoUser.username})
             })
         })
     })
