@@ -4,7 +4,7 @@ import {IconButton, InputAdornment, TextField} from "@mui/material";
 import MainButton from "../../components/MainButton";
 import {Link, Redirect, Route, useHistory} from "react-router-dom";
 import {useAuth} from "../../navigation/Auth/ProvideAuth";
-import {ASSIGNMENT, ROOT} from "../../navigation/CONSTANTS";
+import {ASSIGNMENT, ROOT, SIGNUP} from "../../navigation/CONSTANTS";
 import {Controller, useForm} from "react-hook-form";
 import {Visibility, VisibilityOff} from "@material-ui/icons";
 function LoginBlock() {
@@ -76,13 +76,17 @@ function LoginBlock() {
                                         </InputAdornment>
                                     )
                                 }}
-                                error={!!errors.passWord}
-                                helperText={errors.passWord?.message}
+                                error={!!errors.password}
+                                helperText={errors.password?.message}
                             />
                         )}
                     />
                     <Link>Forget Password?</Link>
                     <MainButton type="submit" btnLabel={"Login"} isLoading={isLoading}/>
+                    <div className={"flex pl-65"}>
+                        <div className={"mr-5"}>Don't have an account? </div><Link to={SIGNUP}>Sign up</Link>
+                    </div>
+
                 </form>
                 {signInErr? <div className={"bad"}>* The email/user name or password you entered does not exist</div> : <></>}
             </div>

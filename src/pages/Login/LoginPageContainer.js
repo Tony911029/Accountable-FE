@@ -22,8 +22,6 @@ export default function LoginPageContainer() {
         <AppLayout>
             <div className={"login-container"}>
                 <LoginBlock/>
-                <div>--- New user can register here! ---</div>
-                <SignUp/>
             </div>
             <Footer/>
         </AppLayout>

@@ -21,6 +21,7 @@ function DailyGoalContainer() {
 
     const handleFetchingQuestion = () =>{
         setAttempt(attempt+1);
+        // todo: figure out cros stuff
         getCallTesting().then((res)=>{
             console.log(res)
             return res
@@ -29,6 +30,7 @@ function DailyGoalContainer() {
         })
 
         console.log(attempt)
+
 
         // fetchQuestion().then((res)=>{
         //     setQuestion(res.questionText)
@@ -58,7 +60,6 @@ function DailyGoalContainer() {
                         <div className={"full-w align-left"}>
                             <h1>Question</h1>
                             <TextField
-                                id="question-input"
                                 label="Question"
                                 type="text"
                                 multiline
@@ -69,7 +70,7 @@ function DailyGoalContainer() {
                         </div>
                     </div>
                     <div className="assignment-btn">
-                        <MainButton btnLabel={"Generate"}/>
+                        <MainButton btnLabel={"Generate"} onClick={handleFetchingQuestion}/>
                         <div>*Click the bottom to generate a random question</div>
                     </div>
                 </div>
@@ -79,7 +80,6 @@ function DailyGoalContainer() {
                         <div className={"full-w align-left"}>
                             <h1>Answer</h1>
                             <TextField
-                                id="question-input"
                                 label="Answer"
                                 type="text"
                                 multiline
@@ -95,7 +95,7 @@ function DailyGoalContainer() {
                     </div>
                 </div>
                 <div className="h-5rem">
-                    <MainButton btnLabel={"Submit Answer"}/>
+                    <MainButton type={"submit"} btnLabel={"Submit Answer"}/>
                 </div>
                 <hr />
 
@@ -113,10 +113,6 @@ function DailyGoalContainer() {
                     </ul>
                 </div>
                 <hr />
-
-
-
-
                 <Footer/>
             </div>
         </AppLayout>

@@ -21,7 +21,7 @@ export function ProvideAuth({ children }) {
     } catch (err) {
       setUser(null)
     }
-    console.log(user)
+    console.log("user", user)
   }
 
   useEffect(() => {

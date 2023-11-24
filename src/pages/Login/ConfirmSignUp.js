@@ -10,8 +10,8 @@ import { MdEmail } from "react-icons/md";
 import {useAuth} from "../../navigation/Auth/ProvideAuth";
 import SuccessfulConfirmation from "../../navigation/Auth/SuccessfulConfirmation";
 
-// TODO: Make this private route: only after you signup or you leave the page and want to verify again (after trying to sign in)
-// TODO: OR simply add a link to the user email so you don't have to figure out which page to show and worry about page getting lost
+// TODO: Figure out how to resend a code,
+// TODO: what should happen if the user leaves the page before entering the code
 export default function ConfirmSignUp() {
     const [code, setCode] = useState("")
     const [error, setError] = useState("")
@@ -58,7 +58,7 @@ export default function ConfirmSignUp() {
     }
 
     return (
-        <AppLayout>
+        <div>
             <div className="login-container colored-border">
                 <MdEmail size={"5rem"} color={"#FF9900"}/>
                 <h3 className={"ft-30"}>Verify Your Email</h3>
@@ -75,8 +75,6 @@ export default function ConfirmSignUp() {
                 </form>
                 {error? <div className={"bad"}>* input code is incorrect</div> : <></>}
             </div>
-            <Footer/>
-        </AppLayout>
-
+        </div>
     )
 }

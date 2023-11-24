@@ -6,3 +6,17 @@
     padding: 0;
     font-family: 'Poppins', sans-serif;
 }
+
+
+
+.flex{
+    display: flex;
+}
+
+.mr-5{
+   margin-right: 5px;
+}
+
+.pl-65{
+    padding-left: 65px;
+}

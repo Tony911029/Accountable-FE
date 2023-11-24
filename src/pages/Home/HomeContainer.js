@@ -11,10 +11,17 @@ import { FaTwitterSquare } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import Background from '../../assets/images/HomePageBackground.png';
 import Footer from "../../components/AppLayout/Footer";
+import {ASSIGNMENT, LOGIN} from "../../navigation/CONSTANTS";
+import {useHistory} from "react-router-dom";
 
 // TODO: remove redundant css and remove fixed height and replaced with dynamic height
 export function HomeContainer() {
-  return (
+    let history = useHistory();
+    const handleGetStarted = () => {
+        history.push(ASSIGNMENT)
+    }
+
+    return (
       <AppLayout>
           <IconContext.Provider value={{color: "#FF9900", size:"45px" }}>
               <div>
@@ -29,12 +36,12 @@ export function HomeContainer() {
                           </div>
                           <MainButton
                               btnLabel="Get Started"
+                              onClick={handleGetStarted}
                           />
                       </div>
 
                       <div className="home-section2">
                           <h1 className={"mb-30"}>
-                              {/*Here is a bit off*/}
                               Why Choose Us
                           </h1>
                           <div className="three-icons">
@@ -111,5 +118,5 @@ export function HomeContainer() {
               </div>
           </IconContext.Provider>
       </AppLayout>
-  );
+    );
 }

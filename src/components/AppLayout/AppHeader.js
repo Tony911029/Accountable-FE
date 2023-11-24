@@ -61,7 +61,7 @@ function AppHeader(){
         <ul className={"dropDownProfile"}>
             <li
                  onClick={toggleProfile}>
-                <CgProfile style={iconStyles} size={"1.7rem"}/> Hello, Tony123
+                <CgProfile style={iconStyles} size={"1.7rem"}/> Hello, Tony
             </li>
             <li className={profile ? "" : "hideDropDown"}
                 onClick={toggleProfile}>

@@ -12,7 +12,6 @@ const userPool = new CognitoUserPool({
 
 /*Sign up user with username, email and password*/
 // user name and email should be unique
-// TODO: Figure out how to store user presistenly (like refresh shouldn't log user out)
 export function signUp(username, email, password) {
     return new Promise((resolve, reject) => {
         userPool.signUp(
@@ -71,12 +70,43 @@ export function signIn(username, password) {
     })
 }
 
+
+// TODO: Forget passwords
+// TODO: Turn aws lambda on for email duplication
 export function forgotPassword(username) {
-    // Forgot password implementation
+    return new Promise((resolve, reject) => {
+        const cognitoUser = new CognitoUser({
+            Username: username,
+            Pool: userPool,
+        })
+
+        cognitoUser.forgotPassword({
+            onSuccess: () => {
+                resolve()
+            },
+            onFailure: (err) => {
+                reject(err)
+            },
+        })
+    })
 }
 
-export function confirmPassword(username, code, newPassword) {
-    // Confirm password implementation
+export function confirmPassword(username, confirmationCode, newPassword) {
+    return new Promise((resolve, reject) => {
+        const cognitoUser = new CognitoUser({
+            Username: username,
+            Pool: userPool,
+        })
+
+        cognitoUser.confirmPassword(confirmationCode, newPassword, {
+            onSuccess: () => {
+                resolve()
+            },
+            onFailure: (err) => {
+                reject(err)
+            },
+        })
+    })
 }
 
 export function signOut() {
