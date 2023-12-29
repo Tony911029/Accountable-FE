@@ -118,6 +118,7 @@ export function signOut() {
 
 
 // Get user attributes
+/*https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html */
 export async function getCurrentUser() {
     return new Promise((resolve, reject) => {
         const cognitoUser = userPool.getCurrentUser()
@@ -126,6 +127,7 @@ export async function getCurrentUser() {
             return
         }
 
+        // getSession will refresh the token if needed behind the scene
         cognitoUser.getSession((err, session) => {
             if (err) {
                 reject(err)
@@ -136,32 +138,18 @@ export async function getCurrentUser() {
                     reject(err)
                     return
                 }
+
                 const userData = attributes.reduce((acc, attribute) => {
                     acc[attribute.Name] = attribute.Value
                     return acc
                 }, {})
+                // We only need Id token (contains claims about the identity)
+                userData.tokenId = session.getIdToken();
+                userData.tokenId = session.getAccessToken();
+
 
                 resolve({ ...userData, username: cognitoUser.username})
             })
-        })
-    })
-}
-
-
-// get access or id JWT tokens
-export function getSession() {
-    const cognitoUser = userPool.getCurrentUser()
-    return new Promise((resolve, reject) => {
-        if (!cognitoUser) {
-            reject(new Error("No user found"))
-            return
-        }
-        cognitoUser.getSession((err, session) => {
-            if (err) {
-                reject(err)
-                return
-            }
-            resolve(session)
         })
     })
 }

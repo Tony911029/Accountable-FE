@@ -4,8 +4,20 @@
  */
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import * as auth from "./UserPool"
+import {axiosInterceptors} from "../../config/HttpInterceptor"
 
 export const AuthContext = createContext();
+
+/**
+ user
+   {
+     "email": string,
+     "isAdmin": boolean,
+     "fullName": string,
+     "userId": UUID,
+     "token": string
+   }
+ * **/
 
 // Context Provider to wrap the whole app within and make auth information (user) available.
 export function ProvideAuth({ children }) {
@@ -14,14 +26,34 @@ export function ProvideAuth({ children }) {
   const [username, setUsername] = useState("")
   const [isLoading, setIsLoading] = useState(true)
 
+  try{
+    axiosInterceptors(user)
+  }catch (err){
+    console.log("interceptorErr", err)
+  }
+
   const getCurrentUser = async () => {
+
     try {
-      const user = await auth.getCurrentUser()
+      const data = await auth.getCurrentUser()
+      const user = createUserObject(data);
       setUser(user)
+      console.log("user", user)
     } catch (err) {
       setUser(null)
     }
-    console.log("user", user)
+  }
+
+
+  const createUserObject = (data) => {
+    let user = {}
+    user.email = data.email;
+    // TODO: fetch user from our backend
+    user.isAdmin = false;
+    user.fullName = data.username;
+    user.userId = data.sub;
+    user.token = data.tokenId?.jwtToken;
+    return user
   }
 
   useEffect(() => {
