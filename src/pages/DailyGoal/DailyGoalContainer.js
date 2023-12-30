@@ -6,6 +6,7 @@ import {fetchQuestion, getCallTesting, getQuestion, submitQuestion} from "servic
 import {AppLayout} from "../../components/AppLayout/AppLayout";
 import Footer from "../../components/AppLayout/Footer";
 import {useAuth} from "../../navigation/Auth/ProvideAuth";
+import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
 
 // TODO: might wanna try out Amazon service or some other solution for this
@@ -18,18 +19,27 @@ microphone.interimResults = true;
 microphone.lang = "en-US";
 let timeLimit = 120; // maximum of 120 seconds
 let timeoutId;
+let maxAttempt = 3;
 
 function DailyGoalContainer() {
+    //  Note: index 0 is empty, so index 1 is first attempt/index
+    //         (0th attempt/index is added upon mic initialization)
     const {user} = useAuth()
-    const [attempt, setAttempt] = useState(0)
+    const [attempt, setAttempt] = useState(-1)
     const [count, setCount] = useState(0)
 
     const [question, setQuestion] = useState('');
     const [answer, setAnswer] = useState('');
     const [answers, setAnswers] = useState([]);
+    /**
+        ans.answer = string;
+        ans.count = int
+     **/
 
     const [isRecording, setIsRecording] = useState(false);
-    const [answerToSubmitIndex, setIndex] = useState(0);
+    const [index, setIndex] = useState(-1);
+
+    const [chosenAttempt, setChosenAttempt] = useState("")
 
 
     // todo: figure out cros stuff
@@ -37,16 +47,16 @@ function DailyGoalContainer() {
         resetStats()
         setQuestion("This is a question... Click RECORD to record your answer")
 
-        // getCallTesting().then((res)=>{
-        //     console.log(res)
-        //     setQuestion(res)
-        //     return res
-        // }).catch((err)=>{
-        //     console.log(err)
-        //     setQuestion(err)
-        // })
-        //
-        // console.log(attempt)
+        getCallTesting().then((res)=>{
+            console.log(res)
+            setQuestion(res)
+            return res
+        }).catch((err)=>{
+            console.log(err)
+            setQuestion(err)
+        })
+
+        console.log(attempt)
 
         // fetchQuestion().then((res)=>{
         //     setQuestion(res.questionText)
@@ -66,7 +76,6 @@ function DailyGoalContainer() {
 
     const handleRecord = () => {
         if (isRecording) {
-            setAttempt(attempt+1);
             microphone.start();
             microphone.onend = () => {
                 microphone.start();
@@ -75,14 +84,14 @@ function DailyGoalContainer() {
             // Set a timeout to stop the recording after 2 mins
             timeoutId = setTimeout(() => {
                 microphone.stop();
-                storeAnsAttempt();
+                storeAnsAttempt(answer);
             }, timeLimit*1000);
 
 
         } else {
             microphone.stop();
             microphone.onend = ()=>{}
-            storeAnsAttempt()
+            storeAnsAttempt(answer)
             if (timeoutId){clearTimeout(timeoutId);}
         }
 
@@ -110,7 +119,17 @@ function DailyGoalContainer() {
         setAnswers([...answers, ans]);
         setAnswer("")
         setCount(0)
+        setIndex(index+1)
+        setAttempt(attempt+1)
     };
+
+    useEffect(() => {
+        console.log(answers)
+        console.log(index)
+        if (answers.length>1){
+            setChosenAttempt(answers[index]?.answer)
+        }
+    }, [index]);
 
     function countWords(str) {
         if (!str){
@@ -121,6 +140,19 @@ function DailyGoalContainer() {
             .length;
     }
 
+    function handlePrePage() {
+        setIndex(index-1)
+    }
+
+    function handleNextPage() {
+        setIndex(index+1)
+    }
+
+    const handleSubmitAnswer = () => {
+        submitQuestion(answers[index], user.userId)
+        resetStats()
+    }
+
     const resetStats = () =>{
         setQuestion("");
         setAnswers("");
@@ -128,12 +160,6 @@ function DailyGoalContainer() {
         setCount(0);
     }
 
-    const handleSubmitAnswer = () => {
-        // reset attempt -> store answer (axios) -> clear question/answer
-        // TODO: store the chosen answer object to submit
-        submitQuestion(user.userId)
-        resetStats()
-    }
 
 
     return (
@@ -180,22 +206,67 @@ function DailyGoalContainer() {
                                 fullWidth
                                 disabled
                             />
-                            <div className={"theme-text full-w flex attempt-counter"}>
+                            <div className={"theme-text full-w flex spc-btwn"}>
                                 <div>Word count: {count}</div>
                                 <div>Attempts: {attempt}</div>
                             </div>
                         </div>
                     </div>
                     <div  className="assignment-btn">
-                        <MainButton btnLabel={isRecording? "Stop" : "Record"} onClick={() => setIsRecording((prevState) => !prevState)}/>
+                        <MainButton
+                            // TODO: Disable button before the question is generated
+                            btnLabel={isRecording? "Stop" : "Record"}
+                            onClick={() => setIsRecording((prevState) => !prevState)}
+                            disabled={attempt===maxAttempt}
+                        />
                         <div>*Click the bottom to record your answer</div>
                     </div>
                 </div>
-                <div className="h-5rem">
-                    <MainButton type={"submit"} btnLabel={"Submit Answer"} onClick={handleSubmitAnswer}/>
+
+                <div className="assignment-section2">
+                    <div className={"outer-padding assignment-container"}>
+                        <h1 className={"flex full-w spc-btwn attempt-page"}>
+                            <button
+                                onClick={handlePrePage}
+                                disabled={index<=1}
+                            >
+                                    <IoIosArrowBack />
+                            </button>
+                            <p>attempt {index}</p>
+                            <button
+                                onClick={handleNextPage}
+                                disabled={index=== attempt}
+                            >
+                                    <IoIosArrowForward />
+                            </button>
+                        </h1>
+                        <div className={"full-w align-left mt-5"}>
+                            <TextField
+                                type="text"
+                                multiline
+                                rows={2}
+                                value = {answers[index]?.answer}
+                                disabled
+                                fullWidth
+                            />
+                            <div className={"theme-text full-w flex"}>
+                                <div>Word count: {answers[index]?.count}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="assignment-btn">
+                        <div>*Click arrows to choose which attempts to submit</div>
+                    </div>
+                </div>
+                {/*TODO: Disable button before the question is generated*/}
+                <div className="h-5rem mt-5">
+                    <MainButton
+                        type={"submit"}
+                        btnLabel={"Submit Answer"}
+                        onClick={handleSubmitAnswer}
+                    />
                 </div>
                 <hr />
-
                 <div className="assignment-section3">
                     <ul>
                         <li>

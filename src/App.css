@@ -15,10 +15,17 @@
    margin-right: 5px;
 }
 
+.mt-5{
+    margin-top: 5px;
+}
 .pl-65{
     padding-left: 65px;
 }
 
 .theme-text{
     color: #FF9900;
+}
+
+.spc-btwn{
+    justify-content: space-between;
 }

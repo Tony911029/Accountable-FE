@@ -90,8 +90,22 @@ hr{
     background: #FFF !Important;
 }
 
-.attempt-counter{
-    justify-content: space-between;
+.attempt-page{
+    align-self: baseline;
+}
+
+.attempt-page button{
+    background: none;
+    border: none;
+    color: #FF9900;
+    font-size: 35px;
+    font-weight: 700;
+    display: flex;
+}
+
+.attempt-page button:hover{
+    box-shadow: 0 10px 30px 0 #FF99004A;
+    cursor: pointer;
 }
 
 
