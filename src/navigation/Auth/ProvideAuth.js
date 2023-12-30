@@ -13,7 +13,7 @@ export const AuthContext = createContext();
    {
      "email": string,
      "isAdmin": boolean,
-     "fullName": string,
+     "username": string,
      "userId": UUID,
      "token": string
    }
@@ -36,8 +36,7 @@ export function ProvideAuth({ children }) {
 
     try {
       const data = await auth.getCurrentUser()
-      const user = createUserObject(data);
-      setUser(user)
+      const user = setUserObject(data);
       console.log("user", user)
     } catch (err) {
       setUser(null)
@@ -45,14 +44,15 @@ export function ProvideAuth({ children }) {
   }
 
 
-  const createUserObject = (data) => {
+  const setUserObject = (data) => {
     let user = {}
     user.email = data.email;
     // TODO: fetch user from our backend
     user.isAdmin = false;
-    user.fullName = data.username;
+    user.username = data.username;
     user.userId = data.sub;
     user.token = data.tokenId?.jwtToken;
+    setUser(user)
     return user
   }
 

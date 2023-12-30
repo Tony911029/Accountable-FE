@@ -85,11 +85,15 @@ hr{
     align-items: flex-start;
 }
 
-
 /*force mui text box to be white*/
 .assignment-section2 .MuiTextField-root{
     background: #FFF !Important;
 }
+
+.attempt-counter{
+    justify-content: space-between;
+}
+
 
 
 

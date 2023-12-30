@@ -8,3 +8,7 @@ export const fetchQuestion = () =>
 
 export const getCallTesting = () =>
     axios.get(`${API_URL}/api/question/testing`).then((response)=>response?.data?.data)
+
+
+export const submitQuestion = (userId) =>
+    axios.post(`${API_URL}/api/question/testing`).then((response)=>response?.data?.data)

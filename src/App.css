@@ -7,8 +7,6 @@
     font-family: 'Poppins', sans-serif;
 }
 
-
-
 .flex{
     display: flex;
 }
@@ -19,4 +17,8 @@
 
 .pl-65{
     padding-left: 65px;
+}
+
+.theme-text{
+    color: #FF9900;
 }
