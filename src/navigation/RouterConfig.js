@@ -2,7 +2,7 @@ import React from "react";
 import {Switch, Route } from "react-router-dom";
 import Home from "pages/Home";
 import { NotFound } from "navigation/NotFound";
-import {ROOT, ASSIGNMENT, PROGRESS, LEADERBOARD, SIGNUP, LOGIN, CONFIRM_SIGNUP} from "navigation/CONSTANTS";
+import {ROOT, ASSIGNMENT, PROGRESS, LEADERBOARD, SIGNUP, LOGIN, CONFIRM_SIGNUP, PROFILE} from "navigation/CONSTANTS";
 import LoginPageContainer from "../pages/Login/LoginPageContainer";
 import DailyGoalContainer from "../pages/DailyGoal/DailyGoalContainer";
 import LeaderboardContainer from "../pages/Leaderboard/LeaderboardContainer";
@@ -10,6 +10,7 @@ import ProgressContainer from "../pages/Progress/ProgressContainer";
 import SignUp from "../pages/Login/SignUp";
 import ConfirmSignUp from "../pages/Login/ConfirmSignUp";
 import PrivateRoute from "./Auth/PrivateRoute";
+import {Profile} from "../pages/Login/Profile";
 
 export const RouterConfig = () => {
     return (
@@ -25,6 +26,8 @@ export const RouterConfig = () => {
                     <PrivateRoute exact path={ASSIGNMENT} component={DailyGoalContainer}/>
                     <PrivateRoute exact path={PROGRESS} component={ProgressContainer}/>
                     <PrivateRoute exact path={LEADERBOARD} component={LeaderboardContainer}/>
+                    <PrivateRoute exact path={PROFILE} component={Profile}/>
+
                     {/*<PrivateRoute exact path={CONFIRM_SIGNUP} component={ConfirmSignUp}/>*/}
 
                     <Route path="*">

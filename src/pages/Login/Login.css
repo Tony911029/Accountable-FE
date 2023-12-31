@@ -47,6 +47,10 @@
     gap: 1rem;
 }
 
+.gap-3{
+    gap: 3rem;
+}
+
 
 .good{
     color: #1bc25b !important;

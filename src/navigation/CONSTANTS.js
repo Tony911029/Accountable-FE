@@ -9,4 +9,5 @@ export const AUTH_PAGE1 = "/authorized1";
 export const ASSIGNMENT = "/assignment";
 export const PROGRESS = "/progress";
 export const LEADERBOARD = "/leaderboard";
+export const PROFILE = "/profile";
 

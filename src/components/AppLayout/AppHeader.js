@@ -5,7 +5,7 @@ import './AppHeader.css'
 import {Button} from "@material-ui/core";
 import { CgProfile } from "react-icons/cg";
 import {makeStyles} from "tss-react/mui";
-import {LOGIN, ROOT} from "../../navigation/CONSTANTS";
+import {LOGIN, ROOT, PROFILE} from "../../navigation/CONSTANTS";
 import {useAuth} from "../../navigation/Auth/ProvideAuth";
 import { MdLogout } from "react-icons/md";
 
@@ -24,6 +24,10 @@ function AppHeader(){
 
     const [profile, setProfile] = useState(false)
     const toggleProfile = () => setProfile(!profile)
+
+    function handleProfile() {
+        history.push(PROFILE)
+    }
 
     const useStyles = makeStyles()(() => ({
         customButton: {
@@ -64,7 +68,7 @@ function AppHeader(){
                 <CgProfile style={iconStyles} size={"1.7rem"}/> Hello, Tony
             </li>
             <li className={profile ? "" : "hideDropDown"}
-                onClick={toggleProfile}>
+                onClick={handleProfile}>
                 <CgProfile style={iconStyles} size={"1.7rem"}/> My Account
             </li>
             <li className={profile ? "" : "hideDropDown"}

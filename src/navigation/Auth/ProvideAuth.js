@@ -33,16 +33,15 @@ export function ProvideAuth({ children }) {
   }
 
   const getCurrentUser = async () => {
-
     try {
       const data = await auth.getCurrentUser()
       const user = setUserObject(data);
+      setUser(user)
       console.log("user", user)
     } catch (err) {
       setUser(null)
     }
   }
-
 
   const setUserObject = (data) => {
     let user = {}
@@ -52,7 +51,6 @@ export function ProvideAuth({ children }) {
     user.username = data.username;
     user.userId = data.sub;
     user.token = data.tokenId?.jwtToken;
-    setUser(user)
     return user
   }
 
