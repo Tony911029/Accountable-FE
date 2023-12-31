@@ -214,10 +214,9 @@ function DailyGoalContainer() {
                     </div>
                     <div  className="assignment-btn">
                         <MainButton
-                            // TODO: Disable button before the question is generated
                             btnLabel={isRecording? "Stop" : "Record"}
                             onClick={() => setIsRecording((prevState) => !prevState)}
-                            disabled={attempt===maxAttempt}
+                            disabled={attempt===maxAttempt || !question}
                         />
                         <div>*Click the bottom to record your answer</div>
                     </div>
@@ -258,12 +257,12 @@ function DailyGoalContainer() {
                         <div>*Click arrows to choose which attempts to submit</div>
                     </div>
                 </div>
-                {/*TODO: Disable button before the question is generated*/}
                 <div className="h-5rem mt-5">
                     <MainButton
                         type={"submit"}
                         btnLabel={"Submit Answer"}
                         onClick={handleSubmitAnswer}
+                        disabled={!question || attempt===0}
                     />
                 </div>
                 <hr />
