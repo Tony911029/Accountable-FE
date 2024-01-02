@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {TextField} from "@mui/material";
+import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField} from "@mui/material";
 import "./DailyGoal.css"
 import MainButton from "../../components/MainButton";
 import {fetchQuestion, getCallTesting, getQuestion, submitQuestion} from "services/questionService"
@@ -7,6 +7,8 @@ import {AppLayout} from "../../components/AppLayout/AppLayout";
 import Footer from "../../components/AppLayout/Footer";
 import {useAuth} from "../../navigation/Auth/ProvideAuth";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import {Button} from "@material-ui/core";
+import {FaCheckCircle} from "react-icons/fa";
 
 
 // TODO: might wanna try out Amazon service or some other solution for this
@@ -40,6 +42,8 @@ function DailyGoalContainer() {
     const [index, setIndex] = useState(-1);
 
     const [chosenAttempt, setChosenAttempt] = useState("")
+    const [isSubmitted, setIsSubmitted] = useState(false)
+    const [confirmOpen, setConfirmOpen] = useState(false)
 
 
     // todo: figure out cros stuff
@@ -151,6 +155,7 @@ function DailyGoalContainer() {
     const handleSubmitAnswer = () => {
         submitQuestion(answers[index], user.userId)
         resetStats()
+        setConfirmOpen(true)
     }
 
     const resetStats = () =>{
@@ -161,6 +166,10 @@ function DailyGoalContainer() {
     }
 
 
+    function handleClose() {
+        resetStats();
+        setConfirmOpen(false);
+    }
 
     return (
         <AppLayout>
@@ -280,6 +289,22 @@ function DailyGoalContainer() {
                     </ul>
                 </div>
                 <hr />
+                {!isSubmitted && (
+                <Dialog
+                    open={confirmOpen}
+                    onClose={handleClose}
+                >
+                    <DialogContent>
+                        <div className="login-container colored-border gap-1">
+                            <FaCheckCircle size={"5rem"} className={"good"}/>
+                            <h3 className={"ft-30"}>Answer Submitted Successfully</h3>
+                            <span>Job well done!</span>
+                        </div>
+                    </DialogContent>
+                    <DialogActions>
+                        <MainButton btnLabel={"More Question!"} onClick={()=>setConfirmOpen(false)}/>
+                    </DialogActions>
+                </Dialog>)}
                 <Footer/>
             </div>
         </AppLayout>
