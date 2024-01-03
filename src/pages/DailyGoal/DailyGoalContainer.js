@@ -2,10 +2,10 @@ import React, {useEffect, useState} from "react";
 import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField} from "@mui/material";
 import "./DailyGoal.css"
 import MainButton from "../../components/MainButton";
-import {fetchQuestion, getCallTesting, getQuestion, submitQuestion} from "services/questionService"
-import {AppLayout} from "../../components/AppLayout/AppLayout";
+import {fetchQuestion, getCallTesting, submitQuestion} from "src/services/questionService"
+import {AppLayout} from "src/components/AppLayout/AppLayout";
 import Footer from "../../components/AppLayout/Footer";
-import {useAuth} from "../../navigation/Auth/ProvideAuth";
+import {useAuth} from "src/navigation/Auth/ProvideAuth";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import {Button} from "@material-ui/core";
 import {FaCheckCircle} from "react-icons/fa";

@@ -39,9 +39,10 @@ function SignUp() {
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
-    const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
+    const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
+
     const verifyInput = (password) =>{
         const hasUppercase = /[A-Z]/.test(password);
         const hasLowercase = /[a-z]/.test(password);

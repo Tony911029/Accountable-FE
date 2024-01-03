@@ -15,7 +15,7 @@ function LoginBlock() {
     const {signIn, isLoading } = useAuth()
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
-    const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
+    const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
 

@@ -1,4 +1,4 @@
-import { UPDATE_USER } from "redux/actions/userActions";
+import { UPDATE_USER } from "../actions/userActions.js";
 
 const initialState = {
     uid: "",

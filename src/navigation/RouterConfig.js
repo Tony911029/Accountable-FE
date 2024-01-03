@@ -1,8 +1,8 @@
 import React from "react";
 import {Switch, Route } from "react-router-dom";
-import Home from "pages/Home";
-import { NotFound } from "navigation/NotFound";
-import {ROOT, ASSIGNMENT, PROGRESS, LEADERBOARD, SIGNUP, LOGIN, CONFIRM_SIGNUP, PROFILE} from "navigation/CONSTANTS";
+import Home from "../pages/Home";
+import { NotFound } from "../navigation/NotFound";
+import {ROOT, ASSIGNMENT, PROGRESS, LEADERBOARD, SIGNUP, LOGIN, CONFIRM_SIGNUP, PROFILE} from "../navigation/CONSTANTS";
 import LoginPageContainer from "../pages/Login/LoginPageContainer";
 import DailyGoalContainer from "../pages/DailyGoal/DailyGoalContainer";
 import LeaderboardContainer from "../pages/Leaderboard/LeaderboardContainer";

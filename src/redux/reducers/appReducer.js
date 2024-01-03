@@ -1,4 +1,4 @@
-import { DECREMENT, INCREMENT } from "redux/actions/appActions";
+import { DECREMENT, INCREMENT } from "../actions/appActions";
 
 const initialState = {
   counter: 0,
