@@ -5,11 +5,15 @@ import { esbuildCommonjs } from "@originjs/vite-plugin-commonjs";
 import fs from "fs/promises";
 import {resolve} from "path";
 import AutoImport from "unplugin-auto-import/vite";
+import dns from "dns";
 
 // https://vitejs.dev/config/
 // https://github.com/aws-amplify/amplify-js/issues/9639#issuecomment-1376605159
 // https://github.com/vitejs/vite/discussions/3112#discussioncomment-747411
-export default defineConfig({
+
+// dns.setDefaultResultOrder('verbatim')
+
+export default defineConfig(({command}) => ({
     ...(process.env.NODE_ENV === 'development'
         ? {
             define: {
@@ -28,6 +32,13 @@ export default defineConfig({
                 : {}),
         },
     },
+    define:
+    // in development, amplifyjs relies on webpack or similar somewhere so we need to add this for now
+        command === 'serve'
+            ? {
+                global: {},
+            }
+            : undefined,
     plugins: [
         react(),
         jsconfigPaths(),
@@ -64,7 +75,7 @@ export default defineConfig({
     },
     server: {
         port: 3000,
-        host: "localhost",
+        host: true,
     },
-})
+}))
 
