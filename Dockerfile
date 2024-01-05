@@ -17,3 +17,8 @@ EXPOSE 3000
 
 # Entry point command
 CMD ["yarn", "start"]
+
+
+
+# it is possible that we will reach how many images get call we can use on Docker hub,
+# solution is to stoere the Node image in your private registry

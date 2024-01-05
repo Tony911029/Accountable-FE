@@ -3,8 +3,11 @@ import {AppLayout} from "../../components/AppLayout/AppLayout";
 import Footer from "../../components/AppLayout/Footer";
 import {CgProfile} from "react-icons/cg";
 import {ProfileData} from "./ProfileData";
+import {useAuth} from "src/navigation/Auth/ProvideAuth";
 
 export function Profile() {
+
+    const {user} = useAuth()
     function handleUpload() {
         console.log("clicked")
     }
@@ -34,8 +37,7 @@ export function Profile() {
                                             {item.title}
                                         </div>
                                         <div className={"profile-item"}>
-                                            {/*do : user[item.data]*/}
-                                            {item.tempData}
+                                            {user[item.data]}
                                         </div>
                                     </div>
                                 )

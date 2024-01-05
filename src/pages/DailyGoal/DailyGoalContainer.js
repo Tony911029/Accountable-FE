@@ -9,6 +9,7 @@ import {useAuth} from "src/navigation/Auth/ProvideAuth";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import {Button} from "@material-ui/core";
 import {FaCheckCircle} from "react-icons/fa";
+import {sampleQuestions} from "src/pages/DailyGoal/QuestionsSample";
 
 
 // TODO: might wanna try out Amazon service or some other solution for this
@@ -42,25 +43,25 @@ function DailyGoalContainer() {
     const [index, setIndex] = useState(-1);
 
     const [chosenAttempt, setChosenAttempt] = useState("")
-    const [isSubmitted, setIsSubmitted] = useState(false)
     const [confirmOpen, setConfirmOpen] = useState(false)
 
 
     // todo: figure out cros stuff
     const handleFetchingQuestion = () =>{
         resetStats()
-        setQuestion("This is a question... Click RECORD to record your answer")
+        const randomIndex = Math.floor(Math.random() * sampleQuestions.length);
+        setQuestion(sampleQuestions[randomIndex]);
 
-        getCallTesting().then((res)=>{
-            console.log(res)
-            setQuestion(res)
-            return res
-        }).catch((err)=>{
-            console.log(err)
-            setQuestion(err)
-        })
-
-        console.log(attempt)
+        // getCallTesting().then((res)=>{
+        //     console.log(res)
+        //     setQuestion(res)
+        //     return res
+        // }).catch((err)=>{
+        //     console.log(err)
+        //     setQuestion(err)
+        // })
+        //
+        // console.log(attempt)
 
         // fetchQuestion().then((res)=>{
         //     setQuestion(res.questionText)
@@ -152,17 +153,26 @@ function DailyGoalContainer() {
         setIndex(index+1)
     }
 
-    const handleSubmitAnswer = () => {
-        submitQuestion(answers[index], user.userId)
-        resetStats()
+    const handleConfirmAnswer = () => {
+        // TODO: Uncomment this
+        // submitQuestion(answers[index], user.userId)
         setConfirmOpen(true)
+    }
+
+
+    const handleSubmitAnswer = () => {
+        // submitQuestion(answers[index], user.userId)
+        setConfirmOpen(false)
+        resetStats()
     }
 
     const resetStats = () =>{
         setQuestion("");
-        setAnswers("");
+        setAnswers([]);
+        setAnswer("");
         setAttempt(0);
         setCount(0);
+        setIndex(0);
     }
 
 
@@ -210,7 +220,8 @@ function DailyGoalContainer() {
                                 label="Answer"
                                 type="text"
                                 multiline
-                                rows={2}
+                                minRows={2}
+                                maxRows={10}
                                 value = {answer}
                                 fullWidth
                                 disabled
@@ -252,13 +263,14 @@ function DailyGoalContainer() {
                             <TextField
                                 type="text"
                                 multiline
-                                rows={2}
-                                value = {answers[index]?.answer}
+                                minRows={2}
+                                maxRows={10}
+                                value = {answers[index-1]?.answer || ""}
                                 disabled
                                 fullWidth
                             />
                             <div className={"theme-text full-w flex"}>
-                                <div>Word count: {answers[index]?.count}</div>
+                                <div>Word count: {answers[index-1]?.count || ""}</div>
                             </div>
                         </div>
                     </div>
@@ -270,7 +282,7 @@ function DailyGoalContainer() {
                     <MainButton
                         type={"submit"}
                         btnLabel={"Submit Answer"}
-                        onClick={handleSubmitAnswer}
+                        onClick={handleConfirmAnswer}
                         disabled={!question || attempt===0}
                     />
                 </div>
@@ -289,7 +301,7 @@ function DailyGoalContainer() {
                     </ul>
                 </div>
                 <hr />
-                {!isSubmitted && (
+                {confirmOpen && (
                 <Dialog
                     open={confirmOpen}
                     onClose={handleClose}
@@ -302,7 +314,7 @@ function DailyGoalContainer() {
                         </div>
                     </DialogContent>
                     <DialogActions>
-                        <MainButton btnLabel={"More Question!"} onClick={()=>setConfirmOpen(false)}/>
+                        <MainButton btnLabel={"More Questions!"} onClick={handleSubmitAnswer}/>
                     </DialogActions>
                 </Dialog>)}
                 <Footer/>
