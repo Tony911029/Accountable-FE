@@ -17,18 +17,18 @@ export const RouterConfig = () => {
         <div>
             <div>
                 <Switch>
-                    {/* List all public routes here */}
-                    {/*<Route exact path={LOGIN} component={LoginPageContainer} />*/}
-                    {/*<Route exact path={ROOT} component={Home}/>*/}
-                    {/*<Route exact path={SIGNUP} component={SignUp}/>*/}
+                     List all public routes here
+                    <Route exact path={LOGIN} component={LoginPageContainer} />
+                    <Route exact path={ROOT} component={Home}/>
+                    <Route exact path={SIGNUP} component={SignUp}/>
 
-                    {/*/!* List all private/auth routes here *!/*/}
-                    {/*<PrivateRoute exact path={ASSIGNMENT} component={DailyGoalContainer}/>*/}
-                    {/*<PrivateRoute exact path={PROGRESS} component={ProgressContainer}/>*/}
-                    {/*<PrivateRoute exact path={LEADERBOARD} component={LeaderboardContainer}/>*/}
-                    {/*<PrivateRoute exact path={PROFILE} component={Profile}/>*/}
+                    {/* List all private/auth routes here */}
+                    <PrivateRoute exact path={ASSIGNMENT} component={DailyGoalContainer}/>
+                    <PrivateRoute exact path={PROGRESS} component={ProgressContainer}/>
+                    <PrivateRoute exact path={LEADERBOARD} component={LeaderboardContainer}/>
+                    <PrivateRoute exact path={PROFILE} component={Profile}/>
 
-                    {/*<PrivateRoute exact path={CONFIRM_SIGNUP} component={ConfirmSignUp}/>*/}
+                    <PrivateRoute exact path={CONFIRM_SIGNUP} component={ConfirmSignUp}/>
 
                     <Route path="*">
                         <NotFound />
