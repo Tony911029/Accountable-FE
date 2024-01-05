@@ -33,6 +33,7 @@ export default defineConfig(({command}) => ({
         },
     },
     define:
+    // https://github.com/aws-amplify/amplify-js/issues/9639#issuecomment-1413650169
     // in development, amplifyjs relies on webpack or similar somewhere so we need to add this for now
         command === 'serve'
             ? {
