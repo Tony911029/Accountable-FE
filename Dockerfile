@@ -13,7 +13,7 @@ RUN yarn install
 # Copy the app from the host to the container
 COPY . .
 
-RUN yarn run build
+RUN yarn build
 
 FROM nginx:1.22-alpine
 
