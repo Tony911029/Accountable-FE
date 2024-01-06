@@ -1,6 +1,4 @@
 node_modules
-CRM/node_modules
-website/node_modules
 **/.vscode
 **/.gitignore
 **/.idea
