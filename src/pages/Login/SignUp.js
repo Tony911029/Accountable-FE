@@ -72,7 +72,7 @@ function SignUp() {
         setIsSignUp(false)
         const { userName, email, password, confirmPassword } = userData;
         try {
-            // await signUp(userName, email, password)
+            await signUp(userName, email, password)
             setIsLoading(false)
             setIsSignUp(true)
         } catch (err) {
