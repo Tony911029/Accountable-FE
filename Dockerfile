@@ -1,8 +1,9 @@
-FROM node:18-alpine as build-stage
+FROM node:18-alpine
+
+# working directory
+WORKDIR /app
 
 ENV PORT=3000
-
-WORKDIR /app
 
 COPY package.json ./
 
@@ -21,7 +22,7 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY src/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy the built React app from the previous stage to the Nginx public directory
-COPY --from=build-stage /app/dist/ /usr/share/nginx/html/
+COPY --from=0  app/dist/ /usr/share/nginx/html/
 
 # Expose port 80 to docker host
 EXPOSE 80
