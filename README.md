@@ -6,13 +6,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `yarn install`
+Install all the dependencies
+
 ### `yarn start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
 ### `yarn build`
 
@@ -24,3 +24,28 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+
+## AWS
+The app is deployed to aws ec2 instance via elastic beanstalk and we are using nginx as our server
+
+### Architecture
+
+#### CodePipeline:
+##### Source: V2 GitHub
+##### Build: CodeBuild
+  - Uses buildspec.yml
+    1.login to aws using cli tool to for ECR
+    2. we use first 7 characters of commit as our tag
+    3. Docker build with tags 
+    4. Docker build with tag: latest
+    5. Push the image to ECR for beanstalk
+##### Deploy: Elastic Beanstalk
+  - Retrieve the artifacts (build file)
+  - Runs Dockerrun.aws.json file to know which private registry to pull image from
+  - Run docker container
+
+### just some side nodes:
+  - Need to give EB role to access ECR
+  - Potentially: log file to S3 bucket as well (future)
+  - In CodeBuild, double check where the artifact are sending to (should be in the bucket codepipeline created)
+  - Maybe s3 bucket as well (for storing artifacts?)
