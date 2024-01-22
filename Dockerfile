@@ -13,7 +13,9 @@ RUN yarn install
 # Copy the app from the host to the container
 COPY . .
 
-#RUN yarn build
+# RUN yarn build (Do not uncomment next line)
+# RUN yarn build
+
 
 FROM nginx:1.22-alpine
 
@@ -28,5 +30,12 @@ COPY --from=0  app/dist/ /usr/share/nginx/html/
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
-# it is possible that we will reach how many images get call we can use on Docker hub,
-# solution is to stoere the Node image in your private registry
+
+# TODO: Something to improve:
+# 1. it is possible that we will reach how many images we can fetch from DockerHub
+#    solution is to store the Node image in ESR
+
+# 2. Right now we have the entire build file (dist) on github, we includes all the api keys for AWS cognito
+#    The solution is to use Codebuild to build the code for us using Run yarn build and set api keys as an env var in EB
+#    But the issue is that something is wrong when we try to deploy using EB (command failed to execute)
+

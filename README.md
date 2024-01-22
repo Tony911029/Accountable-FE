@@ -34,14 +34,14 @@ The app is deployed to aws ec2 instance via elastic beanstalk and we are using n
 ##### Source: V2 GitHub
 ##### Build: CodeBuild
   - Uses buildspec.yml
-    1.login to aws using cli tool to for ECR
-    2. we use first 7 characters of commit as our tag
-    3. Docker build with tags 
-    4. Docker build with tag: latest
-    5. Push the image to ECR for beanstalk
+    1. login to aws using cli tool to for ECR
+    2. we use first 7 characters of commit hash as our tag
+    3. Tag the image we just build with "latest" too for Dockerrun.aws.json
+    4. Push the image to ECR for beanstalk
+
 ##### Deploy: Elastic Beanstalk
   - Retrieve the artifacts (build file)
-  - Runs Dockerrun.aws.json file to know which private registry to pull image from
+  - Runs Dockerrun.aws.json file to know which private registry to pull image from (security is done via IAM)
   - Run docker container
 
 ### just some side nodes:
@@ -49,3 +49,6 @@ The app is deployed to aws ec2 instance via elastic beanstalk and we are using n
   - Potentially: log file to S3 bucket as well (future)
   - In CodeBuild, double check where the artifact are sending to (should be in the bucket codepipeline created)
   - Maybe s3 bucket as well (for storing artifacts?)
+  - Remember to add SLL certificate (can be obtained from certificate manager) and add listener (port 443)
+  - Remember to use Route53 to route HTTP(S) to correct server
+  - EC2 Security Group: Inbound traffic: 22 (SSH) and 80 (TCP)
