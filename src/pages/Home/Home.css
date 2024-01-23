@@ -1,143 +1,139 @@
-.home-container{
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+.home-container {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-image: url("../../assets/images/HomePageBackground.png");
+  background-size: cover;
 }
 
-.home-section1 h1{
-    display: flex;
-    justify-content: center;
-    font-size: 40px;
-    font-weight: 700;
-    color: #FF9900;
-    margin-bottom: 45px;
+.home-section1 h1 {
+  display: flex;
+  justify-content: center;
+  font-size: 40px;
+  font-weight: 700;
+  color: #ff9900;
+  margin-bottom: 45px;
 }
 
-.home-section1{
-    height: 900px;
-    display: flex;
-    text-align: center;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.home-section1 {
+  height: 900px;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.home-section2{
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    text-align: center;
-    justify-content: center;
-    background: #FFF7EA;
-    padding: 60px
+.home-section2 {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  text-align: center;
+  justify-content: center;
+  background: #fff7ea;
+  padding: 60px;
 }
 
-.home-section3{
-    height: 700px;
-    display: flex;
-    background: #fff;
-    text-align: center;
-    justify-content: space-around;
-    align-items: center;
+.home-section3 {
+  height: 700px;
+  display: flex;
+  background: #fff;
+  text-align: center;
+  justify-content: space-around;
+  align-items: center;
 }
 
-
-.home-section4{
-    height: 150px;
-    display: flex;
-    background: #FFF7EA;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+.home-section4 {
+  height: 150px;
+  display: flex;
+  background: #fff7ea;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
-.section5{
-    height: 150px;
-    display: flex;
-    background: #FFF;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+.section5 {
+  height: 150px;
+  display: flex;
+  background: #fff;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
-
-.three-icons{
-    display: flex;
-    justify-content: space-around;
-    margin:0;
-    padding:0;
+.three-icons {
+  display: flex;
+  justify-content: space-around;
+  margin: 0;
+  padding: 0;
 }
 
-.home-p1{
-    font-size: 28px;
-    font-weight: 600;
-    line-height: 42px;
-    letter-spacing: 0;
-    text-align: center;
-    width: 900px;
-    margin-bottom: 42px;
+.home-p1 {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 42px;
+  letter-spacing: 0;
+  text-align: center;
+  width: 900px;
+  margin-bottom: 42px;
 }
 
-.home-p2{
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 36px;
-    letter-spacing: 0;
-    text-align: center;
-    width: 250px;
+.home-p2 {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 36px;
+  letter-spacing: 0;
+  text-align: center;
+  width: 250px;
 }
 
-.icon-section{
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    align-items: center;
-    text-align: center;
+.icon-section {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  text-align: center;
 }
 
-.ft-30{
-    color: #FF9900;
-    font-size: 30px;
+.ft-30 {
+  color: #ff9900;
+  font-size: 30px;
 }
 
-.about-us > div{
-    width: 300px;
-    margin-bottom: 40px;
+.about-us > div {
+  width: 300px;
+  margin-bottom: 40px;
 }
 
-.contact-form-container{
-    background: #FFF7EA;
-    padding: 20px;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    width: 450px;
-    height: 500px;
-    margin-top: 10px;
+.contact-form-container {
+  background: #fff7ea;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+  height: 500px;
+  margin-top: 10px;
 }
 
-.contact-form-container .form{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.contact-form-container .form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .form > div {
-    margin-top: 10px;
-    margin-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.mb-30{
-    margin-bottom: 50px;
+.mb-30 {
+  margin-bottom: 50px;
 }
 
-.mb-1{
-    margin-bottom: 1rem;
+.mb-1 {
+  margin-bottom: 1rem;
 }
-
-
-
-
