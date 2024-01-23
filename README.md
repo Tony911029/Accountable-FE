@@ -51,4 +51,4 @@ The app is deployed to aws ec2 instance via elastic beanstalk and we are using n
   - Maybe s3 bucket as well (for storing artifacts?)
   - Remember to add SLL certificate (can be obtained from certificate manager) and add listener (port 443)
   - Remember to use Route53 to route HTTP(S) to correct server
-  - EC2 Security Group: Inbound traffic: 22 (SSH) and 80 (TCP)
+  - EC2 Security Group: Inbound traffic: 22 (SSH), 80 (TCP) and 3000 (don't thin is necessary)
