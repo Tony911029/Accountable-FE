@@ -14,7 +14,11 @@ export function Profile() {
 
     return (
         <AppLayout>
-                <div className={"profile-container"}>
+                <div className={"profile-container"} style={{ 
+                backgroundImage: 'url("src/assets/images/HomePageBackground.png")', // Set your background image here
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+            }}>
                     <div className={"full-w align-center theme-text mb-1"}>
                         <h1>My account</h1>
                     </div>
