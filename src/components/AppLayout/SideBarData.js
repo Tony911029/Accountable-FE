@@ -12,24 +12,24 @@ export const SidebarData = [
         isMain: true
     },
     {
-        title: 'Assignment',
-        path: '/assignment',
+        title: 'Learning Center',
+        path: '/learning-center',
         icon: <AiIcons.AiFillHome />,
         cName: 'nav-text',
         isMain: true
     },
-    {
-        title: 'Progress',
-        path: '/progress',
-        icon: <AiIcons.AiFillHome />,
-        cName: 'nav-text',
-        isMain: true
-    },
-    {
-        title: 'Leaderboard',
-        path: '/leaderboard',
-        icon: <AiIcons.AiFillHome />,
-        cName: 'nav-text',
-        isMain: false
-    }
+    // {
+    //     title: 'Progress',
+    //     path: '/progress',
+    //     icon: <AiIcons.AiFillHome />,
+    //     cName: 'nav-text',
+    //     isMain: true
+    // },
+    // {
+    //     title: 'Leaderboard',
+    //     path: '/leaderboard',
+    //     icon: <AiIcons.AiFillHome />,
+    //     cName: 'nav-text',
+    //     isMain: false
+    // }
 ]
