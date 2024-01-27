@@ -5,11 +5,19 @@ import "./AppHeader.css";
 import { Button } from "@material-ui/core";
 import { CgProfile } from "react-icons/cg";
 import { makeStyles } from "tss-react/mui";
-import { LOGIN, ROOT, PROFILE } from "../../navigation/CONSTANTS";
-import { useAuth } from "../../navigation/Auth/ProvideAuth";
+import {LOGIN, ROOT, PROFILE, LEARNING_CENTER} from "src/navigation/CONSTANTS";
+import { useAuth } from "src/navigation/Auth/ProvideAuth";
 import { MdLogout } from "react-icons/md";
+import { FaLongArrowAltLeft } from "react-icons/fa";
 
-function AppHeader() {
+function AppHeader(
+    {
+        showSubHeader = false,
+        subHeaderLabel = '',
+        isPracticing,
+        setIsPracticing
+    }
+) {
   let iconStyles = {
     backgroundColor: "FF9900",
     color: "#fff",
@@ -34,6 +42,8 @@ function AppHeader() {
     history.push(PROFILE);
   }
 
+  const isLearningPage = window.location.pathname.includes(LEARNING_CENTER);
+
   const useStyles = makeStyles()(() => ({
     customButton: {
       flexDirection: "row",
@@ -50,6 +60,25 @@ function AppHeader() {
       fontFamily: "Poppins, sans-serif !important",
       fontWeight: "700 !important",
     },
+    customBack:{
+      color: "#FF990026",
+      fontSize: "3rem",
+      "&:hover": {
+        cursor: "pointer"
+      },
+    },
+    exitButton:{
+      color: "#FF990026",
+      fontSize: "1rem",
+      "&:hover": {
+        cursor: "pointer"
+      },
+      width: "5.5rem",
+      border: " 4px solid #FF99004A",
+      borderRadius: "16px",
+      display: "flex",
+      justifyContent: "center"
+    }
   }));
 
   const { classes } = useStyles();
@@ -79,26 +108,49 @@ function AppHeader() {
     </ul>
   );
 
+  function handleBack() {
+    history.goBack();
+  }
+
   return (
-    <nav className="nav">
-      <div className="site-title">
-        <Link to={ROOT}>ACCOUNTABLE</Link>
-      </div>
-      <div className="header-tabs">
-        <ul>
-          {SidebarData.filter((item) => item.isMain).map((item, index) => {
-            return (
-              <li key={index} className={item.cName}>
-                <Link to={item.path}>
-                  <span>{item.title}</span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-        {user ? profileDropDown : loginButton}
-      </div>
-    </nav>
+      <>
+        <nav className="nav">
+          <div className="site-title">
+            <Link to={ROOT}>ACCOUNTABLE</Link>
+          </div>
+          <div className="header-tabs">
+            <ul>
+              {SidebarData.filter((item) => item.isMain).map((item, index) => {
+                return (
+                    <li key={index} className={item.cName}>
+                      <Link to={item.path}>
+                        <span>{item.title}</span>
+                      </Link>
+                    </li>
+                );
+              })}
+            </ul>
+            {user ? profileDropDown : loginButton}
+          </div>
+        </nav>
+        {showSubHeader &&
+          <nav className="nav sub-header">
+            <div className={"flex header-tabs gap1"}>
+              <FaLongArrowAltLeft
+                  className={classes.customBack}
+                  onClick={handleBack}
+              />
+              <div>
+                {subHeaderLabel}
+              </div>
+            </div>
+            {(isPracticing) &&
+              <div className={classes.exitButton}>
+                <Link to={LEARNING_CENTER}>Exit</Link>
+              </div>}
+          </nav>}
+
+      </>
   );
 }
 

@@ -1,4 +1,3 @@
-import {AppLayout} from "../../../components/AppLayout/AppLayout";
 import React, {useState} from "react";
 import "../Home.css"
 import {TextField} from "@mui/material";
