@@ -14,7 +14,7 @@ import {
     LEARNING_CENTER, DAILY_SPEAKING
 } from "../navigation/CONSTANTS";
 import LoginPageContainer from "../pages/Login/LoginPageContainer";
-import DailyGoalContainer from "../pages/DailyGoal/DailyGoalContainer";
+import DailyGoalContainer from "../pages/Assignment/DailyGoalContainer";
 import LeaderboardContainer from "../pages/Leaderboard/LeaderboardContainer";
 import ProgressContainer from "../pages/Progress/ProgressContainer";
 import SignUp from "../pages/Login/SignUp";
@@ -22,6 +22,7 @@ import ConfirmSignUp from "../pages/Login/ConfirmSignUp";
 import PrivateRoute from "./Auth/PrivateRoute";
 import {Profile} from "../pages/Login/Profile";
 import LearningCenterContainer from "src/pages/Home/LearningCenter";
+import DailySpeakingPage from "src/pages/Assignment/DailySpeakingPage";
 
 export const RouterConfig = () => {
     return (
@@ -35,7 +36,7 @@ export const RouterConfig = () => {
 
                     {/* List all private/auth routes here */}
                     <PrivateRoute exact path={LEARNING_CENTER} component={LearningCenterContainer}/>
-                    <PrivateRoute exact path={DAILY_SPEAKING} component={DailyGoalContainer}/>
+                    <PrivateRoute exact path={DAILY_SPEAKING} component={DailySpeakingPage}/>
 
 
                     <PrivateRoute exact path={PROGRESS} component={ProgressContainer}/>

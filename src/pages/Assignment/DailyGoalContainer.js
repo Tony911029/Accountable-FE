@@ -9,7 +9,7 @@ import {useAuth} from "src/navigation/Auth/ProvideAuth";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import {Button} from "@material-ui/core";
 import {FaCheckCircle} from "react-icons/fa";
-import {sampleQuestions} from "src/pages/DailyGoal/QuestionsSample";
+import {sampleQuestions} from "src/pages/Assignment/QuestionsSample";
 
 
 // TODO: might wanna try out Amazon service or some other solution for this
@@ -184,7 +184,7 @@ function DailyGoalContainer() {
     return (
         <AppLayout>
             <div className="assignment-container">
-                <div className="assignment-section1">
+                <div className="assignment-section">
                     <h1>Daily Assignment Zone </h1>
                     <div className="p1">
                         Let's practice English together!

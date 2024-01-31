@@ -24,7 +24,6 @@ const useStyles = makeStyles()(() => ({
 }));
 
 function MainButton({
-                        width,
                         isLoading,
                         style,
                         isSaved,
@@ -36,6 +35,7 @@ function MainButton({
                         id,
                         isLabelCapitalize = true,
                         ariaExpanded = false,
+                        className,
                         ...props
                     }) {
     const { classes } = useStyles();
@@ -46,11 +46,7 @@ function MainButton({
             id={id}
             onMouseDown={onMouseDown}
             disabled={disabled || isLoading}
-            className={
-                isLabelCapitalize
-                    ? classes.mainButton
-                    : `${classes.mainButton} noCapitalize`
-            }
+            className={`${className} ${isLabelCapitalize ? classes.mainButton : `${classes.mainButton} noCapitalize`}`}
             onClick={onClick ? onClick : () => {}}
             aria-expanded={ariaExpanded ? "true" : undefined}
             {...props}

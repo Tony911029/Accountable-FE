@@ -3,6 +3,11 @@ import {makeStyles} from "tss-react/mui";
 import {Link, useHistory} from "react-router-dom";
 import {LOGIN, ROOT} from "src/navigation/CONSTANTS";
 
+
+/**
+ * Card used in the learning center main page
+ *
+ * **/
 function LearningCard(
     {label, to, isActive}
 ) {
