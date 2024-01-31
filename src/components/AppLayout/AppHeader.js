@@ -113,7 +113,7 @@ function AppHeader(
   }
 
   return (
-      <>
+      <div className={"mb-30"}>
         <nav className="nav">
           <div className="site-title">
             <Link to={ROOT}>ACCOUNTABLE</Link>
@@ -149,8 +149,7 @@ function AppHeader(
                 <Link to={LEARNING_CENTER}>Exit</Link>
               </div>}
           </nav>}
-
-      </>
+      </div>
   );
 }
 

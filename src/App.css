@@ -19,12 +19,28 @@
     gap: 1rem;
 }
 
+.width-70{
+    width: 70%;
+}
+
+.view-50{
+    width: 50vw;
+}
+
+.width-80{
+    width: 80%;
+}
+
 
 .mt-5{
     margin-top: 5px;
 }
 .pl-65{
     padding-left: 65px;
+}
+
+.gap-3px{
+    grid-gap: 10px;
 }
 
 .theme-text{
@@ -59,3 +75,9 @@
     padding: 15% 0 20% 0 !important;
     text-align: center;
 }
+
+.answer-nav{
+    display: flex;
+    align-items: end;
+}
+

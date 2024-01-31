@@ -4,7 +4,7 @@ import MainButton from "../../components/MainButton";
 import {fetchQuestion, getCallTesting, submitQuestion} from "src/services/questionService"
 import {AppLayout} from "src/components/AppLayout/AppLayout";
 import {LearningCenterData} from "src/pages/Home/LearningCenterData";
-import LearningCard from "src/components/LearningCard";
+import LearningCard from "src/components/Cards/LearningCard";
 import Footer from "src/components/AppLayout/Footer";
 import "./Learning.css"
 
@@ -18,7 +18,7 @@ function LearningCenterContainer() {
     >
         <div>
             <Grid container className="assignment-container">
-                <div className="assignment-section1">
+                <div className="assignment-section">
                     <h1>Learning Center</h1>
                     <div className="p1">
                         Let's practice English together!

@@ -10,6 +10,7 @@ export const LEARNING_CENTER = "/learning-center"
 
 
 export const DAILY_SPEAKING = "/daily-speaking";
+export const DAILY_SPEAKING_DONE = "/daily-speaking/done";
 export const ASSIGNMENT = "/assignment";
 export const SPEAKING = "/assignment/speaking";
 export const READING = "/assignment/reading";
