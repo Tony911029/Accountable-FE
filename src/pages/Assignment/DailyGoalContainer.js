@@ -24,6 +24,10 @@ let timeLimit = 120; // maximum of 120 seconds
 let timeoutId;
 let maxAttempt = 3;
 
+
+/***
+ This component is currently not used
+ ***/
 function DailyGoalContainer() {
     //  Note: index 0 is empty, so index 1 is first attempt/index
     //         (0th attempt/index is added upon mic initialization)

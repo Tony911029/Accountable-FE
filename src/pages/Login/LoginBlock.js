@@ -2,9 +2,9 @@ import React, {useContext, useState} from "react";
 import "./Login.css"
 import {IconButton, InputAdornment, TextField} from "@mui/material";
 import MainButton from "../../components/MainButton";
-import {Link, Redirect, Route, useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {useAuth} from "../../navigation/Auth/ProvideAuth";
-import {ASSIGNMENT, ROOT, SIGNUP} from "../../navigation/CONSTANTS";
+import {LEARNING_CENTER, SIGNUP} from "../../navigation/CONSTANTS";
 import {Controller, useForm} from "react-hook-form";
 import {Visibility, VisibilityOff} from "@material-ui/icons";
 function LoginBlock() {
@@ -23,7 +23,7 @@ function LoginBlock() {
         const { username, password} = userData;
         try {
             await signIn(username, password)
-            history.push(ASSIGNMENT)
+            history.push(LEARNING_CENTER)
         } catch (err) {
             console.log(err.message)
             setSignInErr("Invalid credential")
@@ -82,7 +82,7 @@ function LoginBlock() {
                         )}
                     />
                     <Link>Forget Password?</Link>
-                    <MainButton type="submit" btnLabel={"Login"} isLoading={isLoading}/>
+                    <MainButton type="submit" btnLabel={"Login"} isLoading={isLoading} className={"login-button"}/>
                     <div className={"flex pl-65"}>
                         <div className={"mr-5"}>Don't have an account? </div><Link to={SIGNUP}>Sign up</Link>
                     </div>

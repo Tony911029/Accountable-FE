@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, TextField} from "@mui/material";
-import MainButton from "../../components/MainButton";
 import {fetchQuestion, getCallTesting, submitQuestion} from "src/services/questionService"
 import {AppLayout} from "src/components/AppLayout/AppLayout";
 import {LearningCenterData} from "src/pages/Home/LearningCenterData";
@@ -16,8 +15,9 @@ function LearningCenterContainer() {
         subHeaderLabel={"Back to Previous Page"}
         isPracticing={true}
     >
-        <div>
-            <Grid container className="assignment-container">
+        {/*TODO: find a better background, the tiny square is not dense enough for some pages*/}
+        <div className={"cool-bg"}>
+            <Grid container className="assignment-container cool-bg">
                 <div className="assignment-section">
                     <h1>Learning Center</h1>
                     <div className="p1">
