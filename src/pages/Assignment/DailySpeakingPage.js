@@ -12,8 +12,6 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import {countWords, shuffle} from "src/pages/Assignment/utils";
 import MainButton from "src/components/MainButton";
-import {useHistory} from "react-router-dom";
-import {DAILY_SPEAKING, DAILY_SPEAKING_DONE} from "src/navigation/CONSTANTS";
 import AssignmentDone from "src/pages/Assignment/AssignmentDone";
 
 
@@ -135,7 +133,6 @@ function DailySpeakingPage() {
         );
     };
 
-    console.log("index", index)
     return (
         <AppLayout>
             {!isSubmitted ?

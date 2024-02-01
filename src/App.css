@@ -27,14 +27,6 @@
     width: 50vw;
 }
 
-.width-80{
-    width: 80%;
-}
-
-
-.mt-5{
-    margin-top: 5px;
-}
 .pl-65{
     padding-left: 65px;
 }
@@ -43,25 +35,19 @@
     grid-gap: 10px;
 }
 
+.gap-1{
+    gap: 1rem;
+}
+
 .theme-text{
     color: #FF9900;
 }
 
-.spc-btwn{
-    justify-content: space-between;
-}
-
 .cool-bg{
     background-image: url("./assets/images/HomePageBackground.png");
+    background-size: cover;
 }
 
-.main-text{
-    display: flex;
-    justify-content: center;
-    font-size: 30px;
-    font-weight: 700;
-    color: #ff9900;
-}
 
 .intro{
     font-size: 28px;
@@ -76,8 +62,13 @@
     text-align: center;
 }
 
-.answer-nav{
-    display: flex;
-    align-items: end;
+.good{
+    color: #1bc25b !important;
 }
+
+.bad{
+    color: red !important;
+    font-weight: bold;
+}
+
 

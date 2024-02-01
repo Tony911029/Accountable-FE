@@ -1,6 +1,15 @@
 import React, {useContext, useState} from "react";
-import {signUp} from "../../navigation/Auth/UserPool";
-import {IconButton, InputAdornment, InputLabel, OutlinedInput, TextField} from "@mui/material";
+import {signUp} from "src/navigation/Auth/UserPool";
+import {
+    Checkbox,
+    FormControlLabel,
+    FormGroup,
+    IconButton,
+    InputAdornment,
+    InputLabel,
+    OutlinedInput,
+    TextField
+} from "@mui/material";
 import {Link, useHistory} from "react-router-dom";
 import MainButton from "../../components/MainButton";
 import {useForm, Controller, set} from 'react-hook-form';
@@ -10,11 +19,10 @@ import { BsCheck2 } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import {List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import {passWordCondData} from "./PassWordCondData";
-import {CONFIRM_SIGNUP, LOGIN} from "../../navigation/CONSTANTS";
-import {useAuth} from "../../navigation/Auth/ProvideAuth";
 import ConfirmSignUp from "./ConfirmSignUp";
-import {AppLayout} from "../../components/AppLayout/AppLayout";
+import {AppLayout} from "src/components/AppLayout/AppLayout";
 import Footer from "../../components/AppLayout/Footer";
+import * as AiIcons from "react-icons/ai";
 
 
 function CheckIcon() {
@@ -25,6 +33,7 @@ function ClearIcon() {
     return <RxCross2/>;
 }
 
+const role = {STUDENT: "Student", TEACHER: "Teacher"}
 function SignUp() {
     const { control, handleSubmit, setError, formState: { errors }, watch} = useForm();
     const [requirements, setRequirements] = useState([]);
@@ -34,6 +43,7 @@ function SignUp() {
     const [isSignUp, setIsSignUp] = useState(false)
     const passwordValue = watch('password', '');
     const [isLoading, setIsLoading] = useState(false)
+    const [selectedRole, setSelectedRole] = useState(role.STUDENT)
 
     const history = useHistory();
 
@@ -80,6 +90,17 @@ function SignUp() {
             setIsLoading(false)
             console.log(err)
         }
+    }
+
+    console.log("role", selectedRole)
+
+    const RoleCard = ({name}) => {
+        return(
+            <div className={`roleTab ${selectedRole === name ? "roleTab-selected" : ""}`}
+                 onClick={()=>setSelectedRole(name)}
+            >
+                {name}
+            </div>)
     }
 
     return (
@@ -197,7 +218,19 @@ function SignUp() {
                                         }
                                     </List>
                                 </div>
-                                <MainButton type="submit" btnLabel="Register" isLoading={isLoading}/>
+                                <div style={{fontWeight:800, fontSize:"1.5rem"}}>Register as:</div>
+                                <div className={"flex role-select-container mb-1"}>
+                                    <RoleCard name={role.STUDENT}/>
+                                    <RoleCard name={role.TEACHER}/>
+                                </div>
+                                <FormControlLabel
+                                    className={"consent-checkbox mb-1"}
+                                    required
+                                    variant="label-hidden"
+                                    control={<Checkbox style={{color: "#FF9900",}}/>}
+                                    label= "By clicking this checkbox, I agree to consent to Accountable using my personal data to improve the platform."
+                                />
+                                <MainButton type="submit" btnLabel="Register" isLoading={isLoading} className={"login-button"}/>
                                 {submitErr ? <div className={"bad"}>{submitErr}</div> : <></>}
                             </form>
                         </div>
