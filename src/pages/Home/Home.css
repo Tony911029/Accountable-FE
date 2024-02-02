@@ -137,3 +137,84 @@
 .mb-1 {
   margin-bottom: 1rem;
 }
+
+/* For mobile devices */
+@media screen and (max-width: 768px) {
+  .home-section1 h1 {
+    font-size: 28px; /* Decrease font size for headings */
+    margin: 50px 30px 20px;
+  }
+
+  .home-section1 {
+    height: auto; /* Remove fixed height */
+  }
+
+  .home-section2 {
+    padding: 40px 20px; /* Decrease padding for smaller screens */
+    margin-top: 70px;
+  }
+
+  .home-section3 {
+    display: grid;
+    padding: 30px 30px;
+    color: #563400;
+  }
+
+  .home-section4 {
+    margin-top: 19em;
+  }
+
+  .home-p1 {
+    font-size: 20px; /* Decrease font size for paragraph text */
+    line-height: 36px; /* Increase line height for better readability */
+    width: 82%; /* Adjust width to fit smaller screens */
+    margin-bottom: 50px; /* Decrease margin for smaller screens */
+    color: #563400;
+  }
+
+  .home-p2 {
+    font-size: 18px; /* Decrease font size for paragraph text */
+    line-height: 30px; /* Increase line height for better readability */
+    width: 100%; /* Adjust width to fit smaller screens */
+    margin-bottom: 30px; /* Decrease margin for smaller screens */
+    color: #563400;
+  }
+
+  .three-icons {
+    display: grid;
+  }
+
+  .about-us > div {
+    width: 100%; /* Adjust width to fit smaller screens */
+    margin-bottom: 30px; /* Decrease margin for smaller screens */
+  }
+
+  .contact-form-container {
+    width: 100%; /* Adjust width to fit smaller screens */
+    height: auto; /* Remove fixed height */
+    padding: 20px; /* Decrease padding for smaller screens */
+    margin-top: 20px; /* Decrease margin for smaller screens */
+  }
+
+  .contact-form-container .form > div {
+    margin-top: 10px; /* Decrease margin for smaller screens */
+    margin-bottom: 10px; /* Decrease margin for smaller screens */
+  }
+
+  .mb-30 {
+    margin-bottom: 30px; /* Decrease margin for smaller screens */
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff9900;
+  }
+
+  .ft-30 {
+    font-size: 22px;
+    font-weight: bold;
+  }
+
+  .Get-Start-Button {
+    padding: 1.2rem!important;
+    font-size: 1.2rem!important;
+  }
+}
