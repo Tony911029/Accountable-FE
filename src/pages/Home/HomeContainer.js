@@ -37,6 +37,7 @@ export function HomeContainer() {
                           <MainButton
                               btnLabel="Get Started"
                               onClick={handleGetStarted}
+                              className = "Get-Start-Button"
                           />
                       </div>
 

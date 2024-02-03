@@ -6,7 +6,7 @@ import {AppLayout} from "src/components/AppLayout/AppLayout";
 import Footer from "../../components/AppLayout/Footer";
 import {useAuth} from "src/navigation/Auth/ProvideAuth";
 import {sampleQuestions} from "src/pages/Assignment/QuestionsSample";
-import ProgressBar from "@ramonak/react-progress-bar";
+//import ProgressBar from "@ramonak/react-progress-bar";
 import AssignmentContentCard from "src/components/Cards/AssignmentContentCard";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";

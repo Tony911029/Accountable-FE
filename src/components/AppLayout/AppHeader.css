@@ -1,140 +1,154 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.nav{
-    background-color: #fff;
-    color: #000;
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    gap: 3rem;
-    padding: 0 1rem;
-    height: 3.5rem;
-    font-weight: 700;
-    margin-top: 1rem;
+.nav {
+  background-color: #fff;
+  color: #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 3rem;
+  padding: 0 1rem;
+  height: 3.5rem;
+  font-weight: 700;
+  margin-top: 1rem;
 }
 
-.nav ul{
-    padding:0;
-    margin: 0 1rem 0 0;
-    list-style: none;
-    gap: 1rem;
-    text-decoration: none;
-    display: flex;
+.nav ul {
+  padding: 0;
+  margin: 0 1rem 0 0;
+  list-style: none;
+  gap: 1rem;
+  text-decoration: none;
+  display: flex;
 }
 
 .nav a {
-    text-decoration: none;
-    color: inherit;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding: .25rem;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
 }
 
-.site-title{
-    font-size: 2rem;
-    color: #FF9900;
+.site-title {
+  font-size: 2rem;
+  color: #ff9900;
 }
 
-.nav li:hover{
-    color: #777
+.nav li:hover {
+  color: #777;
 }
 
-.nav li:active{
-    color: #555
+.nav li:active {
+  color: #555;
 }
 
-.header-tabs{
-    align-items: center;
-    display:flex
+.header-tabs {
+  align-items: center;
+  display: flex;
 }
 
-.sub-header{
-    padding: 1% 5%;
+.sub-header {
+  padding: 1% 5%;
 }
 
-.sub .back{
-    align-items: center;
-    gap: 1rem
+.sub .back {
+  align-items: center;
+  gap: 1rem;
 }
 
-.nav-text.home{
-    color: #FF9900;
+.nav-text.home {
+  color: #ff9900;
 }
 
-.footer{
-    margin: 30px 0 40px 0;
-    height: 10%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.footer {
+  margin: 30px 0 40px 0;
+  height: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.footerText{
-    font-size: 40px;
-    font-weight: 700;
-    color: #FF9900;
+.footerText {
+  font-size: 40px;
+  font-weight: 700;
+  color: #ff9900;
 }
 
-.cpy-right{
-    color:#563400;
-    font-weight: 600;
+.cpy-right {
+  color: #563400;
+  font-weight: 600;
 }
 
-.hl{
-    border: 1px solid #FFF7EA;
-    margin-bottom: 2.5%;
+.hl {
+  border: 1px solid #fff7ea;
+  margin-bottom: 2.5%;
 }
 
-.app-layout{
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-
-.header-myAccount{
-    display: flex;
-    flex-direction: column;
-    /*display: none;*/
+.header-myAccount {
+  display: flex;
+  flex-direction: column;
+  /*display: none;*/
 }
 
-.dropDownProfile{
-    display: flex;
-    flex-direction: column;
-    border-radius: 5px;
-    width: 11.2rem;
-    padding: 12px 20px 12px 10px !important;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
-    gap: 2rem !important;
-    align-self: baseline;
-    z-index: 2; /* Higher z-index value */
+.dropDownProfile {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  width: 11.2rem;
+  padding: 12px 20px 12px 10px !important;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+  gap: 2rem !important;
+  align-self: baseline;
+  z-index: 2; /* Higher z-index value */
 }
 
-.dropDownProfile:hover{
-    box-shadow: 0 10px 30px 0 #FF99004A !important;
-    cursor: pointer;
+.dropDownProfile:hover {
+  box-shadow: 0 10px 30px 0 #ff99004a !important;
+  cursor: pointer;
 }
 
-.dropDownProfile ul{
-    display: flex;
-    flex-direction: column;
-    gap: 2rem
+.dropDownProfile ul {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
-.dropDownProfile li{
-    display: flex;
-    align-items: center;
-    height: 2rem;
-    gap: 1rem
+.dropDownProfile li {
+  display: flex;
+  align-items: center;
+  height: 2rem;
+  gap: 1rem;
 }
 
-.dropDownProfile li:hover{
-
+.dropDownProfile li:hover {
 }
 
-.hideDropDown{
-    display: none !important;
+.hideDropDown {
+  display: none !important;
+}
+
+@media screen and (max-width: 768px) {
+  .site-title {
+    font-size: 2.5vh;
+    color: #ff9900;
+    font-weight: bold;
+  }
+
+  .nav-text {
+    display: none;
+  }
+
+  .nav {
+    gap: 0.8vh;
+  }
 }
