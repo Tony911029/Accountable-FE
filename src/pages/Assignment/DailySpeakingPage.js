@@ -6,13 +6,13 @@ import {AppLayout} from "src/components/AppLayout/AppLayout";
 import Footer from "../../components/AppLayout/Footer";
 import {useAuth} from "src/navigation/Auth/ProvideAuth";
 import {sampleQuestions} from "src/pages/Assignment/QuestionsSample";
-//import ProgressBar from "@ramonak/react-progress-bar";
 import AssignmentContentCard from "src/components/Cards/AssignmentContentCard";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import {countWords, shuffle} from "src/pages/Assignment/utils";
 import MainButton from "src/components/MainButton";
 import AssignmentDone from "src/pages/Assignment/AssignmentDone";
+import ProgressBar from "@ramonak/react-progress-bar";
 
 
 // TODO: might wanna try out Amazon service or some other solution for this
