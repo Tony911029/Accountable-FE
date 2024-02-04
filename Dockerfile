@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:18-alpine as builder
 
 # working directory
 WORKDIR /app
@@ -14,17 +14,17 @@ RUN yarn install
 COPY . .
 
 # RUN yarn build (Do not uncomment next line)
-# RUN yarn build
+RUN yarn run build
 
 
 FROM nginx:1.22-alpine
 
 ## Setup Nginx
 RUN rm /etc/nginx/conf.d/default.conf
-COPY src/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY src/nginxginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy the built React app from the previous stage to the Nginx public directory
-COPY --from=0  app/dist/ /usr/share/nginx/html/
+COPY --from=builder  app/dist/ /usr/share/nginx/html/
 
 # Expose port 80 to docker host
 EXPOSE 80
