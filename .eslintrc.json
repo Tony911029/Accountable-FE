@@ -14,8 +14,14 @@
         "react/jsx-uses-react": "off",
         "react/prop-types": 0,
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-        "import/prefer-default-export": [
-            "warn", { "target": "any" }
-        ]
+        "import/prefer-default-export": ["warn", { "target": "any" }],
+        "max-len": "off"
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        }
     }
 }
