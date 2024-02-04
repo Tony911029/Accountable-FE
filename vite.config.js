@@ -78,5 +78,15 @@ export default defineConfig(({command}) => ({
         port: 3000,
         host: true,
     },
+    build: {
+        chunkSizeWarningLimit: 100,
+        rollupOptions: {
+            onwarn(warning, warn) {
+                if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
+                    return
+                }
+                warn(warning)
+            }}
+    }
 }))
 
