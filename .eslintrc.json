@@ -11,6 +11,11 @@
     "rules": {
         "no-unused-vars": ["error", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],
         "react/react-in-jsx-scope": "off",
-        "react/jsx-uses-react": "off"
+        "react/jsx-uses-react": "off",
+        "react/prop-types": 0,
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "import/prefer-default-export": [
+            "warn", { "target": "any" }
+        ]
     }
 }
