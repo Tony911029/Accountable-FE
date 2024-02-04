@@ -4,7 +4,7 @@ import {IconButton, InputAdornment, TextField} from "@mui/material";
 import MainButton from "../../components/MainButton";
 import {Link, useHistory} from "react-router-dom";
 import {useAuth} from "src/navigation/Auth/ProvideAuth";
-import {LEARNING_CENTER, SIGNUP} from "src/navigation/CONSTANTS";
+import {LEARNING_CENTER, ROOT, SIGNUP} from "src/navigation/CONSTANTS";
 import {Controller, useForm} from "react-hook-form";
 import {Visibility, VisibilityOff} from "@material-ui/icons";
 function LoginBlock() {
@@ -81,7 +81,7 @@ function LoginBlock() {
                             />
                         )}
                     />
-                    <Link>Forget Password?</Link>
+                    <Link to={ROOT}>Forget Password?</Link>
                     <MainButton type="submit" btnLabel={"Login"} isLoading={isLoading} className={"login-button"}/>
                     <div className={"flex pl-65"}>
                         <div className={"mr-5"}>Don't have an account? </div><Link to={SIGNUP}>Sign up</Link>

@@ -1,4 +1,4 @@
-import { createMuiTheme } from "@material-ui/core";
+import { createTheme } from "@material-ui/core";
 // import { purple, green, orange, deepOrange } from "@material-ui/core/colors";
 
 // Global styles can be moved to a separate file for ease of maintenance.
@@ -9,7 +9,7 @@ const global = {
   mygrey: "rgba(0, 0, 0, 0.5)",
 };
 
-export const dark = () => (createMuiTheme({
+export const dark = () => (createTheme({
   palette: {
     type: 'dark',
     primary: {
@@ -28,7 +28,7 @@ export const dark = () => (createMuiTheme({
 //   global
 }))
 
-export const light = ()=> (createMuiTheme({
+export const light = ()=> (createTheme({
   palette: {
     type: 'light',
     primary: {
