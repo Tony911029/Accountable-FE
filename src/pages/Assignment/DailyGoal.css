@@ -15,6 +15,9 @@
     padding: 0 10% 0 10%
 }
 
+
+/*TODO: I think we should move assignment-section to more general area
+   as all the intro text for a lot of pages will be using this, like learning center*/
 .assignment-section h1{
     font-size: 35px;
     font-weight: 700;

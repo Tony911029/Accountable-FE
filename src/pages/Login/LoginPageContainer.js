@@ -5,6 +5,7 @@ import "./Login.css"
 import Footer from "../../components/AppLayout/Footer";
 import {Redirect, useLocation} from "react-router-dom";
 import {useAuth} from "src/navigation/Auth/ProvideAuth";
+import LoadingPage from "src/pages/Login/LoadingPage";
 
 export default function LoginPageContainer() {
     const { user, isLoading} = useAuth()
@@ -23,6 +24,6 @@ export default function LoginPageContainer() {
             </div>
             <Footer/>
         </AppLayout>
-        :<LoadingPage/>
+        : <LoadingPage/>
     )
 }

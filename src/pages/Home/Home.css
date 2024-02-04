@@ -3,8 +3,8 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-image: url("../../assets/images/HomePageBackground.png");
-  background-size: cover;
+  /*background-image: url("../../assets/images/HomePageBackground.png");*/
+  /*background-size: cover;*/
 }
 
 .home-section1 h1 {
@@ -48,16 +48,6 @@
   height: 150px;
   display: flex;
   background: #fff7ea;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-}
-
-.section5 {
-  height: 150px;
-  display: flex;
-  background: #fff;
   text-align: center;
   justify-content: center;
   align-items: center;

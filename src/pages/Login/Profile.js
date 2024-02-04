@@ -5,7 +5,7 @@ import {CgProfile} from "react-icons/cg";
 import {ProfileData} from "./ProfileData";
 import {useAuth} from "src/navigation/Auth/ProvideAuth";
 
-export function Profile() {
+export default function Profile() {
 
     const {user} = useAuth()
     function handleUpload() {

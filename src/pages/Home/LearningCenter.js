@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
-import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, TextField} from "@mui/material";
+import {Grid} from "@mui/material";
 import {fetchQuestion, getCallTesting, submitQuestion} from "src/services/questionService"
 import {AppLayout} from "src/components/AppLayout/AppLayout";
 import {LearningCenterData} from "src/pages/Home/LearningCenterData";
 import LearningCard from "src/components/Cards/LearningCard";
 import Footer from "src/components/AppLayout/Footer";
 import "./Learning.css"
+import "../Assignment/DailyGoal.css"
 
 function LearningCenterContainer() {
 
@@ -34,6 +34,7 @@ function LearningCenterContainer() {
                     {LearningCenterData.map((item, index) => {
                         return (
                             <Grid
+                                key = {index}
                                 item
                                 xs={4} sm={8} md={6}>
                                 <LearningCard

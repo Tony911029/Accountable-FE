@@ -7,9 +7,9 @@ import {
     InputAdornment,
     TextField
 } from "@mui/material";
-import {Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import MainButton from "../../components/MainButton";
-import {useForm, Controller, set} from 'react-hook-form';
+import {useForm, Controller} from 'react-hook-form';
 import "./Login.css"
 import {Visibility, VisibilityOff} from "@material-ui/icons";
 import { BsCheck2 } from "react-icons/bs";
@@ -19,7 +19,6 @@ import {passWordCondData} from "./PassWordCondData";
 import ConfirmSignUp from "./ConfirmSignUp";
 import {AppLayout} from "src/components/AppLayout/AppLayout";
 import Footer from "../../components/AppLayout/Footer";
-import * as AiIcons from "react-icons/ai";
 
 
 function CheckIcon() {

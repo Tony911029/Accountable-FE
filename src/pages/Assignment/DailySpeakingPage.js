@@ -1,5 +1,4 @@
-import React, {memo, useEffect, useMemo, useState} from "react";
-import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField} from "@mui/material";
+import React, {useEffect, useMemo, useState} from "react";
 import "./DailyGoal.css"
 import {fetchQuestion, getCallTesting, submitQuestion} from "src/services/questionService"
 import {AppLayout} from "src/components/AppLayout/AppLayout";
