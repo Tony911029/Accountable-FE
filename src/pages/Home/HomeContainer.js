@@ -19,7 +19,7 @@ export function HomeContainer() {
     let history = useHistory();
     const handleGetStarted = () => {
         history.push(LEARNING_CENTER)
-    }
+         }
 
     return (
       <AppLayout>
