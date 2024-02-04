@@ -21,7 +21,7 @@ FROM nginx:1.22-alpine
 
 ## Setup Nginx
 RUN rm /etc/nginx/conf.d/default.conf
-COPY src/nginxginx.conf /etc/nginx/conf.d/default.conf
+COPY src/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy the built React app from the previous stage to the Nginx public directory
 COPY --from=builder  app/dist/ /usr/share/nginx/html/
