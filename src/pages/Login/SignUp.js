@@ -1,13 +1,10 @@
-import React, {useContext, useState} from "react";
+import React, {useState} from "react";
 import {signUp} from "src/navigation/Auth/UserPool";
 import {
     Checkbox,
     FormControlLabel,
-    FormGroup,
     IconButton,
     InputAdornment,
-    InputLabel,
-    OutlinedInput,
     TextField
 } from "@mui/material";
 import {Link, useHistory} from "react-router-dom";

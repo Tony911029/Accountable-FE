@@ -1,5 +1,5 @@
 import React from "react";
-import {AppLayout} from "../../components/AppLayout/AppLayout";
+import {AppLayout} from "src/components/AppLayout/AppLayout";
  function ProgressContainer() {
     return (
         <AppLayout>
