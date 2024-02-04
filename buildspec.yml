@@ -5,6 +5,11 @@ phases:
     commands:
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+
+      # inject env file for build stage
+      - echo "VITE_USER_POOL_ID=$VITE_USER_POOL_ID" > .env
+      - echo "VITE_CLIENT_ID=$VITE_CLIENT_ID" >> .env
+
       # Use 7 characters of commit hash as image tags
       - IMAGE_TAG=${COMMIT_HASH}
       - REPO_URL=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
@@ -23,4 +28,4 @@ phases:
 
 artifacts:
   files:
-    - '**/*'
+    - Dockerrun.aws.json
