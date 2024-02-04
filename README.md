@@ -28,20 +28,23 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ## AWS
 The app is deployed to aws ec2 instance via elastic beanstalk and we are using nginx as our server
 
-### Architecture
+# Architecture
 
-#### CodePipeline:
-##### Source: V2 GitHub
-##### Build: CodeBuild
+## CodePipeline:
+
+### Source: V2 GitHub  (org connection)
+### Build: CodeBuild
   - Uses buildspec.yml
-    1. login to aws using cli tool to for ECR
+    1. login to aws using cli tool for ECR
     2. we use first 7 characters of commit hash as our tag
-    3. Tag the image we just build with "latest" too for Dockerrun.aws.json
-    4. Push the image to ECR for beanstalk
+    3. Docker build image
+    4. Tag the image we just built with "latest" too for Dockerrun.aws.json
+    5. Push the image to ECR for beanstalk
+    6. Set artifact as Dockerrun.aws.json
 
-##### Deploy: Elastic Beanstalk
-  - Retrieve the artifacts (build file)
-  - Runs Dockerrun.aws.json file to know which private registry to pull image from (security is done via IAM)
+### Deploy: Elastic Beanstalk
+  - Retrieve the artifacts: Dockerrun.aws.json
+  - Runs Dockerrun.aws.json file to tell EBS which ECR to pull image from (security is done via IAM)
   - Run docker container
 
 ### just some side nodes:
@@ -49,6 +52,6 @@ The app is deployed to aws ec2 instance via elastic beanstalk and we are using n
   - Potentially: log file to S3 bucket as well (future)
   - In CodeBuild, double check where the artifact are sending to (should be in the bucket codepipeline created)
   - Maybe s3 bucket as well (for storing artifacts?)
-  - Remember to add SLL certificate (can be obtained from certificate manager) and add listener (port 443)
+  - Remember to add SLL certificate (can be obtained from certificate manager) and add listener (port 443) in EBS config
   - Remember to use Route53 to route HTTP(S) to correct server
-  - EC2 Security Group: Inbound traffic: 22 (SSH), 80 (TCP) and 3000 (don't thin is necessary)
+  - EC2 Security Group: Inbound traffic: 22 (SSH), 80 (TCP) and 3000 (don't think is necessary?)

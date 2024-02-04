@@ -1,13 +1,10 @@
 import React from "react"
 import { useState } from "react"
-import {confirmSignUp} from "../../navigation/Auth/UserPool";
-import {AppLayout} from "../../components/AppLayout/AppLayout";
-import Footer from "../../components/AppLayout/Footer";
-import {TextField} from "@mui/material";
+import {confirmSignUp} from "src/navigation/Auth/UserPool";
 import MainButton from "../../components/MainButton";
 import ReactCodeInput from "react-code-input";
 import { MdEmail } from "react-icons/md";
-import {useAuth} from "../../navigation/Auth/ProvideAuth";
+import {useAuth} from "src/navigation/Auth/ProvideAuth";
 import SuccessfulConfirmation from "../../navigation/Auth/SuccessfulConfirmation";
 
 // TODO: Figure out how to resend a code,

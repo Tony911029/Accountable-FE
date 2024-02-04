@@ -1,10 +1,10 @@
-import React, {useContext, useState} from "react";
+import React, {useState} from "react";
 import "./Login.css"
 import {IconButton, InputAdornment, TextField} from "@mui/material";
 import MainButton from "../../components/MainButton";
 import {Link, useHistory} from "react-router-dom";
-import {useAuth} from "../../navigation/Auth/ProvideAuth";
-import {LEARNING_CENTER, SIGNUP} from "../../navigation/CONSTANTS";
+import {useAuth} from "src/navigation/Auth/ProvideAuth";
+import {LEARNING_CENTER, SIGNUP} from "src/navigation/CONSTANTS";
 import {Controller, useForm} from "react-hook-form";
 import {Visibility, VisibilityOff} from "@material-ui/icons";
 function LoginBlock() {

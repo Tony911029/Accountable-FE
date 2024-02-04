@@ -1,5 +1,5 @@
 import React from "react";
-import {AppLayout} from "../../components/AppLayout/AppLayout";
+import {AppLayout} from "src/components/AppLayout/AppLayout";
 import Footer from "../../components/AppLayout/Footer";
 import {CgProfile} from "react-icons/cg";
 import {ProfileData} from "./ProfileData";
