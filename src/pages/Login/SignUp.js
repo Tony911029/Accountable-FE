@@ -30,6 +30,17 @@ function ClearIcon() {
   return <RxCross2 />;
 }
 
+function RoleCard({ name, selectedRole, setSelectedRole }) {
+  return (
+    <div
+      className={`roleTab ${selectedRole === name ? 'roleTab-selected' : ''}`}
+      onClick={() => setSelectedRole(name)}
+    >
+      {name}
+    </div>
+  );
+}
+
 const role = { STUDENT: 'Student', TEACHER: 'Teacher' };
 function SignUp() {
   const {
@@ -95,156 +106,155 @@ function SignUp() {
 
   console.log('role', selectedRole);
 
-  function RoleCard({ name }) {
-    return (
-      <div
-        className={`roleTab ${selectedRole === name ? 'roleTab-selected' : ''}`}
-        onClick={() => setSelectedRole(name)}
-      >
-        {name}
-      </div>
-    );
-  }
-
   return (
     <AppLayout>
       {
-                isSignUp ? <ConfirmSignUp /> : (
-                  <div className="login-container">
-                    <div className="colored-border">
-                      <h1>Register</h1>
-                      <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
-                        <Controller
-                          name="userName"
-                          control={control}
-                          defaultValue=""
-                          rules={{ required: '* User name is required' }}
-                          render={({ field }) => (
-                            <TextField
-                              label="User name"
-                              type="text"
-                              {...field}
-                              error={!!errors.userName}
-                              helperText={errors.userName?.message}
-                            />
-                          )}
-                        />
-                        <Controller
-                          name="email"
-                          control={control}
-                          defaultValue=""
-                          rules={{
-                            required: '* Email is required',
-                            validate: isValidEmail,
-                          }}
-                          render={({ field }) => (
-                            <TextField
-                              label="Email"
-                              type="text"
-                              {...field}
-                              error={!!errors.email}
-                              helperText={errors.email?.message}
-                            />
-                          )}
-                        />
-                        <Controller
-                          name="password"
-                          control={control}
-                          defaultValue=""
-                          rules={{ required: '* Password is required' }}
-                          render={({ field }) => (
-                            <TextField
-                              label="Password"
-                              variant="outlined"
-                              type={showPassword ? 'text' : 'password'}
-                              InputProps={{
-                                endAdornment: (
-                                  <InputAdornment position="end">
-                                    <IconButton
-                                      aria-label="toggle password visibility"
-                                      onClick={handleClickShowPassword}
-                                      onMouseDown={handleMouseDownPassword}
-                                    >
-                                      {showPassword ? <Visibility /> : <VisibilityOff />}
-                                    </IconButton>
-                                  </InputAdornment>
-                                ),
-                              }}
-                              {...field}
-                              error={!!errors.password}
-                              helperText={errors.password?.message}
-                              onChange={(e) => {
-                                field.onChange(e); // This is handled by React Hook Form
-                                verifyInput(e.target.value); // Pass the current input value to your verifyInput function
-                              }}
-                            />
-                          )}
-                        />
-                        <Controller
-                          name="confirmPassword"
-                          control={control}
-                          defaultValue=""
-                          rules={{
-                            required: '* Confirm password is required',
-                            validate: isValidConfirmPassword,
-                          }}
-                          render={({ field }) => (
-                            <TextField
-                              label="Confirm password"
-                              type={showConfirmPassword ? 'text' : 'password'}
-                              {...field}
-                              InputProps={{
-                                endAdornment: (
-                                  <InputAdornment position="end">
-                                    <IconButton
-                                      aria-label="toggle password visibility"
-                                      onClick={handleClickShowConfirmPassword}
-                                      onMouseDown={handleMouseDownPassword}
-                                    >
-                                      {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
-                                    </IconButton>
-                                  </InputAdornment>
-                                ),
-                              }}
-                              error={!!errors.confirmPassword}
-                              helperText={errors.confirmPassword?.message}
-                            />
-                          )}
-                        />
-                        <div>
-                          <List>
-                            {
-                                            passWordCondData.map((item, index) => {
-                                              const isGood = requirements[index] ? 'good' : 'bad';
-                                              return (
-                                                <ListItem className={isGood} key={index}>
-                                                  <ListItemIcon className={isGood}>{requirements[index] ? <CheckIcon /> : <ClearIcon />}</ListItemIcon>
-                                                  <ListItemText primary={item.description} className={isGood} />
-                                                </ListItem>
-                                              );
-                                            })
-                                        }
-                          </List>
-                        </div>
-                        <div style={{ fontWeight: 800, fontSize: '1.5rem' }}>Register as:</div>
-                        <div className="flex role-select-container mb-1">
-                          <RoleCard name={role.STUDENT} />
-                          <RoleCard name={role.TEACHER} />
-                        </div>
-                        <FormControlLabel
-                          className="consent-checkbox mb-1"
-                          required
-                          variant="label-hidden"
-                          control={<Checkbox style={{ color: '#FF9900' }} />}
-                          label="By clicking this checkbox, I agree to consent to Accountable using my personal data to improve the platform."
-                        />
-                        <MainButton type="submit" btnLabel="Register" isLoading={isLoading} className="login-button" />
-                        {submitErr ? <div className="bad">{submitErr}</div> : <></>}
-                      </form>
-                    </div>
-                  </div>
-                )
-            }
+        isSignUp ? <ConfirmSignUp /> : (
+          <div className="login-container">
+            <div className="colored-border">
+              <h1>Register</h1>
+              <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+                <Controller
+                  name="userName"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: '* User name is required' }}
+                  render={({ field }) => (
+                    <TextField
+                      label="User name"
+                      type="text"
+                      {...field}
+                      error={!!errors.userName}
+                      helperText={errors.userName?.message}
+                    />
+                  )}
+                />
+                <Controller
+                  name="email"
+                  control={control}
+                  defaultValue=""
+                  rules={{
+                    required: '* Email is required',
+                    validate: isValidEmail,
+                  }}
+                  render={({ field }) => (
+                    <TextField
+                      label="Email"
+                      type="text"
+                      {...field}
+                      error={!!errors.email}
+                      helperText={errors.email?.message}
+                    />
+                  )}
+                />
+                <Controller
+                  name="password"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: '* Password is required' }}
+                  render={({ field }) => (
+                    <TextField
+                      label="Password"
+                      variant="outlined"
+                      type={showPassword ? 'text' : 'password'}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                            >
+                              {showPassword ? <Visibility /> : <VisibilityOff />}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                      {...field}
+                      error={!!errors.password}
+                      helperText={errors.password?.message}
+                      onChange={(e) => {
+                        field.onChange(e); // This is handled by React Hook Form
+                        verifyInput(e.target.value); // Pass the current input value to your verifyInput function
+                      }}
+                    />
+                  )}
+                />
+                <Controller
+                  name="confirmPassword"
+                  control={control}
+                  defaultValue=""
+                  rules={{
+                    required: '* Confirm password is required',
+                    validate: isValidConfirmPassword,
+                  }}
+                  render={({ field }) => (
+                    <TextField
+                      label="Confirm password"
+                      type={showConfirmPassword ? 'text' : 'password'}
+                      {...field}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowConfirmPassword}
+                              onMouseDown={handleMouseDownPassword}
+                            >
+                              {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                      error={!!errors.confirmPassword}
+                      helperText={errors.confirmPassword?.message}
+                    />
+                  )}
+                />
+                <div>
+                  <List>
+                    {
+                        passWordCondData.map((item, index) => {
+                          const isGood = requirements[index] ? 'good' : 'bad';
+                          return (
+                            <ListItem className={isGood} key={index}>
+                              <ListItemIcon className={isGood}>{requirements[index] ? <CheckIcon /> : <ClearIcon />}</ListItemIcon>
+                              <ListItemText primary={item.description} className={isGood} />
+                            </ListItem>
+                          );
+                        })
+                    }
+                  </List>
+                </div>
+
+                <div style={{ fontWeight: 800, fontSize: '1.5rem' }}>Register as:</div>
+                {/* ,use map for the future */}
+                <div className="flex role-select-container mb-1">
+                  <RoleCard
+                    name={role.STUDENT}
+                    setSelectedRole={setSelectedRole}
+                    selectedRole={selectedRole}
+                  />
+                  <RoleCard
+                    name={role.TEACHER}
+                    setSelectedRole={setSelectedRole}
+                    selectedRole={selectedRole}
+                  />
+                </div>
+                <FormControlLabel
+                  className="consent-checkbox mb-1"
+                  required
+                  variant="label-hidden"
+                  control={<Checkbox style={{ color: '#FF9900' }} />}
+                  label="By clicking this checkbox, I agree to consent to Accountable using my personal data to improve the platform."
+                />
+                <MainButton type="submit" btnLabel="Register" isLoading={isLoading} className="login-button" />
+                {submitErr ? <div className="bad">{submitErr}</div> : <></>}
+              </form>
+            </div>
+          </div>
+        )
+      }
       <Footer />
     </AppLayout>
   );
