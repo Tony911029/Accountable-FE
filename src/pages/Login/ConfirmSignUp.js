@@ -13,7 +13,7 @@ export default function ConfirmSignUp() {
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
-  const { username, user } = useAuth();
+  const { username } = useAuth();
 
   const inputProps = {
     inputStyle: {
