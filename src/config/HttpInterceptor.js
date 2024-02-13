@@ -12,14 +12,4 @@ export const axiosInterceptors = (user) => {
     },
     (error) => Promise.reject(error),
   );
-
-  axios.interceptors.response.use(
-    (response) =>
-    // Modify the response data or handle the response
-      response.data,
-    (error) =>
-    // Handle response errors
-      Promise.reject(error),
-
-  );
 };
