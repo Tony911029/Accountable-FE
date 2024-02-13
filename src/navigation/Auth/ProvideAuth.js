@@ -34,16 +34,22 @@ export function ProvideAuth({ children }) {
   } catch (err) {
     console.log('interceptorErr', err);
   }
-
   const getCurrentUser = async () => {
     try {
-      const awsUser = await auth.getCurrentUser();
-      console.log('userFromAWS', awsUser);
-
-      const nativeUser = await getNativeUser(awsUser);
-      console.log('nativeUser', nativeUser);
-      setUser(nativeUser);
+      // Check for cached user data in local storage first
+      const cachedUser = localStorage.getItem('cachedUser');
+      if (cachedUser) {
+        const curUser = JSON.parse(cachedUser);
+        setUser(curUser);
+      } else {
+        // Fetch user data if not cached
+        const awsUser = await auth.getCurrentUser();
+        const nativeUser = await getNativeUser(awsUser);
+        setUser(nativeUser);
+        localStorage.setItem('cachedUser', JSON.stringify(nativeUser));
+      }
     } catch (err) {
+      localStorage.removeItem('cachedUser');
       setUser(null);
     }
   };
@@ -62,11 +68,12 @@ export function ProvideAuth({ children }) {
   const signOut = async () => {
     await auth.signOut();
     setUser(null);
+    localStorage.removeItem('cachedUser');
   };
 
   const signUp = async (newUsername, email, password) => {
     await auth.signUp(newUsername, email, password).then((res) => {
-      setUsername(res.username);
+      setUsername(res.username); // set username state for code confirm
       // TODO: we can set user here to automatically login upon sign up successfully
     });
   };

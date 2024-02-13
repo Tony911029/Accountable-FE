@@ -4,11 +4,6 @@ import { API_URL } from './CONSTANTS';
 
 /**
  * Function to create a new user upon sign up successfully
- * userPayload: {
- *     userId,
- *     email,
- *     username
- * }
  */
 export const createNewUser = (userPayload) => new Promise((resolve, reject) => {
   try {
@@ -38,7 +33,7 @@ export const getNativeUser = (awsUser) => new Promise((resolve, reject) => {
     axios
       .get(apiEndPoint)
       .then((res) => {
-        resolve(res.data);
+        resolve(res.data.data);
       })
       .catch((err) => {
         reject('Error in getUserDetails axios!', err);
@@ -48,3 +43,26 @@ export const getNativeUser = (awsUser) => new Promise((resolve, reject) => {
     reject(SYSTEM_ERROR);
   }
 });
+
+/**
+userPayload: {
+  userId,
+      email,
+      username
+}
+ ** */
+
+/**
+ * User response example:{
+   *  "id": "cc4d35f8-f0e1-709c-27ff-1965c0e60a8f",
+   *  "displayName": null,
+   *  "username": "TonyTesting1",
+   *  "email": "tony3529353@gmail.com",
+   *  "country": null,
+   *  "role": null,
+   *  "schoolId": null,
+   *  "classroomId": null,
+   *  "isActive": true,
+   *  "authorities": []
+ * }
+ * * */
