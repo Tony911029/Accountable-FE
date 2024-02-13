@@ -2,18 +2,16 @@ import { useState } from 'react';
 import { confirmSignUp } from 'src/navigation/Auth/UserPool';
 import ReactCodeInput from 'react-code-input';
 import { MdEmail } from 'react-icons/md';
-import { useAuth } from 'src/navigation/Auth/ProvideAuth';
-import { createNewUser } from 'src/services/userServices';
 import MainButton from '../../components/MainButton';
 import SuccessfulConfirmation from '../../navigation/Auth/SuccessfulConfirmation';
 
 // TODO: Figure out how to resend a code,
 // TODO: what should happen if the user leaves the page before entering the code
-export default function ConfirmSignUp() {
+export default function ConfirmSignUp({ username }) {
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
-  const { username } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
 
   const inputProps = {
     inputStyle: {
@@ -33,23 +31,19 @@ export default function ConfirmSignUp() {
     setCode(value);
   };
 
-  const createUserPayload = (awsUser) => {
-    const userPayload = {};
-    userPayload.userId = awsUser.sub;
-    userPayload.email = awsUser.email;
-    userPayload.usernmae = awsUser.usernmae;
-    return userPayload;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     try {
+      setIsLoading(true);
       await confirmSignUp(username, code)
-        .then(async (awsUser) => {
-          await createNewUser(createUserPayload(awsUser));
+        .then(async () => {
           setSuccess(true);
-        }).catch((err) => setError('something is wrong when creating user'));
+          setIsLoading(false);
+        }).catch((err) => {
+          setError('something is wrong when creating user');
+          setIsLoading(false);
+        });
     } catch (err) {
       setError('This code is incorrect');
     }
@@ -75,7 +69,7 @@ export default function ConfirmSignUp() {
             onChange={handleCodeChange}
             {...inputProps}
           />
-          <MainButton type="submit" btnLabel="Verify" />
+          <MainButton isLoading={isLoading} type="submit" btnLabel="Verify" />
         </form>
         {error ? <div className="bad">* input code is incorrect</div> : <></>}
       </div>

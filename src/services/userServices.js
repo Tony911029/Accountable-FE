@@ -8,11 +8,10 @@ import { API_URL } from './CONSTANTS';
 export const createNewUser = (userPayload) => new Promise((resolve, reject) => {
   try {
     const apiEndPoint = `${API_URL}/userService/user`;
-    // do an SDK, DB call or API endpoint axios call here and return the promise.
     axios
       .post(apiEndPoint, userPayload)
       .then((res) => {
-        resolve(res.data);
+        resolve(res.data.data);
       })
       .catch((err) => {
         reject(err);
@@ -46,7 +45,7 @@ export const getNativeUser = (awsUser) => new Promise((resolve, reject) => {
 
 /**
 userPayload: {
-  userId,
+  userId,createNewUser
       email,
       username
 }

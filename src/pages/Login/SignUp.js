@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { signUp } from 'src/navigation/Auth/UserPool';
 import {
   Checkbox,
@@ -7,7 +6,6 @@ import {
   InputAdornment,
   TextField,
 } from '@mui/material';
-import { useHistory } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import './Login.css';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
@@ -17,6 +15,8 @@ import {
   List, ListItem, ListItemIcon, ListItemText,
 } from '@material-ui/core';
 import { AppLayout } from 'src/components/AppLayout/AppLayout';
+import { useState } from 'react';
+import { useAuth } from 'src/navigation/Auth/ProvideAuth';
 import { passWordCondData } from './PassWordCondData';
 import ConfirmSignUp from './ConfirmSignUp';
 import MainButton from '../../components/MainButton';
@@ -41,10 +41,14 @@ function RoleCard({ name, selectedRole, setSelectedRole }) {
   );
 }
 
-const role = { STUDENT: 'Student', TEACHER: 'Teacher' };
+const roles = { STUDENT: 'STUDENT', TEACHER: 'TEACHER' };
 function SignUp() {
   const {
-    control, handleSubmit, setError, formState: { errors }, watch,
+    control,
+    handleSubmit,
+    setError,
+    formState: { errors },
+    watch,
   } = useForm();
   const [requirements, setRequirements] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
@@ -52,13 +56,10 @@ function SignUp() {
   const [submitErr, setSubmitErr] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
   const passwordValue = watch('password', '');
+  const username = watch('userName', '');
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedRole, setSelectedRole] = useState(role.STUDENT);
+  const { role, setRole } = useAuth();
 
-  const history = useHistory();
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -104,12 +105,10 @@ function SignUp() {
     }
   };
 
-  console.log('role', selectedRole);
-
   return (
     <AppLayout>
       {
-        isSignUp ? <ConfirmSignUp /> : (
+        isSignUp ? <ConfirmSignUp username={username} /> : (
           <div className="login-container">
             <div className="colored-border">
               <h1>Register</h1>
@@ -129,6 +128,7 @@ function SignUp() {
                     />
                   )}
                 />
+
                 <Controller
                   name="email"
                   control={control}
@@ -147,6 +147,7 @@ function SignUp() {
                     />
                   )}
                 />
+
                 <Controller
                   name="password"
                   control={control}
@@ -162,7 +163,7 @@ function SignUp() {
                           <InputAdornment position="end">
                             <IconButton
                               aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword}
+                              onClick={() => setShowPassword((show) => !show)}
                               onMouseDown={handleMouseDownPassword}
                             >
                               {showPassword ? <Visibility /> : <VisibilityOff />}
@@ -180,6 +181,7 @@ function SignUp() {
                     />
                   )}
                 />
+
                 <Controller
                   name="confirmPassword"
                   control={control}
@@ -198,7 +200,7 @@ function SignUp() {
                           <InputAdornment position="end">
                             <IconButton
                               aria-label="toggle password visibility"
-                              onClick={handleClickShowConfirmPassword}
+                              onClick={() => setShowConfirmPassword((show) => !show)}
                               onMouseDown={handleMouseDownPassword}
                             >
                               {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
@@ -231,14 +233,14 @@ function SignUp() {
                 {/* ,use map for the future */}
                 <div className="flex role-select-container mb-1">
                   <RoleCard
-                    name={role.STUDENT}
-                    setSelectedRole={setSelectedRole}
-                    selectedRole={selectedRole}
+                    name={roles.STUDENT}
+                    setSelectedRole={setRole}
+                    selectedRole={role}
                   />
                   <RoleCard
-                    name={role.TEACHER}
-                    setSelectedRole={setSelectedRole}
-                    selectedRole={selectedRole}
+                    name={roles.TEACHER}
+                    setSelectedRole={setRole}
+                    selectedRole={role}
                   />
                 </div>
                 <FormControlLabel

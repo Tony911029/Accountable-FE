@@ -4,6 +4,7 @@ import {
   AuthenticationDetails,
 } from 'amazon-cognito-identity-js';
 import { cognitoConfig } from './UserPoolConfig';
+// Documentation: https://www.npmjs.com/package/amazon-cognito-identity-js
 
 const userPool = new CognitoUserPool({
   UserPoolId: cognitoConfig.UserPoolId,
@@ -42,7 +43,7 @@ export function confirmSignUp(username, code) {
         reject(err);
         return;
       }
-      resolve(result.user);
+      resolve(result);
     });
   });
 }

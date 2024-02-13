@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import PrivateRoute from 'src/navigation/Auth/PrivateRoute';
 import LoadingPage from 'src/pages/Login/LoadingPage';
