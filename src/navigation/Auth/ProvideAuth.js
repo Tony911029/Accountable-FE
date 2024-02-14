@@ -2,94 +2,116 @@
  * Context API used for Auth related information and methods.
  * I am keeping everything related to the authentication and PrivateRoute in this one file.
  */
-import React, {createContext, useContext, useEffect, useState} from 'react';
-import * as auth from "./UserPool"
-import {axiosInterceptors} from "../../config/HttpInterceptor"
-
-export const AuthContext = createContext();
+import {
+  createContext, useContext, useEffect, useMemo, useState,
+} from 'react';
+import { axiosInterceptors } from 'src/config/HttpInterceptor';
+import { createNewUser, getNativeUser } from 'src/services/userServices';
+import * as auth from './UserPool';
 
 /**
- user
-   {
-     "email": string,
-     "isAdmin": boolean,
-     "username": string,
-     "userId": UUID,
-     "token": string
-   }
- * **/
+ Design:
+ - We use cognito to authenticate user => we will get awsUser/nonNativeUser
+ - Use awsUser to fetch native user from db
+ - if awsUser is found but nativeUser is not found, it is first time login
+          => create a new user
+          => re-fetch user from db again and setUser(dbUser)
+ - If not first time, just let it through
+ - When fetching user from our database, we first check if the user is cached
+ * * */
+export const AuthContext = createContext();
 
 // Context Provider to wrap the whole app within and make auth information (user) available.
 export function ProvideAuth({ children }) {
-  // Here are essentially the "store" for the user
-  const [user, setUser] = useState(null)
-  const [username, setUsername] = useState("")
-  const [isLoading, setIsLoading] = useState(true)
+  const [user, setUser] = useState(null); // native user from db
+  const [awsUser, setAwsUser] = useState(null); // user from aws
+  const [role, setRole] = useState('STUDENT'); // native user from db
+  const isFirstTime = useMemo(() => user === null && awsUser !== null, [user, awsUser]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  try{
-    axiosInterceptors(user)
-  }catch (err){
-    console.log("interceptorErr", err)
+  try {
+    axiosInterceptors(user);
+  } catch (err) {
+    console.log('interceptorErr', err);
   }
-
   const getCurrentUser = async () => {
     try {
-      const data = await auth.getCurrentUser()
-      const user = setUserObject(data);
-      setUser(user)
-      console.log("user", user)
+      // Fetch user data if not cached
+      const nonNativeUser = await auth.getCurrentUser();
+      setAwsUser(nonNativeUser);
     } catch (err) {
-      setUser(null)
+      localStorage.removeItem('cachedUser');
+      setUser(null);
     }
-  }
+  };
 
-  const setUserObject = (data) => {
-    let user = {}
-    user.email = data.email;
-    // TODO: fetch user from our backend
-    user.isAdmin = false;
-    user.username = data.username;
-    user.userId = data.sub;
-    user.token = data.tokenId?.jwtToken;
-    return user
-  }
+  const createUserPayload = () => {
+    const userPayload = {};
+    userPayload.userId = awsUser?.sub;
+    userPayload.email = awsUser?.email;
+    userPayload.username = awsUser?.username;
+    userPayload.isActive = true;
+    userPayload.role = role;
+    return userPayload;
+  };
 
   useEffect(() => {
     getCurrentUser()
-        .then(() => setIsLoading(false))
-        .catch(() => setIsLoading(false))
-  }, [])
+      .then(() => setIsLoading(false))
+      .catch(() => setIsLoading(false));
+  }, []);
+
+  useEffect(() => {
+    async function fetchLocalUser() {
+      const cachedUser = localStorage.getItem('cachedUser');
+      if (!cachedUser) {
+        const currentUser = await createNewUser(createUserPayload(awsUser));
+        setUser(currentUser);
+        localStorage.setItem('cachedUser', JSON.stringify(currentUser));
+      } else {
+        setUser(JSON.parse(cachedUser));
+      }
+    }
+    fetchLocalUser();
+  }, [awsUser]);
 
   const signIn = async (username, password) => {
-    await auth.signIn(username, password)
-    await getCurrentUser()
-  }
+    localStorage.clear();
+    await auth.signIn(username, password);
+    await getCurrentUser();
+    if (isFirstTime) {
+      const newUser = await createNewUser(createUserPayload(awsUser));
+      setUser(newUser);
+    }
+  };
 
   const signOut = async () => {
-    await auth.signOut()
-    setUser(null)
-  }
+    await auth.signOut();
+    setUser(null);
+    setAwsUser(null);
+    localStorage.removeItem('cachedUser');
+  };
 
-  const signUp = async (username, email, password) => {
-    await auth.signUp(username, email, password)
-    setUsername(username);
-  }
+  const signUp = async (newUsername, email, password) => {
+    // TODO: we can set user here to automatically login upon sign up successfully
+    await auth.signUp(newUsername, email, password);
+  };
 
   const authValue = {
-    user,
-    username,
+    user, // nativeUser
+    role,
+    setRole,
     isLoading,
     signUp,
     signIn,
     signOut,
-  }
+  };
 
   return (
-      <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>
-  )
+    <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>
+  );
 }
 
 export function useAuth() {
   return useContext(AuthContext);
 }
-
