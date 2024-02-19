@@ -1,5 +1,5 @@
 import React from "react";
-import {AppLayout} from "../../components/AppLayout/AppLayout";
+import {AppLayout} from "src/components/AppLayout/AppLayout";
 import "./Home.css"
 import MainButton from "../../components/MainButton";
 import {FaBookReader, FaFacebookSquare} from "react-icons/fa";
@@ -9,13 +9,12 @@ import {IconContext} from "react-icons";
 import ContactUs from "./components/ContactUs";
 import { FaTwitterSquare } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
-import Background from '../../assets/images/HomePageBackground.png';
 import Footer from "../../components/AppLayout/Footer";
-import {ASSIGNMENT, LEARNING_CENTER, LOGIN} from "../../navigation/CONSTANTS";
+import {LEARNING_CENTER} from "src/navigation/CONSTANTS";
 import {useHistory} from "react-router-dom";
 
 // TODO: remove redundant css and remove fixed height and replaced with dynamic height
-export function HomeContainer() {
+export default function HomeContainer() {
     let history = useHistory();
     const handleGetStarted = () => {
         history.push(LEARNING_CENTER)

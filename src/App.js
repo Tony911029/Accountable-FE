@@ -1,20 +1,15 @@
 import React, { useState } from "react";
-// Handle console logs
-// import "utils/dropConsole";
-// Styles
-// ROUTER
 
 import { BrowserRouter } from "react-router-dom";
 import { RouterConfig } from "./navigation/RouterConfig";
 // MUI Theme
-import { ThemeProvider, Button, createMuiTheme } from "@material-ui/core";
+import { ThemeProvider} from "@material-ui/core";
 import { dark, light } from "./styles/muiTheme";
 import "./App.css";
 import { ProvideAuth } from "./navigation/Auth/ProvideAuth";
 // Redux
 import { Provider } from "react-redux";
 import {store} from "./redux/store";
-import AppHeader from "./components/AppLayout/AppHeader";
 
 function App() {
   const [darkState, setDarkState] = useState(false);

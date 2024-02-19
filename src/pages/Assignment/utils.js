@@ -1,23 +1,23 @@
 export const shuffle = (array) => {
-    let currentIndex = array.length,  randomIndex;
+  let currentIndex = array.length; let
+    randomIndex;
 
-    // While there remain elements to shuffle.
-    while (currentIndex > 0) {
+  // While there remain elements to shuffle.
+  while (currentIndex > 0) {
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
 
-        // Pick a remaining element.
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-
-        // And swap it with the current element.
-        [array[currentIndex], array[randomIndex]] = [
-            array[randomIndex], array[currentIndex]];
-    }
-    return array;
-}
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+  return array;
+};
 
 export const countWords = (str) => {
-    if (!str){return 0;}
-    return str.split(' ')
-        .filter(function(n) { return n !== '' })
-        .length;
-}
+  if (!str) { return 0; }
+  return str.split(' ')
+    .filter((n) => n !== '')
+    .length;
+};

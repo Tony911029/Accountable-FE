@@ -15,10 +15,6 @@
    margin-right: 5px;
 }
 
-.gap1{
-    gap: 1rem;
-}
-
 .width-70{
     width: 70%;
 }
@@ -39,13 +35,17 @@
     gap: 1rem;
 }
 
+.gap-3rem{
+    gap:3rem
+}
+
 .theme-text{
     color: #FF9900;
 }
 
 .cool-bg{
-    background-image: url("./assets/images/HomePageBackground.png");
-    background-size: cover;
+    /*background-image: url("./assets/images/HomePageBackground.png");*/
+    /*background-size: cover;*/
 }
 
 

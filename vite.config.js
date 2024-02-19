@@ -5,7 +5,6 @@ import { esbuildCommonjs } from "@originjs/vite-plugin-commonjs";
 import fs from "fs/promises";
 import {resolve} from "path";
 import AutoImport from "unplugin-auto-import/vite";
-import dns from "dns";
 
 // https://vitejs.dev/config/
 // https://github.com/aws-amplify/amplify-js/issues/9639#issuecomment-1376605159
@@ -78,5 +77,15 @@ export default defineConfig(({command}) => ({
         port: 3000,
         host: true,
     },
+    build: {
+        chunkSizeWarningLimit: 500,
+        rollupOptions: {
+            onwarn(warning, warn) {
+                if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
+                    return
+                }
+                warn(warning)
+            }}
+    }
 }))
 
