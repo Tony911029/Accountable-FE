@@ -13,6 +13,10 @@ phases:
       # Use 7 characters of commit hash as image tags
       - IMAGE_TAG=${COMMIT_HASH}
       - REPO_URL=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
+
+      # Inject Dockerrun.aws.json
+      - echo Fetching Dockerrun.aws.json file from s3
+      - aws s3 cp $JSON_FILE_PATH Dockerrun.aws.json
   build:
     commands:
       - docker build -t $REPO_URL:latest .
@@ -24,7 +28,6 @@ phases:
 #      - echo "$SSH_KEY" > ~/.ssh/id_rsa
 #      - chmod 400 ~/.ssh/id_rsa
 #      - ssh -o StrictHostKeyChecking=no ubuntu@$INSTANCE "/home/ubuntu/app/deploy.sh $IMAGE_TAG"
-
 
 artifacts:
   files:
