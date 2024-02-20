@@ -3,7 +3,7 @@
  * I am keeping everything related to the authentication and PrivateRoute in this one file.
  */
 import {
-  createContext, useContext, useEffect, useMemo, useState,
+  createContext, useContext, useEffect, useState,
 } from 'react';
 import { axiosInterceptors } from 'src/config/HttpInterceptor';
 import { createNewUser, getNativeUser } from 'src/services/userServices';
@@ -26,7 +26,6 @@ export function ProvideAuth({ children }) {
   const [user, setUser] = useState(null); // native user from db
   const [awsUser, setAwsUser] = useState(null); // user from aws
   const [role, setRole] = useState('STUDENT'); // native user from db
-  const isFirstTime = useMemo(() => user === null && awsUser !== null, [user, awsUser]);
   const [isLoading, setIsLoading] = useState(true);
 
   try {
@@ -34,7 +33,7 @@ export function ProvideAuth({ children }) {
   } catch (err) {
     console.log('interceptorErr', err);
   }
-  const getCurrentUser = async () => {
+  const getCurrenAwsUser = async () => {
     try {
       // Fetch user data if not cached
       const nonNativeUser = await auth.getCurrentUser();
@@ -44,6 +43,27 @@ export function ProvideAuth({ children }) {
       setUser(null);
     }
   };
+
+  useEffect(() => {
+    getCurrenAwsUser()
+      .then(() => setIsLoading(false))
+      .catch(() => setIsLoading(false));
+  }, []);
+
+  // create a new user if the user sign in for the first time
+  useEffect(() => {
+    async function fetchLocalUser() {
+      const cachedUser = localStorage.getItem('cachedUser');
+      if (!cachedUser) {
+        const currentUser = await getNativeUser(awsUser);
+        setUser(currentUser);
+        localStorage.setItem('cachedUser', JSON.stringify(currentUser));
+      } else {
+        setUser(JSON.parse(cachedUser));
+      }
+    }
+    fetchLocalUser();
+  }, [awsUser]);
 
   const createUserPayload = () => {
     const userPayload = {};
@@ -56,33 +76,22 @@ export function ProvideAuth({ children }) {
   };
 
   useEffect(() => {
-    getCurrentUser()
-      .then(() => setIsLoading(false))
-      .catch(() => setIsLoading(false));
-  }, []);
-
-  useEffect(() => {
-    async function fetchLocalUser() {
-      const cachedUser = localStorage.getItem('cachedUser');
-      if (!cachedUser) {
-        const currentUser = await createNewUser(createUserPayload(awsUser));
-        setUser(currentUser);
-        localStorage.setItem('cachedUser', JSON.stringify(currentUser));
-      } else {
-        setUser(JSON.parse(cachedUser));
+    const createNewUserIfNew = async () => {
+      const localUser = await getNativeUser(awsUser);
+      // if this is a new user
+      if (localUser === null && awsUser !== null) {
+        const newUser = await createNewUser(createUserPayload());
+        setUser(newUser);
       }
-    }
-    fetchLocalUser();
+    };
+
+    createNewUserIfNew();
   }, [awsUser]);
 
   const signIn = async (username, password) => {
     localStorage.clear();
     await auth.signIn(username, password);
-    await getCurrentUser();
-    if (isFirstTime) {
-      const newUser = await createNewUser(createUserPayload(awsUser));
-      setUser(newUser);
-    }
+    await getCurrenAwsUser();
   };
 
   const signOut = async () => {
