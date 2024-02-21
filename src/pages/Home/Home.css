@@ -130,17 +130,23 @@
 
 /* For mobile devices */
 @media screen and (max-width: 768px) {
+  
+  .home-container{
+    background-image: url("../../assets/images/Home_Page.svg");
+    background-size: cover;
+  }
+  
   .home-section1 h1 {
-    font-size: 28px; /* Decrease font size for headings */
+    font-size: 28px; 
     margin: 50px 30px 20px;
   }
 
   .home-section1 {
-    height: auto; /* Remove fixed height */
+    height: auto; 
   }
 
   .home-section2 {
-    padding: 40px 20px; /* Decrease padding for smaller screens */
+    padding: 40px 20px; 
     margin-top: 70px;
   }
 
@@ -155,18 +161,18 @@
   }
 
   .home-p1 {
-    font-size: 20px; /* Decrease font size for paragraph text */
-    line-height: 36px; /* Increase line height for better readability */
-    width: 82%; /* Adjust width to fit smaller screens */
-    margin-bottom: 50px; /* Decrease margin for smaller screens */
+    font-size: 20px; 
+    line-height: 36px; 
+    width: 82%; 
+    margin-bottom: 50px; 
     color: #563400;
   }
 
   .home-p2 {
-    font-size: 18px; /* Decrease font size for paragraph text */
-    line-height: 30px; /* Increase line height for better readability */
-    width: 100%; /* Adjust width to fit smaller screens */
-    margin-bottom: 30px; /* Decrease margin for smaller screens */
+    font-size: 18px; 
+    line-height: 30px; 
+    width: 100%; 
+    margin-bottom: 30px; 
     color: #563400;
   }
 
@@ -175,24 +181,24 @@
   }
 
   .about-us > div {
-    width: 100%; /* Adjust width to fit smaller screens */
-    margin-bottom: 30px; /* Decrease margin for smaller screens */
+    width: 100%; 
+    margin-bottom: 30px; 
   }
 
   .contact-form-container {
-    width: 100%; /* Adjust width to fit smaller screens */
-    height: auto; /* Remove fixed height */
-    padding: 20px; /* Decrease padding for smaller screens */
-    margin-top: 20px; /* Decrease margin for smaller screens */
+    width: 100%; 
+    height: auto; 
+    padding: 20px; 
+    margin-top: 20px; 
   }
 
   .contact-form-container .form > div {
-    margin-top: 10px; /* Decrease margin for smaller screens */
-    margin-bottom: 10px; /* Decrease margin for smaller screens */
+    margin-top: 10px; 
+    margin-bottom: 10px; 
   }
 
   .mb-30 {
-    margin-bottom: 30px; /* Decrease margin for smaller screens */
+    margin-bottom: 30px; 
     font-size: 28px;
     font-weight: bold;
     color: #ff9900;
