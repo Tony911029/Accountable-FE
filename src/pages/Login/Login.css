@@ -17,6 +17,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .colored-border h1 {
@@ -95,16 +96,26 @@ input[type="number"] {
 }
 
 @media screen and (max-width: 768px) {
-  .login-form {
-    padding: 48px;
-    max-width: 21em;
+
+  .login-container {
+    max-width: 100%;
+    padding: 12% 2px 12% 2px;
+    background-image: url("../../assets/images/Home_Page.svg");
+    background-size: cover;
   }
+
+  .login-form {
+    padding: 20x;
+    max-width: 100%;
+  }
+
   .colored-border {
     border: 4px soild #ff99004a;
     padding: 2px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 95%;
   }
 
   .flex.pl-65 {
@@ -114,8 +125,10 @@ input[type="number"] {
   .mr-5 {
     color: #563400;
   }
-  .login-button{
-    padding: 1.0em 3.7em 1.0em 3.7em!important;
-    font-size: 1rem!important;
+
+  .login-button {
+    padding: 1.0em 3.7em 1.0em 3.7em !important;
+    font-size: 1rem !important;
   }
+
 }
