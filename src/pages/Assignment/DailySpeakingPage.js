@@ -1,8 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
+import {
+  useCallback, useEffect, useMemo, useState,
+} from 'react';
 import './DailyGoal.css';
-import { fetchQuestion, getCallTesting, submitQuestion } from 'src/services/questionService';
+import { genRandQuestions, getCallTesting, submitQuestion } from 'src/services/questionService';
 import { AppLayout } from 'src/components/AppLayout/AppLayout';
-import { sampleQuestions } from 'src/pages/Assignment/QuestionsSample';
+import { QUESTION_CONSTANT, sampleQuestions } from 'src/pages/Assignment/QuestionsSample';
 import AssignmentContentCard from 'src/components/Cards/AssignmentContentCard';
 import { MdKeyboardDoubleArrowRight, MdKeyboardDoubleArrowLeft } from 'react-icons/md';
 import { countWords, shuffle } from 'src/pages/Assignment/utils';
@@ -16,12 +18,44 @@ import Footer from '../../components/AppLayout/Footer';
 //  https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const microphone = new SpeechRecognition();
-microphone.continuous = true;
 microphone.interimResults = true;
 microphone.lang = 'en-US';
 const timeLimit = 120; // maximum of 120 seconds
 let timeoutId;
 const MAX_QUESTION_NUM = 10;
+
+/**
+ * Filters questions that are active.
+ * @param {Question[]} questions - The array of questions.
+ * @returns {Question[]} An array of active questions.
+ */
+
+/**
+ * Defines the structure of a question.
+ * @typedef {Object} Question
+ * @property {UUID} id - The text of the question.
+ * @property {string} questionText - The text of the question.
+ * @property {boolean} isActive - Indicates whether the question is currently active.
+ */
+
+/**
+ * Defines the structure of an answer.
+ * @typedef {Object} Answer
+ * @property {string} answer - The text of the answer.
+ * @property {string} count - Word counted.
+ * @property {boolean} isActive - Indicates whether the question is currently active.
+ */
+
+function ArrowLabel({
+  IconComponent, label, onClick, iconSize, disabled = false,
+}) {
+  return (
+    <div style={{ cursor: 'pointer', color: disabled ? '#E1E1E1' : '#563400' }} onClick={onClick}>
+      <IconComponent style={{ fontSize: iconSize }} />
+      <div style={{ marginLeft: '10px' }}>{label}</div>
+    </div>
+  );
+}
 
 function DailySpeakingPage() {
   const [counts, setCounts] = useState(new Array(MAX_QUESTION_NUM).fill(0));
@@ -30,22 +64,40 @@ function DailySpeakingPage() {
   const [curAns, setCurAns] = useState('');
 
   const [isRecording, setIsRecording] = useState(false);
-  const [index, setIndex] = useState(-1);
+  const [index, setIndex] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const queAnswerNum = useMemo(() => answers.filter((answer) => answer !== '').length);
+  const queAnswerNum = useMemo(() => answers?.filter((answer) => answer !== '').length);
   const isLastPage = useMemo(() => index === MAX_QUESTION_NUM - 1, [index, MAX_QUESTION_NUM]);
-  const sum = useMemo(() => counts.reduce((accumulator, currentValue) => accumulator + currentValue, 0));
+  const sum = useMemo(() => counts?.reduce((accumulator, currentValue) => accumulator + currentValue, 0));
 
   const resetStats = () => {
     setQuestions([]);
-    setAnswers([]);
+    setAnswers(new Array(MAX_QUESTION_NUM).fill(''));
+    setCounts(new Array(MAX_QUESTION_NUM).fill(0));
     setIndex(0);
+    localStorage.removeItem(QUESTION_CONSTANT.GEN_QUESTION);
+    localStorage.removeItem(QUESTION_CONSTANT.STORE_ANSWER);
+    localStorage.removeItem(QUESTION_CONSTANT.COUNT);
   };
 
+  const fetchData = useCallback(async () => {
+    const genQuestions = await genRandQuestions(MAX_QUESTION_NUM);
+    setQuestions(genQuestions);
+  }, []);
+
   useEffect(() => {
-    resetStats();
-    setQuestions(shuffle(sampleQuestions).slice(0, 10));
+    // resetStats();
+    fetchData();
+  }, [fetchData]);
+
+  useEffect(() => {
+    const storedAnswers = JSON.parse(localStorage.getItem(QUESTION_CONSTANT.STORE_ANSWER));
+    if (storedAnswers) {
+      setAnswers(storedAnswers);
+      const storedCount = storedAnswers?.map((answer) => countWords(answer));
+      setCounts(storedCount);
+    }
   }, []);
 
   const storeAnsAttempt = (record) => {
@@ -53,12 +105,18 @@ function DailySpeakingPage() {
       setCurAns('');
       answers[index] = record;
       setAnswers(answers);
-
       counts[index] = countWords(record);
       setCounts(counts);
+      localStorage.setItem(QUESTION_CONSTANT.STORE_ANSWER, JSON.stringify(answers));
+      localStorage.setItem(QUESTION_CONSTANT.COUNT, JSON.stringify(counts));
 
       if (!isLastPage)setIndex(index + 1);
     }
+  };
+
+  const handleSubmit = () => {
+    setIsSubmitted(true);
+    resetStats();
   };
 
   const handleRecord = () => {
@@ -99,10 +157,12 @@ function DailySpeakingPage() {
     };
   };
 
+  // cap the recording tome at 2 minutes
   useEffect(() => {
     handleRecord();
     return () => {
-      clearTimeout(timeoutId); // Cleanup timeout on component unmount
+      // Cleanup timeout on component unmount
+      clearTimeout(timeoutId);
     };
   }, [isRecording]);
 
@@ -112,17 +172,6 @@ function DailySpeakingPage() {
 
   function handleNextQue() {
     if (index < MAX_QUESTION_NUM - 1) setIndex(index + 1);
-  }
-
-  function ArrowLabel({
-    IconComponent, label, onClick, iconSize, disabled = false,
-  }) {
-    return (
-      <div style={{ cursor: 'pointer', color: disabled ? '#E1E1E1' : '#563400' }} onClick={onClick}>
-        <IconComponent style={{ fontSize: iconSize }} />
-        <div style={{ marginLeft: '10px' }}>{label}</div>
-      </div>
-    );
   }
 
   return (
@@ -142,7 +191,7 @@ function DailySpeakingPage() {
 
               <div className="assignment-container">
                 <div className="view-50">
-                  <div className="mb-30">
+                  <div className="progress-bar-container">
                     <div className="align-right">{`Question answered: ${queAnswerNum}`}</div>
                     <ProgressBar
                       completed={queAnswerNum / MAX_QUESTION_NUM * 100}
@@ -156,7 +205,7 @@ function DailySpeakingPage() {
                     title={`Question ${index + 1}`}
                     className="content"
                   >
-                    <div>{questions[index]}</div>
+                    <div>{questions[index]?.questionText}</div>
                   </AssignmentContentCard>
                   <AssignmentContentCard
                     wordCount
@@ -181,7 +230,17 @@ function DailySpeakingPage() {
                 disabled={isLastPage}
               />
             </div>
-            {isLastPage && <MainButton btnLabel="Submit" className="submit-button" onClick={() => setIsSubmitted(true)} />}
+            <div className="assignment-submit flex">
+              {isLastPage
+                  && (
+                  <MainButton
+                    btnLabel="Submit"
+                    onClick={handleSubmit}
+                    className="font-1.2rem"
+                  />
+                  )}
+            </div>
+
           </div>
         ) : (
           <AssignmentDone wordCount={sum} />

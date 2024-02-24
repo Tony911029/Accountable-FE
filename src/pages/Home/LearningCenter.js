@@ -1,5 +1,4 @@
 import { Grid } from '@mui/material';
-import { fetchQuestion, getCallTesting, submitQuestion } from 'src/services/questionService';
 import { AppLayout } from 'src/components/AppLayout/AppLayout';
 import { LearningCenterData } from 'src/pages/Home/LearningCenterData';
 import LearningCard from 'src/components/Cards/LearningCard';
