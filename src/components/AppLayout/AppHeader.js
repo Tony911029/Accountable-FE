@@ -101,17 +101,17 @@ function AppHeader(
       <li onClick={toggleProfile}>
         <CgProfile style={iconStyles} size="1.7rem" />
         {' '}
-        {user?.username}
+        <span className="listText">{user?.username}</span>
       </li>
       <li className={profile ? '' : 'hideDropDown'} onClick={handleProfile}>
         <CgProfile style={iconStyles} size="1.7rem" />
         {' '}
-        My Account
+        <span className="ListText">My Account</span>
       </li>
       <li className={profile ? '' : 'hideDropDown'} onClick={handleSignOut}>
         <MdLogout style={iconStyles} size="1.7rem" />
         {' '}
-        Log Out
+        <span className="listText">Log Out</span>
       </li>
     </ul>
   );
