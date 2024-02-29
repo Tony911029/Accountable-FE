@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './AppHeader.css';
 import { Button } from '@material-ui/core';
