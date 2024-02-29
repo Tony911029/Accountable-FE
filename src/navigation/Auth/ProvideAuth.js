@@ -1,9 +1,7 @@
-import {
-  createContext, useContext, useEffect, useMemo, useState,
-} from 'react';
-import { axiosInterceptors } from 'src/config/HttpInterceptor';
-import { createNewUser, getNativeUser } from 'src/services/userServices';
-import * as auth from './UserPool';
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { axiosInterceptors } from "src/config/HttpInterceptor";
+import { createNewUser, getNativeUser } from "src/services/userServices";
+import * as auth from "./UserPool";
 
 /**
  Design:
@@ -41,14 +39,16 @@ export const AuthContext = createContext();
 export function ProvideAuth({ children }) {
   const [user, setUser] = useState(null); // native user from db
   const [awsUser, setAwsUser] = useState(null); // user from aws
-  const [role, setRole] = useState(''); // native user from db
-  const isFirstTime = useMemo(() => user === null && awsUser !== null, [user, awsUser]);
+  const [role, setRole] = useState(""); // native user from db
+  const isFirstTime = useMemo(
+    () => user === null && awsUser !== null,
+    [user, awsUser]
+  );
   const [isLoading, setIsLoading] = useState(true);
-
   try {
     axiosInterceptors(user);
   } catch (err) {
-    console.log('interceptorErr', err);
+    console.log("interceptorErr", err);
   }
 
   /**
@@ -60,7 +60,7 @@ export function ProvideAuth({ children }) {
       const nonNativeUser = await auth.getCurrentUser();
       setAwsUser(nonNativeUser);
     } catch (err) {
-      localStorage.removeItem('cachedUser');
+      localStorage.removeItem("cachedUser");
       setUser(null);
     }
   };
@@ -70,7 +70,7 @@ export function ProvideAuth({ children }) {
    * */
   const createUserPayload = () => {
     const userPayload = {};
-    userPayload.userId = awsUser?.sub;
+    userPayload.userId = awsUser.sub;
     userPayload.email = awsUser?.email;
     userPayload.username = awsUser?.username;
     userPayload.isActive = true;
@@ -92,16 +92,19 @@ export function ProvideAuth({ children }) {
    * */
   useEffect(() => {
     async function fetchLocalUser() {
-      const cachedUser = localStorage.getItem('cachedUser');
+      const cachedUser = localStorage.getItem("cachedUser");
       if (!cachedUser) {
         const currentUser = await getNativeUser(awsUser);
         setUser(currentUser);
-        localStorage.setItem('cachedUser', JSON.stringify(currentUser));
+        localStorage.setItem("cachedUser", JSON.stringify(currentUser));
       } else {
         setUser(JSON.parse(cachedUser));
       }
-      setRole(user?.authorities?.find((item) => item.authority.startsWith('ROLE_'))?.authority);
-      console.log('user from database', user);
+      setRole(
+        user?.authorities?.find((item) => item.authority.startsWith("ROLE_"))
+          ?.authority
+      );
+      console.log("user from database", user);
     }
     fetchLocalUser();
   }, [awsUser]);
@@ -128,7 +131,7 @@ export function ProvideAuth({ children }) {
     await auth.signOut();
     setUser(null);
     setAwsUser(null);
-    localStorage.removeItem('cachedUser');
+    localStorage.removeItem("cachedUser");
   };
 
   /**

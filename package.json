@@ -42,7 +42,9 @@
   "scripts": {
     "start": "vite",
     "build": "vite build",
-    "serve": "vite preview --port 3000"
+    "serve": "vite preview --port 3000",
+    "fix": "npm run lint -- --fix",
+    "lint": "eslint ."
   },
   "eslintConfig": {
     "extends": [
@@ -68,13 +70,14 @@
   "devDependencies": {
     "@originjs/vite-plugin-commonjs": "^1.0.3",
     "@vitejs/plugin-react": "^2.1.0",
-    "eslint": "^7.32.0 || ^8.2.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-plugin-import": "^2.25.3",
-    "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-react": "^7.28.0",
-    "eslint-plugin-react-hooks": "^4.3.0",
-    "eslint-plugin-unused-imports": "^3.0.0",
+    "eslint": "^7.14.0",
+    "eslint-config-standard-kit": "0.15.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "prettier": "^2.2.0",
     "unplugin-auto-import": "^0.11.2",
     "vite": "^3.1.4",
     "vite-jsconfig-paths": "^2.0.1",
