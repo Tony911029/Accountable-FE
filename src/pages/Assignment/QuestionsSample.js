@@ -1,3 +1,9 @@
+export const QUESTION_CONSTANT = {
+  GEN_QUESTION: 'genQuestions',
+  STORE_ANSWER: 'storedAns',
+  COUNT: 'count',
+};
+
 export const sampleQuestions = [
   "How would you introduce yourself to someone you've never met before?",
   'What is your daily routine on a weekday?',

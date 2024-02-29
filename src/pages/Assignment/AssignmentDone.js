@@ -3,6 +3,7 @@ import { Grid } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { LEARNING_CENTER } from 'src/navigation/CONSTANTS';
 import { makeStyles } from 'tss-react/mui';
+import '../Home/Home.css';
 
 function AssignmentDone({ wordCount = 0 }) {
   const history = useHistory();

@@ -1,25 +1,30 @@
-import React from "react";
-import { CircularProgress } from "@mui/material";
-import { makeStyles } from "tss-react/mui";
-import { Button } from "@material-ui/core";
+import { CircularProgress } from '@mui/material';
+import { makeStyles } from 'tss-react/mui';
+import { Button } from '@material-ui/core';
 
-const useStyles = makeStyles()(() => ({
+const useStyles = makeStyles()((theme, { disabled }) => ({
   mainButton: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: "8px 20px",
-    whiteSpace: "pre",
-    boxShadow: " 0px 2px 2px rgba(0, 0, 0, 0.1)",
-    borderRadius: "4px",
-    "&:hover": {
-      boxShadow: "0px 10px 30.5px 0px #FF99004A",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '8px 20px',
+    whiteSpace: 'pre',
+    boxShadow: ' 0px 2px 2px rgba(0, 0, 0, 0.1)',
+    borderRadius: '4px',
+    '&:hover': {
+      boxShadow: '0px 10px 30.5px 0px #FF99004A',
     },
-    background: "#FF9900 !important",
-    backgroundColor: "#FF9900",
-    fontFamily: "Poppins, sans-serif",
-    fontWeight: "700 !important",
-    color: "#fff !important",
+    background: disabled ? '#D3D3D3 !important' : '#FF9900 !important', // Conditional background color
+    backgroundColor: disabled ? '#D3D3D3' : '#FF9900',
+    fontFamily: 'Poppins, sans-serif',
+    fontWeight: '800 !important',
+    color: '#fff !important',
+  },
+  testButton: {
+    // Other styles remain unchanged
+    background: disabled ? '#D3D3D3 !important' : '#FF9900 !important', // Correct conditional logic and syntax
+    backgroundColor: disabled ? '#D3D3D3' : '#FF9900',
+    // Other styles remain unchanged
   },
 }));
 
@@ -28,7 +33,7 @@ function MainButton({
   style,
   isSaved,
   type,
-  disabled,
+  disabled = false,
   onClick,
   onMouseDown,
   btnLabel,
@@ -38,7 +43,7 @@ function MainButton({
   className,
   ...props
 }) {
-  const { classes } = useStyles();
+  const { classes } = useStyles({ disabled });
   return (
     <Button
       type={type}
@@ -51,31 +56,32 @@ function MainButton({
           ? classes.mainButton
           : `${classes.mainButton} noCapitalize`
       }`}
-      onClick={onClick ? onClick : () => {}}
-      aria-expanded={ariaExpanded ? "true" : undefined}
+      onClick={onClick || (() => {})}
+      aria-expanded={ariaExpanded ? 'true' : undefined}
       {...props}
     >
       {isLoading ? (
         <span
           style={{
-            marginRight: "10px",
-            display: "flex",
-            alignItems: "center",
+            marginRight: '10px',
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
-          {" "}
+          {' '}
           <CircularProgress
             size={15}
             style={{
-              marginRight: "10px",
-              display: "flex",
-              alignItems: "center",
+              marginRight: '10px',
+              display: 'flex',
+              alignItems: 'center',
             }}
-          />{" "}
-          {"Saving"}
+          />
+          {' '}
+          Saving
         </span>
       ) : isSaved ? (
-        "Saved"
+        'Saved'
       ) : (
         btnLabel
       )}

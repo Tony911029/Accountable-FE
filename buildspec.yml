@@ -25,7 +25,6 @@ phases:
 #      - chmod 400 ~/.ssh/id_rsa
 #      - ssh -o StrictHostKeyChecking=no ubuntu@$INSTANCE "/home/ubuntu/app/deploy.sh $IMAGE_TAG"
 
-
 artifacts:
   files:
     - Dockerrun.aws.json

@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
-import { Link, useHistory } from 'react-router-dom';
-import { LOGIN, ROOT } from 'src/navigation/CONSTANTS';
+import { useHistory } from 'react-router-dom';
+import { cardStyle } from 'src/styles/CardStyle';
 
 /**
  * Card used in the learning center main page
@@ -11,17 +10,7 @@ function LearningCard(
   { label, to, isActive },
 ) {
   const useStyles = makeStyles()(() => ({
-    card: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      fontWeight: '700 !important',
-      height: '300px',
-      display: 'flex',
-      color: '#FF9900 !important',
-      fontSize: '2rem',
-      textDecoration: 'none !important',
-      textAlign: 'center',
-    },
+    card: cardStyle,
     active: {
       boxShadow: '0px 10px 30px 0px #FF99004A !important',
       borderRadius: '8px',

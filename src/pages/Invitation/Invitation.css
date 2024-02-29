@@ -1,0 +1,25 @@
+.invite-code-wrapper{
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.instruction{
+    text-align: left;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.instruction ul li {
+    margin-bottom: 3rem;
+}
+
+.schoolIntro {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.schoolIntro p{
+    font-size: 24px;
+    font-weight: 700;
+}
