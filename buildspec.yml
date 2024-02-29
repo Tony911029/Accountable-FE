@@ -11,12 +11,8 @@ phases:
       - echo "VITE_CLIENT_ID=$VITE_CLIENT_ID" >> .env
 
       # Use 7 characters of commit hash as image tags
-      - IMAGE_TAG=${COMMIT_HASH}
-      - REPO_URL=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
-
-      # Inject Dockerrun.aws.json
-      - echo Fetching Dockerrun.aws.json file from s3
-      - aws s3 cp $JSON_FILE_PATH Dockerrun.aws.json
+#      - IMAGE_TAG=${COMMIT_HASH}
+#      - REPO_URL=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
   build:
     commands:
       - docker build -t $REPO_URL:latest .

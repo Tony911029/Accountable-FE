@@ -1,14 +1,29 @@
 {
-  "AWSEBDockerrunVersion": "1",
-  "Image": {
-    "Name": "255223668147.dkr.ecr.ca-central-1.amazonaws.com/accountable-fe-testing",
-    "Update": "true"
-  },
-  "Ports": [
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
     {
-      "ContainerPort": "80"
+      "name": "frontend",
+      "image": "255223668147.dkr.ecr.ca-central-1.amazonaws.com/accountable-fe-testing:latest",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ]
+    },
+    {
+      "name": "backend",
+      "image": "255223668147.dkr.ecr.ca-central-1.amazonaws.com/accountable-be-dev:latest",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 8080,
+          "containerPort": 8080
+        }
+      ]
     }
   ]
 }
-
-

@@ -10,8 +10,8 @@ import * as auth from './UserPool';
  - We use cognito to authenticate user => we will get awsUser/nonNativeUser
  - Use awsUser to fetch native user from db
  - if awsUser is found but nativeUser is not found, it is first time login
-          => create a new user
-          => re-fetch user from db again and setUser(dbUser)
+ => create a new user
+ => re-fetch user from db again and setUser(dbUser)
  - If not first time, just let it through
  - When fetching user from our database, we first check if the user is cached
  * * */
