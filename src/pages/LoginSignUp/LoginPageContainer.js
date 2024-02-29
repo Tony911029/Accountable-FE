@@ -3,7 +3,7 @@ import LoginBlock from './LoginBlock';
 import './Login.css';
 import { Redirect, useLocation } from 'react-router-dom';
 import { useAuth } from 'src/navigation/Auth/ProvideAuth';
-import LoadingPage from 'src/pages/Login/LoadingPage';
+import LoadingPage from 'src/pages/LoginSignUp/LoadingPage';
 import Footer from '../../components/AppLayout/Footer';
 
 export default function LoginPageContainer() {

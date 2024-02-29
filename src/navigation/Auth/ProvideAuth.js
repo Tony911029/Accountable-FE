@@ -1,7 +1,3 @@
-/**
- * Context API used for Auth related information and methods.
- * I am keeping everything related to the authentication and PrivateRoute in this one file.
- */
 import {
   createContext, useContext, useEffect, useMemo, useState,
 } from 'react';
@@ -19,13 +15,33 @@ import * as auth from './UserPool';
  - If not first time, just let it through
  - When fetching user from our database, we first check if the user is cached
  * * */
+
+/**
+ * Represents an authority with a specific permission.
+ * @typedef {Object} Authority
+ * @property {string} authority - The permission string.
+ */
+
+/**
+ * Represents a user with various attributes including roles and permissions.
+ * @typedef {Object} User
+ * @property {string} userId - The unique identifier for the user.
+ * @property {?string} orgId - The organization ID the user belongs to, if any.
+ * @property {string} displayName - The user's display name.
+ * @property {string} username - The user's username.
+ * @property {string} email - The user's email address.
+ * @property {string} country - The user's country.
+ * @property {string} role - The user's role.
+ * @property {Authority[]} authorities - A list of authorities indicating the user's permissions.
+ */
+
 export const AuthContext = createContext();
 
 // Context Provider to wrap the whole app within and make auth information (user) available.
 export function ProvideAuth({ children }) {
   const [user, setUser] = useState(null); // native user from db
   const [awsUser, setAwsUser] = useState(null); // user from aws
-  const [role, setRole] = useState('STUDENT'); // native user from db
+  const [role, setRole] = useState(''); // native user from db
   const isFirstTime = useMemo(() => user === null && awsUser !== null, [user, awsUser]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -34,6 +50,10 @@ export function ProvideAuth({ children }) {
   } catch (err) {
     console.log('interceptorErr', err);
   }
+
+  /**
+   * Get current authenticated user from aws
+   * * */
   const getCurrentUser = async () => {
     try {
       // Fetch user data if not cached
@@ -45,6 +65,9 @@ export function ProvideAuth({ children }) {
     }
   };
 
+  /**
+   * Create user payload from aws user to for post user request
+   * */
   const createUserPayload = () => {
     const userPayload = {};
     userPayload.userId = awsUser?.sub;
@@ -55,26 +78,39 @@ export function ProvideAuth({ children }) {
     return userPayload;
   };
 
+  /**
+   * Fetch current user
+   * */
   useEffect(() => {
     getCurrentUser()
       .then(() => setIsLoading(false))
       .catch(() => setIsLoading(false));
   }, []);
 
+  /**
+   * If awsUser is changed, use awsUser info to find the native user from database and set the user state
+   * */
   useEffect(() => {
     async function fetchLocalUser() {
       const cachedUser = localStorage.getItem('cachedUser');
       if (!cachedUser) {
-        const currentUser = await createNewUser(createUserPayload(awsUser));
+        const currentUser = await getNativeUser(awsUser);
         setUser(currentUser);
         localStorage.setItem('cachedUser', JSON.stringify(currentUser));
       } else {
         setUser(JSON.parse(cachedUser));
       }
+      setRole(user?.authorities?.find((item) => item.authority.startsWith('ROLE_'))?.authority);
+      console.log('user from database', user);
     }
     fetchLocalUser();
   }, [awsUser]);
 
+  /**
+   * Sign in the user
+   * @param {string} username
+   * @param {string} password
+   * */
   const signIn = async (username, password) => {
     localStorage.clear();
     await auth.signIn(username, password);
@@ -85,6 +121,9 @@ export function ProvideAuth({ children }) {
     }
   };
 
+  /**
+   * Sign out the user
+   * */
   const signOut = async () => {
     await auth.signOut();
     setUser(null);
@@ -92,6 +131,12 @@ export function ProvideAuth({ children }) {
     localStorage.removeItem('cachedUser');
   };
 
+  /**
+   * Sign up the user
+   * @param {string} newUsername
+   * @param {string} email
+   * @param {string} password
+   * */
   const signUp = async (newUsername, email, password) => {
     // TODO: we can set user here to automatically login upon sign up successfully
     await auth.signUp(newUsername, email, password);
@@ -100,7 +145,6 @@ export function ProvideAuth({ children }) {
   const authValue = {
     user, // nativeUser
     role,
-    setRole,
     isLoading,
     signUp,
     signIn,

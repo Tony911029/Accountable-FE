@@ -202,7 +202,7 @@ function DailySpeakingPage() {
                   </div>
 
                   <AssignmentContentCard
-                    title={`Question ${index + 1}`}
+                    title={`Question ${Number(index) + 1}`}
                     className="content"
                   >
                     <div>{questions[index]?.questionText}</div>

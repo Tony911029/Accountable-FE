@@ -18,7 +18,8 @@ export default function Profile() {
         <div className="full-w align-center theme-text mb-1">
           <h1>My account</h1>
         </div>
-        <div className="flex gap-3rem">
+
+        <div className="flex full-w profile-content">
           <div className="avatar">
             <CgProfile size="8rem" />
             <div

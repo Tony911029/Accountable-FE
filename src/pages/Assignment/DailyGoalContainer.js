@@ -228,11 +228,11 @@ function DailyGoalContainer() {
               <div className="theme-text full-w flex spc-btwn">
                 <div>
                   Word count:
-{count}
+                  {count}
                 </div>
                 <div>
                   Attempts:
-{attempt}
+                  {attempt}
                 </div>
               </div>
             </div>
@@ -280,7 +280,7 @@ function DailyGoalContainer() {
               <div className="theme-text full-w flex">
                 <div>
                   Word count:
-{answers[index - 1]?.count || ''}
+                  {answers[index - 1]?.count || ''}
                 </div>
               </div>
             </div>

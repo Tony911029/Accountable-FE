@@ -1,9 +1,8 @@
-import React from 'react';
 import { CircularProgress } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
 import { Button } from '@material-ui/core';
 
-const useStyles = makeStyles()(() => ({
+const useStyles = makeStyles()((theme, { disabled }) => ({
   mainButton: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -15,11 +14,17 @@ const useStyles = makeStyles()(() => ({
     '&:hover': {
       boxShadow: '0px 10px 30.5px 0px #FF99004A',
     },
-    background: '#FF9900 !important',
-    backgroundColor: '#FF9900',
+    background: disabled ? '#D3D3D3 !important' : '#FF9900 !important', // Conditional background color
+    backgroundColor: disabled ? '#D3D3D3' : '#FF9900',
     fontFamily: 'Poppins, sans-serif',
-    fontWeight: '700 !important',
+    fontWeight: '800 !important',
     color: '#fff !important',
+  },
+  testButton: {
+    // Other styles remain unchanged
+    background: disabled ? '#D3D3D3 !important' : '#FF9900 !important', // Correct conditional logic and syntax
+    backgroundColor: disabled ? '#D3D3D3' : '#FF9900',
+    // Other styles remain unchanged
   },
 }));
 
@@ -28,7 +33,7 @@ function MainButton({
   style,
   isSaved,
   type,
-  disabled,
+  disabled = false,
   onClick,
   onMouseDown,
   btnLabel,
@@ -38,7 +43,7 @@ function MainButton({
   className,
   ...props
 }) {
-  const { classes } = useStyles();
+  const { classes } = useStyles({ disabled });
   return (
     <Button
       type={type}

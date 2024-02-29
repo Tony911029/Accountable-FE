@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './AppHeader.css';
 import { Button } from '@material-ui/core';
 import { CgProfile } from 'react-icons/cg';
 import { makeStyles } from 'tss-react/mui';
 import {
-  LOGIN, ROOT, PROFILE, LEARNING_CENTER,
+  LOGIN, ROOT, PROFILE, LEARNING_CENTER, ADMIN_CENTER, TASK_CENTER,
 } from 'src/navigation/CONSTANTS';
 import { useAuth } from 'src/navigation/Auth/ProvideAuth';
 import { MdLogout } from 'react-icons/md';
 import { FaLongArrowAltLeft } from 'react-icons/fa';
+import { ROLES } from 'src/config/CONSTANTS';
 import { SidebarData } from './SideBarData';
 
 function AppHeader(
@@ -27,24 +28,6 @@ function AppHeader(
     borderRadius: '50%',
     minWidth: '19%',
   };
-  const { user, signOut } = useAuth();
-  const history = useHistory();
-  const handleLogin = () => {
-    history.push(LOGIN);
-  };
-
-  const handleSignOut = () => {
-    signOut();
-  };
-
-  const [profile, setProfile] = useState(false);
-  const toggleProfile = () => setProfile(!profile);
-
-  function handleProfile() {
-    history.push(PROFILE);
-  }
-
-  const isLearningPage = window.location.pathname.includes(LEARNING_CENTER);
 
   const useStyles = makeStyles()(() => ({
     customButton: {
@@ -84,6 +67,37 @@ function AppHeader(
   }));
 
   const { classes } = useStyles();
+  const { user, signOut, role } = useAuth();
+  const history = useHistory();
+  const [profile, setProfile] = useState(false);
+  const isLearningPage = window.location.pathname.includes(LEARNING_CENTER);
+
+  const HOME_PAGE = useMemo(() => {
+    if (role === ROLES.STUDENT) {
+      return LEARNING_CENTER;
+    } if (role === ROLES.ADMIN) {
+      return ADMIN_CENTER;
+    } if (role === ROLES.TEACHER) {
+      return TASK_CENTER;
+    }
+    return ROOT;
+  }, [role]);
+
+  const handleSignOut = () => {
+    signOut();
+  };
+  const handleLogin = () => {
+    history.push(LOGIN);
+  };
+
+  const toggleProfile = () => setProfile(!profile);
+  function handleProfile() {
+    history.push(PROFILE);
+  }
+
+  function handleBack() {
+    history.goBack();
+  }
 
   const loginButton = (
     <Button
@@ -116,25 +130,24 @@ function AppHeader(
     </ul>
   );
 
-  function handleBack() {
-    history.goBack();
-  }
-
   return (
     <div className="mb-30">
       <nav className="nav">
         <div className="site-title">
-          <Link to={ROOT}>ACCOUNTABLE</Link>
+          <Link to={HOME_PAGE}>ACCOUNTABLE</Link>
         </div>
         <div className="header-tabs">
           <ul>
-            {SidebarData.filter((item) => item.isMain).map((item, index) => (
-              <li key={index} className={item.cName}>
-                <Link to={item.path}>
-                  <span>{item.title}</span>
-                </Link>
-              </li>
-            ))}
+            {SidebarData.filter(
+              (item) => item.role === role || item.role === ROLES.ALL,
+            )
+              .map((item, index) => (
+                <li key={index} className={item.cName}>
+                  <Link to={item.path}>
+                    <span>{item.title}</span>
+                  </Link>
+                </li>
+              ))}
           </ul>
           {user ? profileDropDown : loginButton}
         </div>
