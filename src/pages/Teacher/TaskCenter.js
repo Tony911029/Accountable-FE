@@ -8,25 +8,24 @@ import '../Assignment/DailyGoal.css';
 import '../Home/Learning.css';
 import { TaskCenterData } from 'src/pages/Teacher/TaskCenterData';
 import { useAuth } from 'src/navigation/Auth/ProvideAuth';
-import { LearningCenterData } from 'src/pages/Home/LearningCenterData';
 
 function TaskCenter() {
   const { user, role } = useAuth();
   return (
     <AppLayout
       showSubHeader
-      subHeaderLabel="Back to Previous Page"
+      subHeaderLabel='Back to Previous Page'
       isPracticing
     >
       {/* TODO: find a better background, the tiny square is not dense enough for some pages */}
-      <div className="cool-bg">
-        <Grid container className="assignment-container">
-          <div className="assignment-section">
+      <div className='cool-bg'>
+        <Grid container className='assignment-container'>
+          <div className='assignment-section'>
             <h1>Task Center</h1>
             <h1>Class A106 - 1</h1>
           </div>
         </Grid>
-        <div className="learn-container theme-text">
+        <div className='learn-container theme-text'>
           <Grid
             container
             spacing={{ xs: 2, sm: 8, md: 8 }}
@@ -38,13 +37,7 @@ function TaskCenter() {
               }
 
               return (
-                <Grid
-                  key={`Card ${index}`}
-                  item
-                  xs={4}
-                  sm={4}
-                  md={6}
-                >
+                <Grid key={`Card ${index}`} item xs={4} sm={4} md={6}>
                   <LearningCard
                     label={item.title}
                     to={item.path}
@@ -57,7 +50,6 @@ function TaskCenter() {
         </div>
       </div>
       <Footer />
-
     </AppLayout>
   );
 }

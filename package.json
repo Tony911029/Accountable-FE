@@ -43,7 +43,6 @@
     "start": "vite",
     "build": "vite build",
     "serve": "vite preview --port 3000",
-    "fix": "npm run lint -- --fix",
     "lint": "eslint ."
   },
   "eslintConfig": {

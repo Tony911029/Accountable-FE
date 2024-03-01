@@ -1,28 +1,30 @@
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import './DailyGoal.css'
+import { genRandQuestions } from 'src/services/questionService'
+import { AppLayout } from 'src/components/AppLayout/AppLayout'
+import { QUESTION_CONSTANT } from 'src/pages/Assignment/QuestionsSample'
+import AssignmentContentCard from 'src/components/Cards/AssignmentContentCard'
 import {
-  useCallback, useEffect, useMemo, useState,
-} from 'react';
-import './DailyGoal.css';
-import { genRandQuestions, getCallTesting, submitQuestion } from 'src/services/questionService';
-import { AppLayout } from 'src/components/AppLayout/AppLayout';
-import { QUESTION_CONSTANT, sampleQuestions } from 'src/pages/Assignment/QuestionsSample';
-import AssignmentContentCard from 'src/components/Cards/AssignmentContentCard';
-import { MdKeyboardDoubleArrowRight, MdKeyboardDoubleArrowLeft } from 'react-icons/md';
-import { countWords, shuffle } from 'src/pages/Assignment/utils';
-import MainButton from 'src/components/MainButton';
-import AssignmentDone from 'src/pages/Assignment/AssignmentDone';
-import ProgressBar from '@ramonak/react-progress-bar';
-import Footer from '../../components/AppLayout/Footer';
+  MdKeyboardDoubleArrowRight,
+  MdKeyboardDoubleArrowLeft
+} from 'react-icons/md'
+import { countWords, shuffle } from 'src/pages/Assignment/utils'
+import MainButton from 'src/components/MainButton'
+import AssignmentDone from 'src/pages/Assignment/AssignmentDone'
+import ProgressBar from '@ramonak/react-progress-bar'
+import Footer from '../../components/AppLayout/Footer'
 
 // TODO: might wanna try out Amazon service or some other solution for this
 //  as they current solution only supports limited browser:
 //  https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-const microphone = new SpeechRecognition();
-microphone.interimResults = true;
-microphone.lang = 'en-US';
-const timeLimit = 120; // maximum of 120 seconds
-let timeoutId;
-const MAX_QUESTION_NUM = 10;
+const SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition
+const microphone = new SpeechRecognition()
+microphone.interimResults = true
+microphone.lang = 'en-US'
+const timeLimit = 120 // maximum of 120 seconds
+let timeoutId
+const MAX_QUESTION_NUM = 10
 
 /**
  * Filters questions that are active.
@@ -47,209 +49,227 @@ const MAX_QUESTION_NUM = 10;
  */
 
 function ArrowLabel({
-  IconComponent, label, onClick, iconSize, disabled = false,
+  IconComponent,
+  label,
+  onClick,
+  iconSize,
+  disabled = false
 }) {
   return (
-    <div style={{ cursor: 'pointer', color: disabled ? '#E1E1E1' : '#563400' }} onClick={onClick}>
+    <div
+      style={{ cursor: 'pointer', color: disabled ? '#E1E1E1' : '#563400' }}
+      onClick={onClick}
+    >
       <IconComponent style={{ fontSize: iconSize }} />
       <div style={{ marginLeft: '10px' }}>{label}</div>
     </div>
-  );
+  )
 }
 
 function DailySpeakingPage() {
-  const [counts, setCounts] = useState(new Array(MAX_QUESTION_NUM).fill(0));
-  const [questions, setQuestions] = useState([]);
-  const [answers, setAnswers] = useState(new Array(MAX_QUESTION_NUM).fill(''));
-  const [curAns, setCurAns] = useState('');
+  const [counts, setCounts] = useState(new Array(MAX_QUESTION_NUM).fill(0))
+  const [questions, setQuestions] = useState([])
+  const [answers, setAnswers] = useState(new Array(MAX_QUESTION_NUM).fill(''))
+  const [curAns, setCurAns] = useState('')
 
-  const [isRecording, setIsRecording] = useState(false);
-  const [index, setIndex] = useState(0);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isRecording, setIsRecording] = useState(false)
+  const [index, setIndex] = useState(0)
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
-  const queAnswerNum = useMemo(() => answers?.filter((answer) => answer !== '').length);
-  const isLastPage = useMemo(() => index === MAX_QUESTION_NUM - 1, [index, MAX_QUESTION_NUM]);
-  const sum = useMemo(() => counts?.reduce((accumulator, currentValue) => accumulator + currentValue, 0));
+  const queAnswerNum = useMemo(
+    () => answers?.filter(answer => answer !== '').length
+  )
+  const isLastPage = useMemo(
+    () => index === MAX_QUESTION_NUM - 1,
+    [index, MAX_QUESTION_NUM]
+  )
+  const sum = useMemo(() =>
+    counts?.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+  )
 
   const resetStats = () => {
-    setQuestions([]);
-    setAnswers(new Array(MAX_QUESTION_NUM).fill(''));
-    setCounts(new Array(MAX_QUESTION_NUM).fill(0));
-    setIndex(0);
-    localStorage.removeItem(QUESTION_CONSTANT.GEN_QUESTION);
-    localStorage.removeItem(QUESTION_CONSTANT.STORE_ANSWER);
-    localStorage.removeItem(QUESTION_CONSTANT.COUNT);
-  };
+    setQuestions([])
+    setAnswers(new Array(MAX_QUESTION_NUM).fill(''))
+    setCounts(new Array(MAX_QUESTION_NUM).fill(0))
+    setIndex(0)
+    localStorage.removeItem(QUESTION_CONSTANT.GEN_QUESTION)
+    localStorage.removeItem(QUESTION_CONSTANT.STORE_ANSWER)
+    localStorage.removeItem(QUESTION_CONSTANT.COUNT)
+  }
 
   const fetchData = useCallback(async () => {
-    const genQuestions = await genRandQuestions(MAX_QUESTION_NUM);
-    setQuestions(genQuestions);
-  }, []);
+    const genQuestions = await genRandQuestions(MAX_QUESTION_NUM)
+    setQuestions(genQuestions)
+  }, [])
 
   useEffect(() => {
     // resetStats();
-    fetchData();
-  }, [fetchData]);
+    fetchData()
+  }, [fetchData])
 
   useEffect(() => {
-    const storedAnswers = JSON.parse(localStorage.getItem(QUESTION_CONSTANT.STORE_ANSWER));
+    const storedAnswers = JSON.parse(
+      localStorage.getItem(QUESTION_CONSTANT.STORE_ANSWER)
+    )
     if (storedAnswers) {
-      setAnswers(storedAnswers);
-      const storedCount = storedAnswers?.map((answer) => countWords(answer));
-      setCounts(storedCount);
+      setAnswers(storedAnswers)
+      const storedCount = storedAnswers?.map(answer => countWords(answer))
+      setCounts(storedCount)
     }
-  }, []);
+  }, [])
 
-  const storeAnsAttempt = (record) => {
+  const storeAnsAttempt = record => {
     if (record) {
-      setCurAns('');
-      answers[index] = record;
-      setAnswers(answers);
-      counts[index] = countWords(record);
-      setCounts(counts);
-      localStorage.setItem(QUESTION_CONSTANT.STORE_ANSWER, JSON.stringify(answers));
-      localStorage.setItem(QUESTION_CONSTANT.COUNT, JSON.stringify(counts));
+      setCurAns('')
+      answers[index] = record
+      setAnswers(answers)
+      counts[index] = countWords(record)
+      setCounts(counts)
+      localStorage.setItem(
+        QUESTION_CONSTANT.STORE_ANSWER,
+        JSON.stringify(answers)
+      )
+      localStorage.setItem(QUESTION_CONSTANT.COUNT, JSON.stringify(counts))
 
-      if (!isLastPage)setIndex(index + 1);
+      if (!isLastPage) setIndex(index + 1)
     }
-  };
+  }
 
   const handleSubmit = () => {
-    setIsSubmitted(true);
-    resetStats();
-  };
+    setIsSubmitted(true)
+    resetStats()
+  }
 
   const handleRecord = () => {
     if (isRecording) {
-      microphone.start();
+      microphone.start()
       microphone.onend = () => {
-        microphone.start();
-      };
+        microphone.start()
+      }
 
       // Set a timeout to stop the recording after 2 mins
       timeoutId = setTimeout(() => {
-        microphone.stop();
-        storeAnsAttempt(curAns);
-      }, timeLimit * 1000);
+        microphone.stop()
+        storeAnsAttempt(curAns)
+      }, timeLimit * 1000)
     } else {
-      microphone.stop();
-      microphone.onend = () => {};
-      storeAnsAttempt(curAns);
-      if (timeoutId) { clearTimeout(timeoutId); }
+      microphone.stop()
+      microphone.onend = () => {}
+      storeAnsAttempt(curAns)
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
     }
 
     // For some reason, this needs to be here
-    microphone.onstart = () => {};
+    microphone.onstart = () => {}
 
-    let recordingResult;
-    microphone.onresult = (event) => {
+    let recordingResult
+    microphone.onresult = event => {
       recordingResult = Array.from(event.results)
-        .map((result) => result[0])
-        .map((result) => result.transcript)
-        .join('');
-      const wordCount = countWords(recordingResult);
-      const updatedList = counts.map((item, idx) => (idx === index ? wordCount : item));
-      setCounts(updatedList);
-      setCurAns(recordingResult);
-      microphone.onerror = (event) => {
-        console.log(event.error);
-      };
-    };
-  };
+        .map(result => result[0])
+        .map(result => result.transcript)
+        .join('')
+      const wordCount = countWords(recordingResult)
+      const updatedList = counts.map((item, idx) =>
+        idx === index ? wordCount : item
+      )
+      setCounts(updatedList)
+      setCurAns(recordingResult)
+      microphone.onerror = event => {
+        console.log(event.error)
+      }
+    }
+  }
 
   // cap the recording tome at 2 minutes
   useEffect(() => {
-    handleRecord();
+    handleRecord()
     return () => {
       // Cleanup timeout on component unmount
-      clearTimeout(timeoutId);
-    };
-  }, [isRecording]);
+      clearTimeout(timeoutId)
+    }
+  }, [isRecording])
 
   function handlePreQue() {
-    if (index > 0) setIndex(index - 1);
+    if (index > 0) setIndex(index - 1)
   }
 
   function handleNextQue() {
-    if (index < MAX_QUESTION_NUM - 1) setIndex(index + 1);
+    if (index < MAX_QUESTION_NUM - 1) setIndex(index + 1)
   }
 
   return (
     <AppLayout>
-      {!isSubmitted
-        ? (
-          <div className="submit-container">
-            <div className="assignment-wrapper">
-              <ArrowLabel
-                IconComponent={MdKeyboardDoubleArrowLeft}
-                label="Go to Previous Question"
-                            // onClick={handlePreviousQuestion}
-                iconSize="5rem"
-                onClick={handlePreQue}
-                disabled={index === 0}
-              />
+      {!isSubmitted ? (
+        <div className='submit-container'>
+          <div className='assignment-wrapper'>
+            <ArrowLabel
+              IconComponent={MdKeyboardDoubleArrowLeft}
+              label='Go to Previous Question'
+              // onClick={handlePreviousQuestion}
+              iconSize='5rem'
+              onClick={handlePreQue}
+              disabled={index === 0}
+            />
 
-              <div className="assignment-container">
-                <div className="view-50">
-                  <div className="progress-bar-container">
-                    <div className="align-right">{`Question answered: ${queAnswerNum}`}</div>
-                    <ProgressBar
-                      completed={queAnswerNum / MAX_QUESTION_NUM * 100}
-                      bgColor="#FFC163"
-                      baseBgColor="#FFF2DD"
-                      height="2rem"
-                    />
-                  </div>
-
-                  <AssignmentContentCard
-                    title={`Question ${Number(index) + 1}`}
-                    className="content"
-                  >
-                    <div>{questions[index]?.questionText}</div>
-                  </AssignmentContentCard>
-                  <AssignmentContentCard
-                    wordCount
-                    count={counts[index]}
-                    title="Your answer"
-                    button
-                    buttonText={isRecording ? 'Stop' : 'Recording'}
-                    onClick={() => setIsRecording((prevState) => !prevState)}
-                    className="content answer-card"
-                  >
-                    <div>
-                      {isRecording ? curAns : answers[index]}
-                    </div>
-                  </AssignmentContentCard>
-                </div>
-              </div>
-              <ArrowLabel
-                IconComponent={MdKeyboardDoubleArrowRight}
-                label="Go to Next Question"
-                onClick={handleNextQue}
-                iconSize="5rem"
-                disabled={isLastPage}
-              />
-            </div>
-            <div className="assignment-submit flex">
-              {isLastPage
-                  && (
-                  <MainButton
-                    btnLabel="Submit"
-                    onClick={handleSubmit}
-                    className="font-1.2rem"
+            <div className='assignment-container'>
+              <div className='view-50'>
+                <div className='progress-bar-container'>
+                  <div className='align-right'>{`Question answered: ${queAnswerNum}`}</div>
+                  <ProgressBar
+                    completed={(queAnswerNum / MAX_QUESTION_NUM) * 100}
+                    bgColor='#FFC163'
+                    baseBgColor='#FFF2DD'
+                    height='2rem'
                   />
-                  )}
-            </div>
+                </div>
 
+                <AssignmentContentCard
+                  title={`Question ${Number(index) + 1}`}
+                  className='content'
+                >
+                  <div>{questions[index]?.questionText}</div>
+                </AssignmentContentCard>
+
+                <AssignmentContentCard
+                  wordCount
+                  count={counts[index]}
+                  title='Your answer'
+                  button
+                  buttonText={isRecording ? 'Stop' : 'Recording'}
+                  onClick={() => setIsRecording(prevState => !prevState)}
+                  className='content answer-card'
+                >
+                  <div>{isRecording ? curAns : answers[index]}</div>
+                </AssignmentContentCard>
+              </div>
+            </div>
+            <ArrowLabel
+              IconComponent={MdKeyboardDoubleArrowRight}
+              label='Go to Next Question'
+              onClick={handleNextQue}
+              iconSize='5rem'
+              disabled={isLastPage}
+            />
           </div>
-        ) : (
-          <AssignmentDone wordCount={sum} />
-        )}
+          <div className='assignment-submit flex'>
+            {isLastPage && (
+              <MainButton
+                btnLabel='Submit'
+                onClick={handleSubmit}
+                className='font-1.2rem'
+              />
+            )}
+          </div>
+        </div>
+      ) : (
+        <AssignmentDone wordCount={sum} />
+      )}
 
       <Footer />
     </AppLayout>
-
-  );
+  )
 }
 
-export default DailySpeakingPage;
+export default DailySpeakingPage

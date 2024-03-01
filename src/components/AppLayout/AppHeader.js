@@ -5,7 +5,12 @@ import { Button } from '@material-ui/core';
 import { CgProfile } from 'react-icons/cg';
 import { makeStyles } from 'tss-react/mui';
 import {
-  LOGIN, ROOT, PROFILE, LEARNING_CENTER, ADMIN_CENTER, TASK_CENTER,
+  LOGIN,
+  ROOT,
+  PROFILE,
+  LEARNING_CENTER,
+  ADMIN_CENTER,
+  TASK_CENTER,
 } from 'src/navigation/CONSTANTS';
 import { useAuth } from 'src/navigation/Auth/ProvideAuth';
 import { MdLogout } from 'react-icons/md';
@@ -13,14 +18,12 @@ import { FaLongArrowAltLeft } from 'react-icons/fa';
 import { ROLES } from 'src/config/CONSTANTS';
 import { SidebarData } from './SideBarData';
 
-function AppHeader(
-  {
-    showSubHeader = false,
-    subHeaderLabel = '',
-    isPracticing,
-    setIsPracticing,
-  },
-) {
+function AppHeader({
+  showSubHeader = false,
+  subHeaderLabel = '',
+  isPracticing,
+  setIsPracticing,
+}) {
   const iconStyles = {
     backgroundColor: 'FF9900',
     color: '#fff',
@@ -75,9 +78,11 @@ function AppHeader(
   const HOME_PAGE = useMemo(() => {
     if (role === ROLES.STUDENT) {
       return LEARNING_CENTER;
-    } if (role === ROLES.ADMIN) {
+    }
+    if (role === ROLES.ADMIN) {
       return ADMIN_CENTER;
-    } if (role === ROLES.TEACHER) {
+    }
+    if (role === ROLES.TEACHER) {
       return TASK_CENTER;
     }
     return ROOT;
@@ -111,67 +116,59 @@ function AppHeader(
 
   const profileDropDown = (
     // TODO: Fixed the username overflow
-    <ul className="dropDownProfile">
+    <ul className='dropDownProfile'>
       <li onClick={toggleProfile}>
-        <CgProfile style={iconStyles} size="1.7rem" />
-        {' '}
-        <span className="listText">{user?.username}</span>
+        <CgProfile style={iconStyles} size='1.7rem' />{' '}
+        <span className='listText'>{user?.username}</span>
       </li>
       <li className={profile ? '' : 'hideDropDown'} onClick={handleProfile}>
-        <CgProfile style={iconStyles} size="1.7rem" />
-        {' '}
-        <span className="ListText">My Account</span>
+        <CgProfile style={iconStyles} size='1.7rem' />{' '}
+        <span className='ListText'>My Account</span>
       </li>
       <li className={profile ? '' : 'hideDropDown'} onClick={handleSignOut}>
-        <MdLogout style={iconStyles} size="1.7rem" />
-        {' '}
-        <span className="listText">Log Out</span>
+        <MdLogout style={iconStyles} size='1.7rem' />{' '}
+        <span className='listText'>Log Out</span>
       </li>
     </ul>
   );
 
   return (
-    <div className="mb-30">
-      <nav className="nav">
-        <div className="site-title">
+    <div className='mb-30'>
+      <nav className='nav'>
+        <div className='site-title'>
           <Link to={HOME_PAGE}>ACCOUNTABLE</Link>
         </div>
-        <div className="header-tabs">
+        <div className='header-tabs'>
           <ul>
             {SidebarData.filter(
-              (item) => item.role === role || item.role === ROLES.ALL,
-            )
-              .map((item, index) => (
-                <li key={index} className={item.cName}>
-                  <Link to={item.path}>
-                    <span>{item.title}</span>
-                  </Link>
-                </li>
-              ))}
+              (item) => item.role === role || item.role === ROLES.ALL
+            ).map((item, index) => (
+              <li key={index} className={item.cName}>
+                <Link to={item.path}>
+                  <span>{item.title}</span>
+                </Link>
+              </li>
+            ))}
           </ul>
           {user ? profileDropDown : loginButton}
         </div>
       </nav>
-      {showSubHeader
-          && (
-          <nav className="nav sub-header">
-            <div className="flex header-tabs gap-1">
-              <FaLongArrowAltLeft
-                className={classes.customBack}
-                onClick={handleBack}
-              />
-              <div>
-                {subHeaderLabel}
-              </div>
+      {showSubHeader && (
+        <nav className='nav sub-header'>
+          <div className='flex header-tabs gap-1'>
+            <FaLongArrowAltLeft
+              className={classes.customBack}
+              onClick={handleBack}
+            />
+            <div>{subHeaderLabel}</div>
+          </div>
+          {isPracticing && (
+            <div className={classes.exitButton}>
+              <Link to={LEARNING_CENTER}>Exit</Link>
             </div>
-            {(isPracticing)
-              && (
-              <div className={classes.exitButton}>
-                <Link to={LEARNING_CENTER}>Exit</Link>
-              </div>
-              )}
-          </nav>
           )}
+        </nav>
+      )}
     </div>
   );
 }

@@ -1,39 +1,42 @@
-import React from 'react';
-import * as FaIcons from 'react-icons/fa';
-import * as AiIcons from 'react-icons/ai';
-import * as IoIcons from 'react-icons/io';
-import { ROLES } from 'src/config/CONSTANTS';
+import React from "react";
+import * as AiIcons from "react-icons/ai";
+import { ROLES } from "src/config/CONSTANTS";
+import {
+  ADMIN_CENTER,
+  LEARNING_CENTER,
+  TASK_CENTER,
+} from "src/navigation/CONSTANTS";
 
 export const SidebarData = [
   {
-    title: 'HOME',
-    path: '/',
+    title: "HOME",
+    path: "/",
     icon: <AiIcons.AiFillHome />,
-    cName: 'nav-text home',
+    cName: "nav-text home",
     isMain: true,
     role: ROLES.ALL,
   },
   {
-    title: 'Learning Center',
-    path: '/learning-center',
+    title: "Learning Center",
+    path: LEARNING_CENTER,
     icon: <AiIcons.AiFillHome />,
-    cName: 'nav-text',
+    cName: "nav-text",
     isMain: true,
     role: ROLES.STUDENT,
   },
   {
-    title: 'Task Center',
-    path: '/task-center',
+    title: "Task Center",
+    path: TASK_CENTER,
     icon: <AiIcons.AiFillHome />,
-    cName: 'nav-text',
+    cName: "nav-text",
     isMain: true,
     role: ROLES.TEACHER,
   },
   {
-    title: 'Admin Center',
-    path: '/admin-center',
+    title: "Admin Center",
+    path: ADMIN_CENTER,
     icon: <AiIcons.AiFillHome />,
-    cName: 'nav-text',
+    cName: "nav-text",
     isMain: true,
     role: ROLES.ADMIN,
   },
