@@ -7,6 +7,7 @@ import './Learning.css'
 import '../Assignment/DailyGoal.css'
 import '../../App.css'
 import { useAuth } from 'src/navigation/Auth/ProvideAuth'
+import DropDownList from 'src/components/DropDownList/DropDownList'
 
 function LearningCenterContainer() {
   /** @property {User} user * */
@@ -22,10 +23,13 @@ function LearningCenterContainer() {
         <Grid container className='assignment-container'>
           <div className='assignment-section'>
             <h1>Learning Center</h1>
-            <p>Let's practice English together!</p>
+            <p className='mb-30'>Let's practice English together!</p>
+            <h1>Self Growing Zone</h1>
+          </div>
+          <div className='dropdown-position'>
+            <DropDownList />
           </div>
         </Grid>
-
         <div className='learn-container theme-text'>
           <Grid
             container

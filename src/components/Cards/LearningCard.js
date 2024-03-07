@@ -1,14 +1,12 @@
-import { makeStyles } from 'tss-react/mui';
-import { useHistory } from 'react-router-dom';
-import { cardStyle } from 'src/styles/CardStyle';
+import { makeStyles } from 'tss-react/mui'
+import { useHistory } from 'react-router-dom'
+import { cardStyle } from 'src/styles/CardStyle'
 
 /**
  * Card used in the learning center main page
  *
  * * */
-function LearningCard(
-  { label, to, isActive },
-) {
+function LearningCard({ label, to, isActive }) {
   const useStyles = makeStyles()(() => ({
     card: cardStyle,
     active: {
@@ -18,29 +16,36 @@ function LearningCard(
         background: '#FFDEAB',
         color: 'white !important',
         boxShadow: '0px 5px 21px 0px #FF990033 !important',
-        cursor: 'pointer',
-      },
+        cursor: 'pointer'
+      }
     },
     inActive: {
       background: '#E1E1E1',
-      color: 'white !important',
-    },
-  }));
+      color: 'white !important'
+    }
+  }))
 
-  const { classes } = useStyles();
+  const { classes } = useStyles()
 
-  const history = useHistory();
+  const history = useHistory()
   const handleClick = () => {
     if (isActive) {
-      history.push(to);
+      history.push(to)
     }
-  };
+  }
 
   return (
-    <div className={isActive ? `${classes.card} ${classes.active}` : `${classes.card} ${classes.inActive}`} onClick={handleClick}>
+    <div
+      className={
+        isActive
+          ? `${classes.card} ${classes.active}`
+          : `${classes.card} ${classes.inActive}`
+      }
+      onClick={handleClick}
+    >
       <div>{label}</div>
     </div>
-  );
+  )
 }
 
-export default LearningCard;
+export default LearningCard

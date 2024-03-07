@@ -1,16 +1,17 @@
-import { AppLayout } from 'src/components/AppLayout/AppLayout';
-import { Grid } from '@mui/material';
-import LearningCard from 'src/components/Cards/LearningCard';
-import Footer from 'src/components/AppLayout/Footer';
+import { AppLayout } from 'src/components/AppLayout/AppLayout'
+import { Grid } from '@mui/material'
+import LearningCard from 'src/components/Cards/LearningCard'
+import Footer from 'src/components/AppLayout/Footer'
 
 // todo: gotta move this to comment view
-import '../Assignment/DailyGoal.css';
-import '../Home/Learning.css';
-import { TaskCenterData } from 'src/pages/Teacher/TaskCenterData';
-import { useAuth } from 'src/navigation/Auth/ProvideAuth';
+import '../Assignment/DailyGoal.css'
+import '../Home/Learning.css'
+import { TaskCenterData } from 'src/pages/Teacher/TaskCenterData'
+import { useAuth } from 'src/navigation/Auth/ProvideAuth'
+import DropDownList from 'src/components/DropDownList/DropDownList'
 
 function TaskCenter() {
-  const { user, role } = useAuth();
+  const { user, role } = useAuth()
   return (
     <AppLayout
       showSubHeader
@@ -24,6 +25,9 @@ function TaskCenter() {
             <h1>Task Center</h1>
             <h1>Class A106 - 1</h1>
           </div>
+          <div className='dropdown-position'>
+            <DropDownList />
+          </div>
         </Grid>
         <div className='learn-container theme-text'>
           <Grid
@@ -33,7 +37,7 @@ function TaskCenter() {
           >
             {TaskCenterData.map((item, index) => {
               if (item.name === 'joinSchool' && user.orgId) {
-                return null; // show join school if the user is not assigned to any
+                return null // show join school if the user is not assigned to any
               }
 
               return (
@@ -44,14 +48,14 @@ function TaskCenter() {
                     isActive={item.isActive}
                   />
                 </Grid>
-              );
+              )
             })}
           </Grid>
         </div>
       </div>
       <Footer />
     </AppLayout>
-  );
+  )
 }
 
-export default TaskCenter;
+export default TaskCenter

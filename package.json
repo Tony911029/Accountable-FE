@@ -9,6 +9,7 @@
     "@material-ui/icons": "^4.11.3",
     "@mui/icons-material": "^5.14.16",
     "@mui/material": "^5.14.17",
+    "@mui/x-data-grid": "^6.19.6",
     "@ramonak/react-progress-bar": "^5.2.0",
     "@reduxjs/toolkit": "^1.9.7",
     "@testing-library/jest-dom": "^5.17.0",

@@ -200,9 +200,9 @@ function DailySpeakingPage() {
   }
 
   return (
-    <AppLayout>
+    <AppLayout showSubHeader subHeaderLabel='EXIT' isPracticing>
       {!isSubmitted ? (
-        <div className='submit-container'>
+        <div>
           <div className='assignment-wrapper'>
             <ArrowLabel
               IconComponent={MdKeyboardDoubleArrowLeft}

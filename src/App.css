@@ -15,6 +15,22 @@
    margin-right: 5px;
 }
 
+.mb-30{
+    margin-bottom: 30px;
+}
+
+.mb-15{
+    margin-bottom: 15px;
+}
+
+ml-25{
+    margin-left: 25%;
+}
+
+mr-25{
+    margin-right: 25%;
+}
+
 .pl-65{
     padding-left: 65px;
 }
@@ -31,8 +47,18 @@
     gap:3rem
 }
 
+.gap-25{
+    gap:25%
+}
+
+
 .theme-text{
     color: #FF9900;
+}
+
+.table-info h1{
+    font-size: 25px;
+    font-weight: 600;
 }
 
 .cool-bg{
@@ -66,15 +92,29 @@
     /*justify-content: flex-start;*/
 }
 
+.align-top{
+    align-items: flex-start !important;
+}
+
 /*TODO: I think we should move assignment-section to more general area*/
 /* Change those names to more appropriate names*/
 /*this container will center the dev*/
+/*flex-dir column*/
 .assignment-container{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
+}
+
+/*flex-dir row*/
+.assignment-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 10% 0 10%
 }
 
 .assignment-section h1{
@@ -98,6 +138,9 @@
     align-items: center;
 }
 
+
+
+
 .learn-container{
     padding: 60px;
     margin: 20px 5% 30% 5%;
@@ -105,6 +148,11 @@
 
 .learn-container a{
     text-decoration: none;
+}
+
+.dropdown-position{
+    position: absolute;
+    margin-left: 60%;
 }
 
 .card{

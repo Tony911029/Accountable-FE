@@ -1,8 +1,8 @@
-import { lazy, Suspense } from "react";
-import { Switch, Route } from "react-router-dom";
-import PrivateRoute from "src/navigation/Auth/PrivateRoute";
-import LoadingPage from "src/pages/LoginSignUp/LoadingPage";
-import { NotFound } from "./NotFound";
+import { lazy, Suspense } from 'react'
+import { Switch, Route } from 'react-router-dom'
+import PrivateRoute from 'src/navigation/Auth/PrivateRoute'
+import LoadingPage from 'src/pages/LoginSignUp/LoadingPage'
+import { NotFound } from './NotFound'
 import {
   ROOT,
   PROGRESS,
@@ -16,57 +16,63 @@ import {
   TASK_CENTER,
   ADMIN_CENTER,
   INVITATION,
-} from "./CONSTANTS";
+  TEACHER_LIST
+} from './CONSTANTS'
 
 const LoginPageContainer = lazy(() =>
   import(
-    /* webpackChunkName: "LoginPageContainer" */ "../pages/LoginSignUp/LoginPageContainer"
+    /* webpackChunkName: "LoginPageContainer" */ '../pages/LoginSignUp/LoginPageContainer'
   )
-);
+)
 // const DailyGoalContainer = lazy(() => import("../pages/Assignment/DailyGoalContainer"));
 const LeaderboardContainer = lazy(() =>
   import(
-    /* webpackChunkName: "LeaderboardContainer" */ "../pages/Leaderboard/LeaderboardContainer"
+    /* webpackChunkName: "LeaderboardContainer" */ '../pages/Leaderboard/LeaderboardContainer'
   )
-);
+)
 const ProgressContainer = lazy(() =>
   import(
-    /* webpackChunkName: "ProgressContainer" */ "../pages/Progress/ProgressContainer"
+    /* webpackChunkName: "ProgressContainer" */ '../pages/Progress/ProgressContainer'
   )
-);
+)
 const SignUp = lazy(() =>
-  import(/* webpackChunkName: "SignUp" */ "../pages/LoginSignUp/SignUp")
-);
+  import(/* webpackChunkName: "SignUp" */ '../pages/LoginSignUp/SignUp')
+)
 const ConfirmSignUp = lazy(() =>
   import(
-    /* webpackChunkName: "ConfirmSignUp" */ "../pages/LoginSignUp/ConfirmSignUp"
+    /* webpackChunkName: "ConfirmSignUp" */ '../pages/LoginSignUp/ConfirmSignUp'
   )
-);
+)
 const Profile = lazy(() =>
-  import(/* webpackChunkName: "Profile" */ "../pages/LoginSignUp/Profile")
-);
+  import(/* webpackChunkName: "Profile" */ '../pages/LoginSignUp/Profile')
+)
 const LearningCenterContainer = lazy(() =>
   import(
-    /* webpackChunkName: "LearningCenterContainer" */ "src/pages/Home/LearningCenter"
+    /* webpackChunkName: "LearningCenterContainer" */ 'src/pages/Home/LearningCenter'
   )
-);
+)
 const DailySpeakingPage = lazy(() =>
   import(
-    /* webpackChunkName: "DailySpeakingPage" */ "src/pages/Assignment/DailySpeakingPage"
+    /* webpackChunkName: "DailySpeakingPage" */ 'src/pages/Assignment/DailySpeakingPage'
   )
-);
+)
 const Home = lazy(() =>
-  import(/* webpackChunkName: "HOME" */ "src/pages/Home/HomeContainer")
-);
+  import(/* webpackChunkName: "HOME" */ 'src/pages/Home/HomeContainer')
+)
 const InviteCode = lazy(() =>
-  import(/* webpackChunkName: "Invitation" */ "src/pages/Invitation/InviteCode")
-);
+  import(/* webpackChunkName: "Invitation" */ 'src/pages/Invitation/InviteCode')
+)
 const TaskCenter = lazy(() =>
-  import(/* webpackChunkName: "TaskCenter" */ "src/pages/Teacher/TaskCenter")
-);
+  import(/* webpackChunkName: "TaskCenter" */ 'src/pages/Teacher/TaskCenter')
+)
 const AdminCenter = lazy(() =>
-  import(/* webpackChunkName: "AdminCenter" */ "src/pages/Admin/AdminCenter")
-);
+  import(/* webpackChunkName: "AdminCenter" */ 'src/pages/Admin/AdminCenter')
+)
+const AdminUserList = lazy(() =>
+  import(
+    /* webpackChunkName: "AdminUserList" */ 'src/pages/Admin/AdminUserList'
+  )
+)
 
 export function RouterConfig() {
   return (
@@ -104,6 +110,7 @@ export function RouterConfig() {
 
             {/* Admin Path */}
             <PrivateRoute exact path={ADMIN_CENTER} component={AdminCenter} />
+            <PrivateRoute exact path={TEACHER_LIST} component={AdminUserList} />
 
             <PrivateRoute
               exact
@@ -111,12 +118,12 @@ export function RouterConfig() {
               component={ConfirmSignUp}
             />
 
-            <Route path="*">
+            <Route path='*'>
               <NotFound />
             </Route>
           </Switch>
         </Suspense>
       </div>
     </div>
-  );
+  )
 }

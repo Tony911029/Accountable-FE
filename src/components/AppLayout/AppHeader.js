@@ -1,36 +1,36 @@
-import { useState, useMemo } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import './AppHeader.css';
-import { Button } from '@material-ui/core';
-import { CgProfile } from 'react-icons/cg';
-import { makeStyles } from 'tss-react/mui';
+import { useState, useMemo, useEffect } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import './AppHeader.css'
+import { Button } from '@material-ui/core'
+import { CgProfile } from 'react-icons/cg'
+import { makeStyles } from 'tss-react/mui'
 import {
   LOGIN,
   ROOT,
   PROFILE,
   LEARNING_CENTER,
   ADMIN_CENTER,
-  TASK_CENTER,
-} from 'src/navigation/CONSTANTS';
-import { useAuth } from 'src/navigation/Auth/ProvideAuth';
-import { MdLogout } from 'react-icons/md';
-import { FaLongArrowAltLeft } from 'react-icons/fa';
-import { ROLES } from 'src/config/CONSTANTS';
-import { SidebarData } from './SideBarData';
+  TASK_CENTER
+} from 'src/navigation/CONSTANTS'
+import { useAuth } from 'src/navigation/Auth/ProvideAuth'
+import { MdLogout } from 'react-icons/md'
+import { FaLongArrowAltLeft } from 'react-icons/fa'
+import { ROLES } from 'src/config/CONSTANTS'
+import { SidebarData } from './SideBarData'
 
 function AppHeader({
-  showSubHeader = false,
+  showSubHeader = true,
   subHeaderLabel = '',
   isPracticing,
-  setIsPracticing,
+  setIsPracticing
 }) {
   const iconStyles = {
     backgroundColor: 'FF9900',
     color: '#fff',
     fontSize: '1.2rem',
     borderRadius: '50%',
-    minWidth: '19%',
-  };
+    minWidth: '19%'
+  }
 
   const useStyles = makeStyles()(() => ({
     customButton: {
@@ -42,66 +42,72 @@ function AppHeader({
       boxShadow: ' 0px 2px 2px rgba(0, 0, 0, 0.1)',
       borderRadius: '4px',
       '&:hover': {
-        boxShadow: '0px 10px 30px 0px #FF99004A !important',
+        boxShadow: '0px 10px 30px 0px #FF99004A !important'
       },
       background: '#FFF !important',
       fontFamily: 'Poppins, sans-serif !important',
-      fontWeight: '700 !important',
+      fontWeight: '700 !important'
     },
     customBack: {
       color: '#FF990026',
       fontSize: '3rem',
       '&:hover': {
-        cursor: 'pointer',
-      },
+        cursor: 'pointer'
+      }
     },
     exitButton: {
       color: '#FF990026',
       fontSize: '1rem',
       '&:hover': {
-        cursor: 'pointer',
+        cursor: 'pointer'
       },
       width: '5.5rem',
       border: ' 4px solid #FF99004A',
       borderRadius: '16px',
       display: 'flex',
-      justifyContent: 'center',
-    },
-  }));
+      justifyContent: 'center'
+    }
+  }))
 
-  const { classes } = useStyles();
-  const { user, signOut, role } = useAuth();
-  const history = useHistory();
-  const [profile, setProfile] = useState(false);
-  const isLearningPage = window.location.pathname.includes(LEARNING_CENTER);
+  const { classes } = useStyles()
+  const { user, signOut, role } = useAuth()
+  const history = useHistory()
+  const [profile, setProfile] = useState(false)
+  const isLearningPage = window.location.pathname.includes(LEARNING_CENTER)
+
+  const [userRole, setUserRole] = useState(role)
+
+  useEffect(() => {
+    setUserRole(role)
+  }, [role])
 
   const HOME_PAGE = useMemo(() => {
-    if (role === ROLES.STUDENT) {
-      return LEARNING_CENTER;
+    if (userRole === ROLES.STUDENT) {
+      return LEARNING_CENTER
     }
-    if (role === ROLES.ADMIN) {
-      return ADMIN_CENTER;
+    if (userRole === ROLES.ADMIN) {
+      return ADMIN_CENTER
     }
-    if (role === ROLES.TEACHER) {
-      return TASK_CENTER;
+    if (userRole === ROLES.TEACHER) {
+      return TASK_CENTER
     }
-    return ROOT;
-  }, [role]);
+    return ROOT
+  }, [userRole])
 
   const handleSignOut = () => {
-    signOut();
-  };
+    signOut()
+  }
   const handleLogin = () => {
-    history.push(LOGIN);
-  };
+    history.push(LOGIN)
+  }
 
-  const toggleProfile = () => setProfile(!profile);
+  const toggleProfile = () => setProfile(!profile)
   function handleProfile() {
-    history.push(PROFILE);
+    history.push(PROFILE)
   }
 
   function handleBack() {
-    history.goBack();
+    history.goBack()
   }
 
   const loginButton = (
@@ -112,7 +118,7 @@ function AppHeader({
     >
       Login/Register
     </Button>
-  );
+  )
 
   const profileDropDown = (
     // TODO: Fixed the username overflow
@@ -130,7 +136,7 @@ function AppHeader({
         <span className='listText'>Log Out</span>
       </li>
     </ul>
-  );
+  )
 
   return (
     <div className='mb-30'>
@@ -141,7 +147,7 @@ function AppHeader({
         <div className='header-tabs'>
           <ul>
             {SidebarData.filter(
-              (item) => item.role === role || item.role === ROLES.ALL
+              item => item.role === userRole || item.role === ROLES.ALL
             ).map((item, index) => (
               <li key={index} className={item.cName}>
                 <Link to={item.path}>
@@ -170,7 +176,7 @@ function AppHeader({
         </nav>
       )}
     </div>
-  );
+  )
 }
 
-export default AppHeader;
+export default AppHeader
