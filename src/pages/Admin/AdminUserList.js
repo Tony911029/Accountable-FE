@@ -4,6 +4,9 @@ import UserListTable from 'src/components/Tables/UserListTable'
 import 'App.css'
 import AddPersonIcon from 'src/components/Icon/Badge'
 
+// TODO: Will need to add more props for customization,
+//  this will be used for "list student/List teachers" for admin
+//  this will be used for "list students" for teacher's management classroom view
 function AdminUserList() {
   return (
     <AppLayout

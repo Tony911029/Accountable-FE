@@ -13,6 +13,9 @@ import { LEARNING_CENTER, TASK_CENTER } from 'src/navigation/CONSTANTS'
 import { findOrgByCode } from 'src/services/orgService'
 import { CgProfile } from 'react-icons/cg'
 
+// TODO: Will need to add more props for customization,
+//  this will be used for "join school" for both students and teachers
+//  this will be used for "join classroom" for students
 function InviteCode() {
   /** @property {User} user * */
   const { role } = useAuth()

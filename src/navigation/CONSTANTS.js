@@ -22,8 +22,11 @@ export const PROFILE = '/profile'
 export const INVITATION = '/invite'
 
 // Teacher Page
-export const TASK_CENTER = '/task_center'
+export const TASK_CENTER = '/teacher/task_center'
+export const TEACHER_STUDENT_LIST = '/teacher/student_list'
+export const TEACHER_CLASSROOMS = '/teacher/classrooms'
 
 // Admin Page
-export const ADMIN_CENTER = '/admin_center'
-export const TEACHER_LIST = '/teacher_list'
+export const ADMIN_CENTER = '/admin/admin_center'
+export const ADMIN_TEACHER_LIST = '/admin/teacher_list'
+export const ADMIN_STUDENT_LIST = '/admin/student_list'

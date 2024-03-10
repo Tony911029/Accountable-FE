@@ -1,16 +1,19 @@
-import { TEACHER_LIST } from 'src/navigation/CONSTANTS'
+import {
+  ADMIN_STUDENT_LIST,
+  ADMIN_TEACHER_LIST
+} from 'src/navigation/CONSTANTS'
 
 export const AdminCenterData = [
   {
     title: 'Teacher List',
     name: 'teacher',
-    path: TEACHER_LIST,
+    path: ADMIN_TEACHER_LIST,
     isActive: true
   },
   {
     title: 'Student List',
     name: 'student',
-    path: '/',
+    path: ADMIN_STUDENT_LIST,
     isActive: true
   },
   {

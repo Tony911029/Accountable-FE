@@ -4,9 +4,9 @@ import LearningCard from 'src/components/Cards/LearningCard'
 import Footer from 'src/components/AppLayout/Footer'
 
 // todo: gotta move this to comment view
-import '../Assignment/DailyGoal.css'
-import '../Home/Learning.css'
-import { TaskCenterData } from 'src/pages/Teacher/TaskCenterData'
+import '../../Assignment/DailyGoal.css'
+import '../../Home/Learning.css'
+import { TaskCenterData } from 'src/pages/Teacher/TaskCenter/TaskCenterData'
 import { useAuth } from 'src/navigation/Auth/ProvideAuth'
 import DropDownList from 'src/components/DropDownList/DropDownList'
 

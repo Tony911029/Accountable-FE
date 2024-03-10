@@ -21,7 +21,7 @@ const columns = [
     field: 'avatar',
     headerName: 'Avatar',
     renderCell: params => <Row params={params} />,
-    width: 150,
+    flex: 3,
     editable: false
   },
   {
@@ -30,16 +30,16 @@ const columns = [
     renderCell: params => (
       <div className='table-text'>{params.row.username}</div>
     ),
-    width: 250,
+    flex: 5,
     editable: false
   }
 ]
 
 const rows = [
   { id: 1, avatar: 'Snow', username: 'Giannis Antetokounmpo' },
-  { id: 2, avatar: 'Lannister', username: 'Amanda Anderson' },
+  { id: 2, avatar: 'Lancaster', username: 'Amanda Anderson' },
   { id: 3, avatar: 'Tony', username: 'Michael Wilson' },
-  { id: 4, avatar: 'Tommmy', username: 'Emily Johnson' },
+  { id: 4, avatar: 'Tommy', username: 'Emily Johnson' },
   { id: 5, avatar: 'Chris', username: 'Maria Rodriguez' },
   { id: 6, avatar: 'Ben', username: 'Benjamin Lewis' },
   { id: 7, avatar: 'Evan', username: 'Linh Nguyen' },
@@ -51,52 +51,52 @@ const rows = [
   { id: 13, avatar: 'West', username: 'Hello Wolrd' }
 ]
 
-function UserListTable() {
-  const useStyles = makeStyles()(() => ({
-    root: {
-      '& .MuiDataGrid-cell:focus, & .MuiDataGrid-cell:focus-within': {
+const useStyles = makeStyles()(() => ({
+  root: {
+    '& .MuiDataGrid-cell:focus, & .MuiDataGrid-cell:focus-within': {
+      outline: 'none'
+    },
+    '& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-columnHeader:focus-within':
+      {
         outline: 'none'
       },
-      '& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-columnHeader:focus-within':
-        {
-          outline: 'none'
-        },
-      '& .Mui-focused': {
-        outline: 'none'
-      },
-      '& .MuiCheckbox-root svg': {
-        width: 25,
-        height: 25,
-        backgroundColor: 'transparent',
-        border: `3px solid #FFC56D`,
-        borderRadius: '50%'
-      },
-      '& .MuiCheckbox-root svg path': {
-        display: 'none'
-      },
-      '& .MuiCheckbox-root.Mui-checked:not(.MuiCheckbox-indeterminate) svg': {
-        backgroundColor: '#FFC56D',
-        borderColor: '#FFC56D'
-      },
-      '& .MuiDataGrid-cell': {
-        border: 'none'
-      },
-      '& .MuiDataGrid-columnHeaders': {
-        border: 'none'
-      },
-      '& .MuiDataGrid-footerContainer ': {
-        border: 'none'
-      },
-      border: 'none',
-      boxShadow: '0px 5px 21px 0px rgba(255, 153, 0, 0.2)',
-      borderRadius: '10px',
-      '& .MuiDataGrid-main': {
-        borderRadius: '10px'
-      },
-      padding: '25px 0px 0px 25px'
-    }
-  }))
+    '& .Mui-focused': {
+      outline: 'none'
+    },
+    '& .MuiCheckbox-root svg': {
+      width: 25,
+      height: 25,
+      backgroundColor: 'transparent',
+      border: `3px solid #FFC56D`,
+      borderRadius: '50%'
+    },
+    '& .MuiCheckbox-root svg path': {
+      display: 'none'
+    },
+    '& .MuiCheckbox-root.Mui-checked:not(.MuiCheckbox-indeterminate) svg': {
+      backgroundColor: '#FFC56D',
+      borderColor: '#FFC56D'
+    },
+    '& .MuiDataGrid-cell': {
+      border: 'none'
+    },
+    '& .MuiDataGrid-columnHeaders': {
+      border: 'none'
+    },
+    '& .MuiDataGrid-footerContainer ': {
+      border: 'none'
+    },
+    border: 'none',
+    boxShadow: '0px 5px 21px 0px rgba(255, 153, 0, 0.2)',
+    borderRadius: '10px',
+    '& .MuiDataGrid-main': {
+      borderRadius: '10px'
+    },
+    padding: '25px 0px 0px 25px'
+  }
+}))
 
+function UserListTable() {
   const { classes } = useStyles()
   return (
     <Box
