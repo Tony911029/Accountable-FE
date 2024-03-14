@@ -1,14 +1,19 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
+import useState from 'react-usestateref'
 import './DailyGoal.css'
 import { genRandQuestions } from 'src/services/questionService'
 import { AppLayout } from 'src/components/AppLayout/AppLayout'
 import { QUESTION_CONSTANT } from 'src/pages/Assignment/QuestionsSample'
 import AssignmentContentCard from 'src/components/Cards/AssignmentContentCard'
 import {
-  MdKeyboardDoubleArrowRight,
-  MdKeyboardDoubleArrowLeft
+  MdKeyboardDoubleArrowLeft,
+  MdKeyboardDoubleArrowRight
 } from 'react-icons/md'
-import { countWords, shuffle } from 'src/pages/Assignment/utils'
+import {
+  capitalizeFirstLetter,
+  countWords,
+  debounce
+} from 'src/pages/Assignment/utils'
 import MainButton from 'src/components/MainButton'
 import AssignmentDone from 'src/pages/Assignment/AssignmentDone'
 import ProgressBar from '@ramonak/react-progress-bar'
@@ -70,7 +75,6 @@ function DailySpeakingPage() {
   const [counts, setCounts] = useState(new Array(MAX_QUESTION_NUM).fill(0))
   const [questions, setQuestions] = useState([])
   const [answers, setAnswers] = useState(new Array(MAX_QUESTION_NUM).fill(''))
-  const [curAns, setCurAns] = useState('')
 
   const [isRecording, setIsRecording] = useState(false)
   const [index, setIndex] = useState(0)
@@ -98,7 +102,10 @@ function DailySpeakingPage() {
   }
 
   const fetchData = useCallback(async () => {
-    const genQuestions = await genRandQuestions(MAX_QUESTION_NUM)
+    let genQuestions = await genRandQuestions(MAX_QUESTION_NUM)
+    if (!genQuestions) {
+      genQuestions = new Array(MAX_QUESTION_NUM).fill('')
+    }
     setQuestions(genQuestions)
   }, [])
 
@@ -140,6 +147,30 @@ function DailySpeakingPage() {
     resetStats()
   }
 
+  const [genAns, setGenAns, genRef] = useState('')
+  const [pendingAns, setPendingAns, pendingRef] = useState('')
+  const [curAns, setCurAns, curAnsRef] = useState('') // answer we want to anchor
+
+  const mergeCurAns = newSentence => {
+    if (newSentence.toLowerCase().includes(genRef.current.toLowerCase())) {
+      setGenAns(newSentence)
+      setPendingAns(
+        `${
+          curAnsRef.current ? `${curAnsRef.current}. ` : ''
+        }${capitalizeFirstLetter(newSentence)}`
+      )
+    } else {
+      const mergedSentence = `${
+        curAnsRef.current ? `${curAnsRef.current}. ` : ''
+      }${capitalizeFirstLetter(genRef.current)}`
+      setPendingAns(mergedSentence)
+      setCurAns(mergedSentence)
+      setGenAns('')
+    }
+  }
+
+  const debouncedMergeCurAns = debounce(mergeCurAns, 200)
+
   const handleRecord = () => {
     if (isRecording) {
       microphone.start()
@@ -150,12 +181,12 @@ function DailySpeakingPage() {
       // Set a timeout to stop the recording after 2 mins
       timeoutId = setTimeout(() => {
         microphone.stop()
-        storeAnsAttempt(curAns)
+        storeAnsAttempt(pendingRef.current)
       }, timeLimit * 1000)
     } else {
       microphone.stop()
       microphone.onend = () => {}
-      storeAnsAttempt(curAns)
+      storeAnsAttempt(pendingRef.current)
       if (timeoutId) {
         clearTimeout(timeoutId)
       }
@@ -170,12 +201,12 @@ function DailySpeakingPage() {
         .map(result => result[0])
         .map(result => result.transcript)
         .join('')
-      const wordCount = countWords(recordingResult)
+      const wordCount = countWords(pendingRef.current)
       const updatedList = counts.map((item, idx) =>
         idx === index ? wordCount : item
       )
       setCounts(updatedList)
-      setCurAns(recordingResult)
+      debouncedMergeCurAns(recordingResult)
       microphone.onerror = event => {
         console.log(event.error)
       }
@@ -188,6 +219,9 @@ function DailySpeakingPage() {
     return () => {
       // Cleanup timeout on component unmount
       clearTimeout(timeoutId)
+      microphone.onend = null
+      microphone.onresult = null
+      microphone.onerror = null
     }
   }, [isRecording])
 
@@ -241,7 +275,7 @@ function DailySpeakingPage() {
                   onClick={() => setIsRecording(prevState => !prevState)}
                   className='content answer-card'
                 >
-                  <div>{isRecording ? curAns : answers[index]}</div>
+                  <div>{isRecording ? pendingRef.current : answers[index]}</div>
                 </AssignmentContentCard>
               </div>
             </div>

@@ -18,7 +18,11 @@
 // export const GET_USER_DETAILS = (id) => `https://jsonplaceholder.typicode.com/users/${id}`;
 
 // Local endpoints. Uncomment below section to use dummy local data.
-export const GET_ALL_USERS = () => '/data/users';
-export const GET_USER_DETAILS = (id) => '/data/user';
+export const GET_ALL_USERS = () => '/data/users'
+export const GET_USER_DETAILS = id => '/data/user'
 
-export const API_URL = 'http://localhost:8080';
+// This will not include orgId
+export const BACKEND_URL = `http://localhost:8080`
+
+// This will include orgId
+export const API_URL = `${BACKEND_URL}/org/{{orgId}}`

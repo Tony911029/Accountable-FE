@@ -5,52 +5,6 @@ import Avatar from '@mui/material/Avatar'
 import './Tables.css'
 import { makeStyles } from 'tss-react/mui'
 
-const Row = ({ params }) => {
-  return (
-    <div className='table-row table-text'>
-      <div>{params.id}</div>
-      <div>
-        <Avatar src='' />
-      </div>
-    </div>
-  )
-}
-
-const columns = [
-  {
-    field: 'avatar',
-    headerName: 'Avatar',
-    renderCell: params => <Row params={params} />,
-    flex: 3,
-    editable: false
-  },
-  {
-    field: 'username',
-    headerName: 'Username',
-    renderCell: params => (
-      <div className='table-text'>{params.row.username}</div>
-    ),
-    flex: 5,
-    editable: false
-  }
-]
-
-const rows = [
-  { id: 1, avatar: 'Snow', username: 'Giannis Antetokounmpo' },
-  { id: 2, avatar: 'Lancaster', username: 'Amanda Anderson' },
-  { id: 3, avatar: 'Tony', username: 'Michael Wilson' },
-  { id: 4, avatar: 'Tommy', username: 'Emily Johnson' },
-  { id: 5, avatar: 'Chris', username: 'Maria Rodriguez' },
-  { id: 6, avatar: 'Ben', username: 'Benjamin Lewis' },
-  { id: 7, avatar: 'Evan', username: 'Linh Nguyen' },
-  { id: 8, avatar: 'God', username: 'Mei-Ling Chan' },
-  { id: 9, avatar: 'West', username: 'Kanye West' },
-  { id: 10, avatar: 'West', username: 'Paul George' },
-  { id: 11, avatar: 'West', username: 'Max Verstappen' },
-  { id: 12, avatar: 'West', username: 'Elon Mush' },
-  { id: 13, avatar: 'West', username: 'Hello Wolrd' }
-]
-
 const useStyles = makeStyles()(() => ({
   root: {
     '& .MuiDataGrid-cell:focus, & .MuiDataGrid-cell:focus-within': {
@@ -96,31 +50,45 @@ const useStyles = makeStyles()(() => ({
   }
 }))
 
-function UserListTable() {
+function UserListTable({
+  height = 800,
+  width = '70%',
+  rowHeight = 70,
+  useHeader = true,
+  // pageSize = 15,// kinda buggy
+  infiniteScroll = false,
+  pageSizeOptions = [5, 10, 15, 20],
+  rows,
+  columns
+}) {
   const { classes } = useStyles()
+  const conditionalProps = !useHeader ? { columnHeaderHeight: 0 } : {}
+  // if (infiniteScroll) {
+  //   pageSize = rows.length
+  // }
+
   return (
     <Box
       sx={{
-        height: 800,
-        width: '70%'
+        height,
+        width
       }}
     >
       <DataGrid
-        autoheight
-        columnHeaderHeight={0}
         rows={rows}
         columns={columns}
-        rowHeight={70}
+        rowHeight={rowHeight}
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 20
+              pageSize: 15
             }
           }
         }}
-        pageSizeOptions={[5, 10, 15, 20]}
+        pageSizeOptions={pageSizeOptions}
         checkboxSelection
         className={classes.root}
+        {...conditionalProps}
       />
     </Box>
   )

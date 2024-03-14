@@ -139,7 +139,7 @@ function AppHeader({
   )
 
   return (
-    <div className='mb-30'>
+    <div>
       <nav className='nav'>
         <div className='site-title'>
           <Link to={HOME_PAGE}>ACCOUNTABLE</Link>
