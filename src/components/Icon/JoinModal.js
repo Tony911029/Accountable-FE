@@ -8,14 +8,10 @@ import Avatar from '@mui/material/Avatar'
 import { Box, Typography } from '@mui/material'
 import MainButton from 'src/components/MainButton'
 import './JoinModal.css'
+import { ROLES } from 'src/config/CONSTANTS'
+import { getPendingUsersByRoleAndClassroomId } from 'src/services/userServices'
 
-const teacherRequests = [
-  { id: 1, name: 'Daniel Davis', avatar: '' },
-  { id: 2, name: 'Megan Smith', avatar: '' },
-  { id: 3, name: 'Karen Miller', avatar: '' }
-]
-
-function JoinRequestModal({ handleClose, open, badgeRef }) {
+function JoinRequestModal({ handleClose, open, badgeRef, classInfo }) {
   const modalRef = useRef(null)
   const [modalStyle, setModalStyle] = useState({
     position: 'absolute',
@@ -24,6 +20,23 @@ function JoinRequestModal({ handleClose, open, badgeRef }) {
     transform: 'translate(-50%, -50%)', // Initial off-screen positioning
     visibility: 'hidden' // Hide until positioned
   })
+  const [rows, setRows] = useState([])
+
+  const transformToRows = users => {
+    return users?.map(user => ({
+      id: user.userId,
+      username: user.username,
+      avatarUrl: ''
+    }))
+  }
+
+  const handleAccept = user => {
+    console.log('Accept', user)
+  }
+
+  const handleReject = user => {
+    console.log('Rejected', user)
+  }
 
   useEffect(() => {
     if (!badgeRef.current) {
@@ -53,6 +66,24 @@ function JoinRequestModal({ handleClose, open, badgeRef }) {
     })
   }, [badgeRef, open])
 
+  // fetch all users but show the pending one
+  useEffect(() => {
+    const fetchClassroom = async () => {
+      if (classInfo) {
+        try {
+          const res = await getPendingUsersByRoleAndClassroomId(
+            ROLES.STUDENT,
+            classInfo.id
+          )
+          setRows(transformToRows(res))
+        } catch (err) {
+          console.error(err)
+        }
+      }
+    }
+    fetchClassroom()
+  }, [classInfo])
+
   return (
     <>
       <Modal open={open} onClose={handleClose}>
@@ -61,30 +92,40 @@ function JoinRequestModal({ handleClose, open, badgeRef }) {
             <Typography variant='h6' component='h2' marginBottom={3}>
               You have{' '}
               <Box component='span' sx={{ color: 'orange' }}>
-                {teacherRequests.length}
+                {rows.length}
               </Box>{' '}
               teacher joining request.
             </Typography>
 
             <List>
-              {teacherRequests.map((teacher, index) => (
+              {rows.map((user, index) => (
                 <ListItem
-                  key={teacher.id}
+                  key={user.id}
                   disableGutters
                   className='gap-3rem mb-15'
                   secondaryAction={
                     <>
                       <div className='flex gap-3rem'>
-                        <MainButton btnLabel='Accept' />
-                        <MainButton btnLabel='Reject' />
+                        <MainButton
+                          btnLabel='Accept'
+                          onClick={() => {
+                            handleAccept(user.id)
+                          }}
+                        />
+                        <MainButton
+                          btnLabel='Reject'
+                          onClick={() => {
+                            handleReject(user.id)
+                          }}
+                        />
                       </div>
                     </>
                   }
                 >
                   <ListItemAvatar>
-                    <Avatar src={teacher.avatar} />
+                    <Avatar src={user.avatar} />
                   </ListItemAvatar>
-                  <ListItemText primary={teacher.name} className='item-text' />
+                  <ListItemText primary={user.username} />
                 </ListItem>
               ))}
             </List>

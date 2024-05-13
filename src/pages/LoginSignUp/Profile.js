@@ -12,6 +12,10 @@ export default function Profile() {
     console.log('clicked')
   }
 
+  function getNestedProperty(obj, path) {
+    return path.split('.').reduce((acc, part) => acc && acc[part], obj)
+  }
+
   return (
     <AppLayout>
       <div className='profile-container assignment-container'>
@@ -31,7 +35,9 @@ export default function Profile() {
             {ProfileData.map((item, index) => (
               <div key={index} className='flex profile-data'>
                 <div className='profile-title'>{item.title}</div>
-                <div className='profile-item'>{user[item.data]}</div>
+                <div className='profile-item'>
+                  {getNestedProperty(user, item.data) ?? item.defaultData}
+                </div>
               </div>
             ))}
           </div>

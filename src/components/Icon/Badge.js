@@ -33,20 +33,35 @@ const useStyles = makeStyles()(() => ({
     margin: '0 0 0px 12px'
   }
 }))
-function AddPersonIcon() {
+
+// TODO: Switch to TypeScript, this is dumb af
+/**
+ * @typedef {Object} Params
+ * @property {string} id - The id of the class.
+ * @property {string} name - The name of the class.
+ * @property {number} number - number of users within the class
+ */
+
+/** @property {Params} params * */
+function AddPersonIcon({ classInfo }) {
   // Custom styling
 
   const { classes } = useStyles()
 
   const [open, setOpen] = useState(false)
-  const toggleModal = () => setOpen(!open)
+  const toggleModal = event => {
+    event.stopPropagation()
+    setOpen(!open)
+  }
+  console.log('params', classInfo)
 
   const badgeRef = useRef(null)
 
+  // TDOO: If class is 0, the badge will not show
   return (
     <Badge
       overlap='circular'
-      badgeContent={5}
+      badgeContent={classInfo?.number} // TODO: This is the entire class number not just pending
       className={classes.badge}
       classes={{
         badge: classes.font1
@@ -60,6 +75,7 @@ function AddPersonIcon() {
         handleClose={toggleModal}
         open={open}
         badgeRef={badgeRef}
+        classInfo={classInfo}
       />
     </Badge>
   )

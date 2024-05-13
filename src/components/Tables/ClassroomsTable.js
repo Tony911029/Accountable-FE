@@ -1,37 +1,9 @@
 import Box from '@mui/material/Box'
 import { DataGrid } from '@mui/x-data-grid'
-import Avatar from '@mui/material/Avatar'
 import './Tables.css'
 import { makeStyles } from 'tss-react/mui'
 import * as React from 'react'
-import AddPersonIcon from 'src/components/Icon/Badge'
 import { useCallback } from 'react'
-
-const Row = ({ params }) => {
-  console.log('params', params)
-  const rowInfo = params.row
-  return (
-    <div className='classroom-row'>
-      <div>{rowInfo.name}</div>
-      <div>{rowInfo.number}</div>
-      <AddPersonIcon />
-    </div>
-  )
-}
-const columns = [
-  {
-    field: 'classInfo',
-    renderCell: params => <Row params={params} />,
-    flex: 1,
-    editable: false
-  }
-]
-
-const rows = [
-  { id: 1, name: 'ECE140', number: 23 },
-  { id: 2, name: 'ECE109', number: 16 },
-  { id: 3, name: 'ECE222', number: 28 }
-]
 
 const useStyles = makeStyles()(() => ({
   root: {
@@ -52,38 +24,38 @@ const useStyles = makeStyles()(() => ({
       display: 'none'
     },
     border: 'none',
-    padding: '25px 0px 0px 25px'
+    padding: '25px 0px 0px px'
   }
 }))
 
-// I don't think there will be hundreds of classrooms for each teacher so pagination might not be too important now
-function ClassroomTable() {
+function ClassroomTable({
+  height = 800,
+  width = '70%',
+  rows = [],
+  columns,
+  handleRowClick
+}) {
   const { classes } = useStyles()
-
-  const getRowSpacing = useCallback(params => {
-    return {
-      bottom: params.isLastVisible ? 0 : '3%'
-    }
-  }, [])
-
+  const getRowSpacing = useCallback(params => ({ bottom: '5%' }), [])
   return (
     <Box
       sx={{
-        height: 700,
-        width: '70%'
+        height,
+        width
       }}
     >
       <DataGrid
-        autoheight
         columnHeaderHeight={0}
-        getRowSpacing={getRowSpacing}
+        // getRowSpacing={getRowSpacing} // TODO: giving us issues in the console
         rows={rows}
         columns={columns}
-        rowHeight={130}
+        rowHeight={150}
+        onRowClick={handleRowClick}
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: rows.length // load all in once
+              // pageSize: rows.length // TODO:infinite scrolling not working
+              pageSize: 30
             }
           }
         }}

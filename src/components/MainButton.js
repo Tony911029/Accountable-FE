@@ -1,6 +1,6 @@
-import { CircularProgress } from '@mui/material';
-import { makeStyles } from 'tss-react/mui';
-import { Button } from '@material-ui/core';
+import { CircularProgress } from '@mui/material'
+import { makeStyles } from 'tss-react/mui'
+import { Button } from '@material-ui/core'
 
 const useStyles = makeStyles()((theme, { disabled }) => ({
   mainButton: {
@@ -12,21 +12,21 @@ const useStyles = makeStyles()((theme, { disabled }) => ({
     boxShadow: ' 0px 2px 2px rgba(0, 0, 0, 0.1)',
     borderRadius: '4px',
     '&:hover': {
-      boxShadow: '0px 10px 30.5px 0px #FF99004A',
+      boxShadow: '0px 10px 30.5px 0px #FF99004A'
     },
     background: disabled ? '#D3D3D3 !important' : '#FF9900 !important', // Conditional background color
     backgroundColor: disabled ? '#D3D3D3' : '#FF9900',
     fontFamily: 'Poppins, sans-serif',
     fontWeight: '800 !important',
-    color: '#fff !important',
+    color: '#fff !important'
   },
   testButton: {
     // Other styles remain unchanged
     background: disabled ? '#D3D3D3 !important' : '#FF9900 !important', // Correct conditional logic and syntax
-    backgroundColor: disabled ? '#D3D3D3' : '#FF9900',
+    backgroundColor: disabled ? '#D3D3D3' : '#FF9900'
     // Other styles remain unchanged
-  },
-}));
+  }
+}))
 
 function MainButton({
   isLoading,
@@ -43,7 +43,7 @@ function MainButton({
   className,
   ...props
 }) {
-  const { classes } = useStyles({ disabled });
+  const { classes } = useStyles({ disabled })
   return (
     <Button
       type={type}
@@ -65,7 +65,7 @@ function MainButton({
           style={{
             marginRight: '10px',
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'center'
           }}
         >
           {' '}
@@ -74,10 +74,9 @@ function MainButton({
             style={{
               marginRight: '10px',
               display: 'flex',
-              alignItems: 'center',
+              alignItems: 'center'
             }}
-          />
-          {' '}
+          />{' '}
           Saving
         </span>
       ) : isSaved ? (
@@ -86,7 +85,7 @@ function MainButton({
         btnLabel
       )}
     </Button>
-  );
+  )
 }
 
-export default MainButton;
+export default MainButton

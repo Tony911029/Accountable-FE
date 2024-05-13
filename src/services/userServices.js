@@ -47,7 +47,18 @@ export const getNativeUser = awsUser =>
   })
 
 /**
- * Function to fetch all users in an organization
+ * Function to fetch all classroom info
+ * @param {string} role .
+ * @param {string} id .
+ */
+export const getPendingUsersByRoleAndClassroomId = (role, id) => {
+  const apiEndPoint = `${BACKEND_URL}/userService/role/${role}/classroom/${id}`
+  return makeAxiosRequest(apiEndPoint)
+}
+
+/**
+ * Function to fetch all users within an organization.
+ * Note that this posts to org controllers not users controller
  */
 export const getUsersForAdmin = () => {
   const apiEndPoint = `${API_URL}/admin/users`

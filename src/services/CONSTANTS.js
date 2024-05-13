@@ -21,7 +21,7 @@
 export const GET_ALL_USERS = () => '/data/users'
 export const GET_USER_DETAILS = id => '/data/user'
 
-// This will not include orgId
+// This will not include orgId (for userService)
 export const BACKEND_URL = `http://localhost:8080`
 
 // This will include orgId

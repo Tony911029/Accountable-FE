@@ -21,10 +21,17 @@ import * as auth from './UserPool'
  */
 
 /**
+ * Represents an Organization a user belongs to
+ * @typedef {Object} Organization
+ * @property {string} id - UUID
+ * @property {string} orgName
+ */
+
+/**
  * Represents a user with various attributes including roles and permissions.
  * @typedef {Object} User
  * @property {string} userId - The unique identifier for the user.
- * @property {?string} orgId - The organization ID the user belongs to, if any.
+ * @property {Organization} organization - The organization the user belongs to, if any.
  * @property {string} displayName - The user's display name.
  * @property {string} username - The user's username.
  * @property {string} email - The user's email address.
@@ -36,6 +43,7 @@ import * as auth from './UserPool'
 export const AuthContext = createContext()
 
 // Context Provider to wrap the whole app within and make auth information (user) available.
+// TODO: Use Session storage instead of local storage (only used for dev purposes now)
 export function ProvideAuth({ children }) {
   const [user, setUser] = useState(null) // native user from db
   const [awsUser, setAwsUser] = useState(null) // user from aws

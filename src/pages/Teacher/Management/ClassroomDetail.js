@@ -6,14 +6,13 @@ import AddPersonIcon from 'src/components/Icon/Badge'
 import * as React from 'react'
 import Avatar from '@mui/material/Avatar'
 import { useEffect, useState } from 'react'
-import { getUsersForAdmin } from 'src/services/userServices'
-import { useLocation } from 'react-router-dom'
+import { getClassroomById } from 'src/services/classroomService'
+import { useLocation, useParams } from 'react-router-dom'
 import {
   ADMIN_STUDENT_LIST,
   ADMIN_TEACHER_LIST
 } from 'src/navigation/CONSTANTS'
 import { ROLES } from 'src/config/CONSTANTS'
-import { useAuth } from 'src/navigation/Auth/ProvideAuth'
 
 const Row = ({ params }) => {
   return (
@@ -26,36 +25,36 @@ const Row = ({ params }) => {
   )
 }
 
-function AdminUserList() {
+const columns = [
+  {
+    field: 'avatar',
+    headerName: 'Avatar',
+    renderCell: params => <Row params={params} />,
+    flex: 3,
+    editable: false
+  },
+  {
+    field: 'username',
+    headerName: 'Username',
+    renderCell: params => (
+      <div className='table-text'>{params.row.username}</div>
+    ),
+    flex: 5,
+    editable: false
+  }
+]
+
+function ClassroomDetail() {
+  const [classroom, setClassroom] = useState({})
   const [rows, setRows] = useState([])
   const [loading, setLoading] = useState(true)
-  const [displayUserType, setDisplayUserType] = useState('')
-  const { user } = useAuth()
-
+  const [role, setRole] = useState('')
   const location = useLocation()
-
-  const columns = [
-    {
-      field: 'avatar',
-      headerName: 'Avatar',
-      renderCell: params => <Row params={params} />,
-      flex: 3,
-      editable: false
-    },
-    {
-      field: 'username',
-      headerName: 'Username',
-      renderCell: params => (
-        <div className='table-text'>{params.row.username}</div>
-      ),
-      flex: 5,
-      editable: false
-    }
-  ]
+  const { id } = useParams()
 
   const transformToRows = users => {
     return users
-      .filter(user => user.role === displayUserType)
+      ?.filter(user => user.role === ROLES.STUDENT)
       .map((user, index) => ({
         id: index + 1,
         // we will want display name in the future
@@ -67,23 +66,33 @@ function AdminUserList() {
   useEffect(() => {
     const currentUrl = location.pathname
     if (currentUrl.includes(ADMIN_TEACHER_LIST)) {
-      setDisplayUserType(ROLES.TEACHER)
+      setRole(ROLES.TEACHER)
     } else if (currentUrl.includes(ADMIN_STUDENT_LIST)) {
-      setDisplayUserType(ROLES.STUDENT)
+      setRole(ROLES.STUDENT)
     } else {
-      setDisplayUserType(null)
+      setRole(null)
     }
   }, [location.pathname])
 
   useEffect(() => {
-    getUsersForAdmin()
-      .then(users => {
-        const rows = transformToRows(users)
-        if (rows.length > 0) setRows(rows)
+    getClassroomById(id)
+      .then(res => {
+        // Filter out teachers
+        const filteredUsers = res?.users.filter(
+          user => user.role === ROLES.STUDENT
+        )
+        setClassroom({ ...res, users: filteredUsers })
       })
       .catch(err => {})
       .finally(setLoading(false))
-  }, [displayUserType])
+  }, [role])
+
+  useEffect(() => {
+    const users = classroom?.users
+    if (users?.length > 0) {
+      setRows(transformToRows(classroom?.users))
+    }
+  }, [classroom])
 
   return (
     <AppLayout
@@ -93,18 +102,16 @@ function AdminUserList() {
     >
       <div className='assignment-container'>
         <div className='assignment-section'>
-          <h1>Admin of {user.organization.orgName}</h1>
+          <h1>{classroom?.className}</h1>
           <p className='mb-30'>
-            {`you have ${
-              rows.length
-            } ${displayUserType.toLowerCase()}s on the list`}
+            {`you have ${classroom?.users?.length || 0} students on the list`}
           </p>
         </div>
 
         <div className='assignment-wrapper align-top full-w'>
           <div className='view-30 table-info'>
-            <h1 className='theme-text'>Capacity</h1>
-            <h1>{`${rows.length} / 30`}</h1>
+            <h1 className='theme-text'>Class Code</h1>
+            <h1>{`${classroom?.code}`}</h1>
           </div>
           <UserListTable
             rows={rows}
@@ -113,7 +120,13 @@ function AdminUserList() {
             useHeader={false}
           />
           <div className='view-30'>
-            <AddPersonIcon />
+            <AddPersonIcon
+              classInfo={{
+                id: classroom.id,
+                className: classroom.className,
+                number: classroom.users?.length || 0
+              }}
+            />
           </div>
         </div>
       </div>
@@ -122,4 +135,4 @@ function AdminUserList() {
   )
 }
 
-export default AdminUserList
+export default ClassroomDetail

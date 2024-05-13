@@ -7,7 +7,7 @@ import Footer from 'src/components/AppLayout/Footer'
 import '../Assignment/DailyGoal.css'
 import '../Home/Learning.css'
 import { AdminCenterData } from 'src/pages/Admin/AdminCenterData'
-import DropDownList from 'src/components/DropDownList/DropDownList'
+import ClassDropDownList from 'src/components/DropDownList/ClassDropDownList'
 
 function AdminCenter() {
   return (

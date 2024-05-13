@@ -4,7 +4,7 @@ export const axiosInterceptors = user => {
   axios.interceptors.request.use(
     config => {
       if (config.url.includes('{{orgId}}')) {
-        const orgId = user.orgId
+        const orgId = user?.organization?.id
         config.url = config.url.replaceAll('{{orgId}}', orgId)
       }
 

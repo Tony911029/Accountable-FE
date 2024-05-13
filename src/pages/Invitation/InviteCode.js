@@ -6,23 +6,33 @@ import './Invitation.css'
 import { useAuth } from 'src/navigation/Auth/ProvideAuth'
 import MainButton from 'src/components/MainButton'
 import TextBox from 'src/components/TextBox/TextBox'
-import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
 import { ROLES } from 'src/config/CONSTANTS'
 import { LEARNING_CENTER, TASK_CENTER } from 'src/navigation/CONSTANTS'
 import { findOrgByCode } from 'src/services/orgService'
 import { CgProfile } from 'react-icons/cg'
+import _ from 'lodash'
+import { sendJoinRequest } from 'src/services/joinRequest'
 
 // TODO: Will need to add more props for customization,
 //  this will be used for "join school" for both students and teachers
 //  this will be used for "join classroom" for students
+
+const TypeDict = {
+  org: 'School',
+  classroom: 'Classroom'
+}
+
 function InviteCode() {
   /** @property {User} user * */
-  const { role } = useAuth()
+  const { role, user } = useAuth()
   const [value, setValue] = useState('')
-  const [org, setOrg] = useState(null)
-  const [isDisabled, setIsDisabled] = useState(true)
+  const [placeToJoin, setPlaceToJoin] = useState([])
+  const [type, setType] = useState('')
+  const typeRef = useRef(type)
   const history = useHistory()
+  const location = useLocation()
 
   const handleSkip = () => {
     if (role === ROLES.STUDENT) {
@@ -33,57 +43,78 @@ function InviteCode() {
     }
   }
 
-  const handleChange = e => {
-    const code = e.target.value
-    setValue(code)
-    if (code.length === 7) {
-      setIsDisabled(false)
-      const foundOrg = findOrgByCode(code)
-      console.log('org', foundOrg)
-      setOrg(foundOrg)
-    } else {
-      setIsDisabled(true)
-      setOrg(null)
-    }
+  const submitRequest = (org, user) => {
+    sendJoinRequest(org, null, user).then(
+      r => console.log(r)
+      // TODO: figure out what to do once they send the request
+    )
   }
 
-  const handleSearch = () => {}
+  useEffect(() => {
+    typeRef.current = type
+  }, [type])
+
+  useEffect(() => {
+    const currentUrl = location.pathname
+    const parts = currentUrl.split('/')
+    const inviteIndex = parts.findIndex(part => part === 'invite')
+    if (inviteIndex >= 0 && inviteIndex < parts.length - 1) {
+      const locationType = parts[inviteIndex + 1]
+      setType(TypeDict[locationType])
+    }
+  }, [location.pathname])
+
+  // TODO: Probably should work with full text search on the name?
+  const debouncedSearch = useCallback(
+    _.debounce(nextValue => {
+      if (typeRef.current === TypeDict.org) {
+        if (nextValue) {
+          findOrgByCode(nextValue).then(setPlaceToJoin)
+        } else {
+          setPlaceToJoin([])
+        }
+      } else if (type === TypeDict.classroom) {
+        // do nothing
+      }
+    }, 500),
+    []
+  )
+
+  const handleChange = event => {
+    setValue(event.target.value)
+    debouncedSearch(event.target.value)
+  }
 
   return (
     <AppLayout>
       <div className='assignment-container gap-3rem'>
         <div className='assignment-section'>
-          <h1>Join a School!</h1>
-          <p>Enter a school code to find the school</p>
+          <h1>{`Join a ${type} !`}</h1>
+          <p>{`Enter a ${type} code to find the school`}</p>
         </div>
 
         <div className='view-50'>
           <div className='flex invite-code-wrapper gap-1'>
-            <h2>7 Digits School Code</h2>
-            <TextBox
-              value={value}
-              onChange={handleChange}
-              fullWidth
-              defaultValue='Default Value'
-            />
+            <h2>{`7 Digits ${type} Code`}</h2>
+            <TextBox value={value} onChange={handleChange} fullWidth />
           </div>
 
-          {org && (
-            <div className='full-w card schoolIntro'>
-              <CgProfile size='4rem' />
-              <p>{org?.schoolName}</p>
-              <MainButton btnLabel='Send Request' onClick={handleSkip} />
-            </div>
-          )}
+          {placeToJoin &&
+            placeToJoin?.map(org => {
+              return (
+                <div className='full-w card schoolIntro' key={org?.orgName}>
+                  <CgProfile size='4rem' />
+                  <p>{org?.orgName}</p>
+                  <MainButton
+                    btnLabel='Send Request'
+                    onClick={() => {
+                      submitRequest(org, user)
+                    }}
+                  />
+                </div>
+              )
+            })}
         </div>
-
-        {!org && (
-          <MainButton
-            btnLabel='Search'
-            disabled={isDisabled}
-            onClick={handleSearch}
-          />
-        )}
 
         <div className='view-30'>
           <Divider>or</Divider>

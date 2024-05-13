@@ -23,68 +23,49 @@ import {
 } from './CONSTANTS'
 
 const LoginPageContainer = lazy(() =>
-  import(
-    /* webpackChunkName: "LoginPageContainer" */ '../pages/LoginSignUp/LoginPageContainer'
-  )
-)
-// const DailyGoalContainer = lazy(() => import("../pages/Assignment/DailyGoalContainer"));
+  import(/* webpackChunkName: "LoginPageContainer" */ '../pages/LoginSignUp/LoginPageContainer'))
+
 const LeaderboardContainer = lazy(() =>
-  import(
-    /* webpackChunkName: "LeaderboardContainer" */ '../pages/Leaderboard/LeaderboardContainer'
-  )
-)
+  import(/* webpackChunkName: "LeaderboardContainer" */ '../pages/Leaderboard/LeaderboardContainer'))
+
 const ProgressContainer = lazy(() =>
-  import(
-    /* webpackChunkName: "ProgressContainer" */ '../pages/Progress/ProgressContainer'
-  )
-)
+  import(/* webpackChunkName: "ProgressContainer" */ '../pages/Progress/ProgressContainer'))
+
 const SignUp = lazy(() =>
-  import(/* webpackChunkName: "SignUp" */ '../pages/LoginSignUp/SignUp')
-)
+  import(/* webpackChunkName: "SignUp" */ '../pages/LoginSignUp/SignUp'))
+
 const ConfirmSignUp = lazy(() =>
-  import(
-    /* webpackChunkName: "ConfirmSignUp" */ '../pages/LoginSignUp/ConfirmSignUp'
-  )
-)
+  import(/* webpackChunkName: "ConfirmSignUp" */ '../pages/LoginSignUp/ConfirmSignUp'))
+
 const Profile = lazy(() =>
-  import(/* webpackChunkName: "Profile" */ '../pages/LoginSignUp/Profile')
-)
+  import(/* webpackChunkName: "Profile" */ '../pages/LoginSignUp/Profile'))
+
 const LearningCenterContainer = lazy(() =>
-  import(
-    /* webpackChunkName: "LearningCenterContainer" */ 'src/pages/Home/LearningCenter'
-  )
-)
+  import(/* webpackChunkName: "LearningCenterContainer" */ 'src/pages/Home/LearningCenter'))
+
 const DailySpeakingPage = lazy(() =>
-  import(
-    /* webpackChunkName: "DailySpeakingPage" */ 'src/pages/Assignment/DailySpeakingPage'
-  )
-)
+  import(/* webpackChunkName: "DailySpeakingPage" */ 'src/pages/Assignment/DailySpeakingPage'))
+
 const Home = lazy(() =>
-  import(/* webpackChunkName: "HOME" */ 'src/pages/Home/HomeContainer')
-)
+  import(/* webpackChunkName: "HOME" */ 'src/pages/Home/HomeContainer'))
+
 const InviteCode = lazy(() =>
-  import(/* webpackChunkName: "Invitation" */ 'src/pages/Invitation/InviteCode')
-)
+  import(/* webpackChunkName: "Invitation" */ 'src/pages/Invitation/InviteCode'))
 
 const TaskCenter = lazy(() =>
-  import(
-    /* webpackChunkName: "TaskCenter" */ 'src/pages/Teacher/TaskCenter/TaskCenter'
-  )
-)
+  import(/* webpackChunkName: "TaskCenter" */ 'src/pages/Teacher/TaskCenter/TaskCenter'))
+
 const Classrooms = lazy(() =>
-  import(
-    /* webpackChunkName: "Classrooms" */ 'src/pages/Teacher/Management/Classrooms'
-  )
-)
+  import(/* webpackChunkName: "Classrooms" */ 'src/pages/Teacher/Management/Classrooms'))
 
 const AdminCenter = lazy(() =>
-  import(/* webpackChunkName: "AdminCenter" */ 'src/pages/Admin/AdminCenter')
-)
+  import(/* webpackChunkName: "AdminCenter" */ 'src/pages/Admin/AdminCenter'))
+
 const AdminUserList = lazy(() =>
-  import(
-    /* webpackChunkName: "AdminUserList" */ 'src/pages/Admin/AdminUserList'
-  )
-)
+  import(/* webpackChunkName: "AdminUserList" */ 'src/pages/Admin/AdminUserList'))
+
+const ClassroomDetail = lazy(() =>
+  import(/* webpackChunkName: "ClassroomDetail" */ 'src/pages/Teacher/Management/ClassroomDetail'))
 
 export function RouterConfig() {
   return (
@@ -97,57 +78,25 @@ export function RouterConfig() {
             <Route exact path={SIGNUP} component={SignUp} />
 
             {/* List all private/auth routes here */}
-            <PrivateRoute
-              exact
-              path={LEARNING_CENTER}
-              component={LearningCenterContainer}
-            />
-            <PrivateRoute
-              exact
-              path={DAILY_SPEAKING}
-              component={DailySpeakingPage}
-            />
+            <PrivateRoute exact path={LEARNING_CENTER} component={LearningCenterContainer} />
+            <PrivateRoute exact path={DAILY_SPEAKING} component={DailySpeakingPage} />
 
             <PrivateRoute exact path={PROGRESS} component={ProgressContainer} />
-            <PrivateRoute
-              exact
-              path={LEADERBOARD}
-              component={LeaderboardContainer}
-            />
+            <PrivateRoute exact path={LEADERBOARD} component={LeaderboardContainer} />
             <PrivateRoute exact path={PROFILE} component={Profile} />
-            <PrivateRoute exact path={INVITATION} component={InviteCode} />
+            <PrivateRoute path={INVITATION} component={InviteCode} />
 
             {/* Teacher Path */}
             <PrivateRoute exact path={TASK_CENTER} component={TaskCenter} />
-            <PrivateRoute
-              exact
-              path={TEACHER_STUDENT_LIST}
-              component={AdminUserList}
-            />
-            <PrivateRoute
-              exact
-              path={TEACHER_CLASSROOMS}
-              component={Classrooms}
-            />
+            <PrivateRoute path={TEACHER_STUDENT_LIST} component={ClassroomDetail} />
+            <PrivateRoute path={TEACHER_CLASSROOMS} component={Classrooms} />
 
             {/* Admin Path */}
             <PrivateRoute exact path={ADMIN_CENTER} component={AdminCenter} />
-            <PrivateRoute
-              exact
-              path={ADMIN_TEACHER_LIST}
-              component={AdminUserList}
-            />
-            <PrivateRoute
-              exact
-              path={ADMIN_STUDENT_LIST}
-              component={AdminUserList}
-            />
+            <PrivateRoute path={ADMIN_TEACHER_LIST} component={AdminUserList} />
+            <PrivateRoute path={ADMIN_STUDENT_LIST} component={AdminUserList} />
 
-            <PrivateRoute
-              exact
-              path={CONFIRM_SIGNUP}
-              component={ConfirmSignUp}
-            />
+            <PrivateRoute exact path={CONFIRM_SIGNUP} component={ConfirmSignUp} />
 
             <Route path='*'>
               <NotFound />

@@ -1,8 +1,8 @@
 export const QUESTION_CONSTANT = {
   GEN_QUESTION: 'genQuestions',
   STORE_ANSWER: 'storedAns',
-  COUNT: 'count',
-};
+  COUNT: 'count'
+}
 
 export const sampleQuestions = [
   "How would you introduce yourself to someone you've never met before?",
@@ -94,5 +94,5 @@ export const sampleQuestions = [
   "What is the best piece of advice you've ever been given?",
   'Describe a custom or tradition from your country that others might find surprising.',
   'If you could spend a day with any fictional character, who would it be and what would you do?',
-  "What is something you've always wanted to do but haven't yet? Why haven't you done it?",
-];
+  "What is something you've always wanted to do but haven't yet? Why haven't you done it?"
+]

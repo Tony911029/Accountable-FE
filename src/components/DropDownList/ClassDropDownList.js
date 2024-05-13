@@ -1,54 +1,51 @@
 import { makeStyles } from 'tss-react/mui'
-import { useHistory } from 'react-router-dom'
-import { cardStyle } from 'src/styles/CardStyle'
 import { List, ListItemText } from '@material-ui/core'
 import { Box, ListItemButton, Menu, MenuItem } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-const options = [
-  'Select classrooms',
-  'Self Growing Zone',
-  'Class A106',
-  'Class B207'
-]
+const useStyles = makeStyles()(() => ({
+  label: {
+    fontWeight: '600',
+    fontSize: '1.25rem',
+    color: '#C19D72'
+  },
+  backGround: {
+    boxShadow: '0px 2px 10px 0px #FF990033',
+    borderRadius: '10px'
+  },
+  dropDownButton: {
+    width: '100%',
+    minWidth: '200px',
+    textAlign: 'center'
+  },
+  listItemText: {
+    fontSize: '1rem',
+    fontWeight: '600',
+    color: '#FF9900'
+  },
+  listItem: {
+    width: '100% !important',
+    minWidth: '200px',
+    '&:hover': {
+      backgroundColor: '#FFDEAB'
+    },
+    '&.Mui-selected, &.Mui-selected:hover': {
+      backgroundColor: '0px 10px 30px 0px #FF99004A !important',
+      color: '0px 10px 30px 0px #FF99004A !important'
+    },
+    color: '#FF9900 !important',
+    fontWeight: '600 !important',
+    textAlign: 'center'
+  }
+}))
 
-function DropDownList({ label, to, isActive }) {
-  const useStyles = makeStyles()(() => ({
-    label: {
-      fontWeight: '600',
-      fontSize: '1.25rem',
-      color: '#C19D72'
-    },
-    backGround: {
-      boxShadow: '0px 2px 10px 0px #FF990033',
-      borderRadius: '10px'
-    },
-    button: {
-      width: '100%',
-      minWidth: '200px',
-      textAlign: 'center'
-    },
-    listItemText: {
-      fontSize: '1rem',
-      fontWeight: '600',
-      color: '#FF9900'
-    },
-    listItem: {
-      width: '100%',
-      minWidth: '200px',
-      '&:hover': {
-        backgroundColor: '#FFDEAB'
-      },
-      '&.Mui-selected, &.Mui-selected:hover': {
-        backgroundColor: '0px 10px 30px 0px #FF99004A !important',
-        color: '0px 10px 30px 0px #FF99004A !important'
-      },
-      color: '#FF9900',
-      fontWeight: '600 !important',
-      textAlign: 'center'
-    }
-  }))
-
+function ClassDropDownList({
+  label,
+  to,
+  isActive,
+  onClassChange,
+  classrooms = []
+}) {
   const { classes } = useStyles()
   const [anchorEl, setAnchorEl] = useState(null)
   const [selectedIndex, setSelectedIndex] = useState(1)
@@ -60,6 +57,7 @@ function DropDownList({ label, to, isActive }) {
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index)
     setAnchorEl(null)
+    onClassChange(classrooms[index])
   }
 
   const handleClose = () => {
@@ -78,12 +76,12 @@ function DropDownList({ label, to, isActive }) {
             aria-label='My classroom'
             aria-expanded={open ? 'true' : undefined}
             onClick={handleClickListItem}
-            className={classes.button}
+            className={classes.dropDownButton}
           >
             <ListItemText
               primary={
                 <Box className={classes.listItemText}>
-                  {options[selectedIndex]}
+                  {classrooms[selectedIndex]?.className}
                 </Box>
               }
             />
@@ -95,15 +93,15 @@ function DropDownList({ label, to, isActive }) {
           open={open}
           onClose={handleClose}
         >
-          {options.map((option, index) => (
+          {classrooms.map((option, index) => (
             <MenuItem
-              key={option}
+              key={`${option} + ${index}`}
               disabled={index === 0}
               selected={index === selectedIndex}
               onClick={event => handleMenuItemClick(event, index)}
               className={classes.listItem}
             >
-              {option}
+              {option.className}
             </MenuItem>
           ))}
         </Menu>
@@ -112,4 +110,4 @@ function DropDownList({ label, to, isActive }) {
   )
 }
 
-export default DropDownList
+export default ClassDropDownList

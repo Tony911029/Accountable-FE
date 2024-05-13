@@ -1,23 +1,22 @@
-import React from 'react'
 export const ProfileData = [
-    {
-        title: 'User name',
-        data: "username",
-        tempData: "TonyChan"
-    },
-    {
-        title: 'Email',
-        data: "email",
-        tempData: "tony.tester@gmail.com"
-    },
-    {
-        title: 'Rank',
-        data: "rank",
-        tempData: "3"
-    },
-    {
-        title: 'School',
-        data: "school",
-        tempData: "Waterloo University"
-    }
+  {
+    title: 'User name',
+    data: 'username',
+    defaultData: 'TonyChan'
+  },
+  {
+    title: 'Email',
+    data: 'email',
+    defaultData: ''
+  },
+  {
+    title: 'Word Count',
+    data: 'wordCount',
+    defaultData: 0
+  },
+  {
+    title: 'School',
+    data: 'organization.orgName',
+    defaultData: `You currently don't have any school`
+  }
 ]

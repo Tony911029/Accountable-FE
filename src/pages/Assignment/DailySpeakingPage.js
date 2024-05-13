@@ -96,6 +96,7 @@ function DailySpeakingPage() {
     setAnswers(new Array(MAX_QUESTION_NUM).fill(''))
     setCounts(new Array(MAX_QUESTION_NUM).fill(0))
     setIndex(0)
+    // TODO: Now this is shared by every questions
     localStorage.removeItem(QUESTION_CONSTANT.GEN_QUESTION)
     localStorage.removeItem(QUESTION_CONSTANT.STORE_ANSWER)
     localStorage.removeItem(QUESTION_CONSTANT.COUNT)
@@ -147,6 +148,7 @@ function DailySpeakingPage() {
     resetStats()
   }
 
+  // TODO: Use the confident level to tune the speech
   const [genAns, setGenAns, genRef] = useState('')
   const [pendingAns, setPendingAns, pendingRef] = useState('')
   const [curAns, setCurAns, curAnsRef] = useState('') // answer we want to anchor
@@ -213,7 +215,7 @@ function DailySpeakingPage() {
     }
   }
 
-  // cap the recording tome at 2 minutes
+  // cap the recording time at 2 minutes
   useEffect(() => {
     handleRecord()
     return () => {

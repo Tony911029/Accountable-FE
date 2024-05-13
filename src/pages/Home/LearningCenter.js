@@ -7,11 +7,38 @@ import './Learning.css'
 import '../Assignment/DailyGoal.css'
 import '../../App.css'
 import { useAuth } from 'src/navigation/Auth/ProvideAuth'
-import DropDownList from 'src/components/DropDownList/DropDownList'
+import ClassDropDownList from 'src/components/DropDownList/ClassDropDownList'
+import { useEffect, useState } from 'react'
+import { getClassroomsByUserId } from 'src/services/classroomService'
 
 function LearningCenterContainer() {
   /** @property {User} user * */
   const { user } = useAuth()
+  const [classrooms, setClassrooms] = useState([])
+  const [selectedClassroom, setSelectedClassroom] = useState(null)
+
+  useEffect(() => {
+    const fetchClassrooms = async () => {
+      if (user) {
+        try {
+          const res = await getClassroomsByUserId(user.userId)
+          const defaultOptions = [
+            { className: 'Select classrooms' },
+            { className: 'Self Growing Zone' }
+          ]
+          setClassrooms([...defaultOptions, ...res])
+        } catch (err) {
+          console.error(err)
+        }
+      }
+    }
+    fetchClassrooms()
+  }, [user])
+
+  useEffect(() => {
+    setSelectedClassroom(classrooms[1])
+  }, [classrooms])
+
   return (
     <AppLayout
       showSubHeader
@@ -24,10 +51,13 @@ function LearningCenterContainer() {
           <div className='assignment-section'>
             <h1>Learning Center</h1>
             <p className='mb-30'>Let's practice English together!</p>
-            <h1>Self Growing Zone</h1>
+            <h1>{selectedClassroom?.className}</h1>
           </div>
           <div className='dropdown-position'>
-            <DropDownList />
+            <ClassDropDownList
+              onClassChange={setSelectedClassroom}
+              classrooms={classrooms}
+            />
           </div>
         </Grid>
         <div className='learn-container theme-text'>
@@ -37,7 +67,7 @@ function LearningCenterContainer() {
             columns={{ xs: 4, sm: 8, md: 12 }}
           >
             {LearningCenterData.map((item, index) => {
-              if (item.name === 'joinSchool' && user.orgId) {
+              if (item.name === 'joinSchool' && user?.organization?.id) {
                 return null // show join school if the user is not assigned to any
               }
 
@@ -47,6 +77,7 @@ function LearningCenterContainer() {
                     label={item.title}
                     to={item.path}
                     isActive={item.isActive}
+                    classroom={selectedClassroom}
                   />
                 </Grid>
               )

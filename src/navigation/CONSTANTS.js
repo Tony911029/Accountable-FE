@@ -19,11 +19,11 @@ export const SUBMISSION = '/submission'
 export const PROGRESS = '/progress'
 export const LEADERBOARD = '/leaderboard'
 export const PROFILE = '/profile'
-export const INVITATION = '/invite'
+export const INVITATION = ['/invite/org', '/invite/classroom']
 
 // Teacher Page
 export const TASK_CENTER = '/teacher/task_center'
-export const TEACHER_STUDENT_LIST = '/teacher/student_list'
+export const TEACHER_STUDENT_LIST = '/teacher/student_list/id/:id'
 export const TEACHER_CLASSROOMS = '/teacher/classrooms'
 
 // Admin Page
