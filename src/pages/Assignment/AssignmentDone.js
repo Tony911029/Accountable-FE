@@ -1,15 +1,16 @@
-import MainButton from 'src/components/MainButton';
-import { Grid } from '@mui/material';
-import { useHistory } from 'react-router-dom';
-import { LEARNING_CENTER } from 'src/navigation/CONSTANTS';
-import { makeStyles } from 'tss-react/mui';
+import MainButton from "src/components/MainButton";
+import { Grid } from "@mui/material";
+import { useHistory } from "react-router-dom";
+import { LEARNING_CENTER } from "src/navigation/CONSTANTS";
+import { makeStyles } from "tss-react/mui";
+import "../Home/Home.css";
 
 function AssignmentDone({ wordCount = 0 }) {
   const history = useHistory();
 
   const useStyles = makeStyles()(() => ({
     emoji: {
-      fontSize: '7rem',
+      fontSize: "7rem",
     },
   }));
 
@@ -23,7 +24,12 @@ function AssignmentDone({ wordCount = 0 }) {
         <div className="p1 mb-30">
           {`You did a great job! You spoke ${wordCount} word(s) in this round of practice!`}
         </div>
-        <MainButton btnLabel="Go to Assignment Page" onClick={() => { history.push(LEARNING_CENTER); }} />
+        <MainButton
+          btnLabel="Go to Assignment Page"
+          onClick={() => {
+            history.push(LEARNING_CENTER);
+          }}
+        />
       </div>
     </Grid>
   );

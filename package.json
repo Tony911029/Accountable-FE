@@ -9,6 +9,7 @@
     "@material-ui/icons": "^4.11.3",
     "@mui/icons-material": "^5.14.16",
     "@mui/material": "^5.14.17",
+    "@mui/x-data-grid": "^6.19.6",
     "@ramonak/react-progress-bar": "^5.2.0",
     "@reduxjs/toolkit": "^1.9.7",
     "@testing-library/jest-dom": "^5.17.0",
@@ -19,6 +20,7 @@
     "fontsource-roboto": "^4.0.0",
     "i18next": "^23.7.3",
     "i18next-browser-languagedetector": "^7.2.0",
+    "lodash": "^4.17.21",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.0",
@@ -32,6 +34,7 @@
     "react-router-dom": "^5.3.4",
     "react-speech-kit": "^3.0.1",
     "react-spinners": "^0.13.8",
+    "react-usestateref": "^1.0.8",
     "redux": "^4.2.1",
     "redux-thunk": "^2.4.2",
     "semver": "^7.5.4",
@@ -42,7 +45,8 @@
   "scripts": {
     "start": "vite",
     "build": "vite build",
-    "serve": "vite preview --port 3000"
+    "serve": "vite preview --port 3000",
+    "lint": "eslint ."
   },
   "eslintConfig": {
     "extends": [
@@ -68,13 +72,14 @@
   "devDependencies": {
     "@originjs/vite-plugin-commonjs": "^1.0.3",
     "@vitejs/plugin-react": "^2.1.0",
-    "eslint": "^7.32.0 || ^8.2.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-plugin-import": "^2.25.3",
-    "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-react": "^7.28.0",
-    "eslint-plugin-react-hooks": "^4.3.0",
-    "eslint-plugin-unused-imports": "^3.0.0",
+    "eslint": "^7.14.0",
+    "eslint-config-standard-kit": "0.15.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "prettier": "^2.2.0",
     "unplugin-auto-import": "^0.11.2",
     "vite": "^3.1.4",
     "vite-jsconfig-paths": "^2.0.1",

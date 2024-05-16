@@ -25,27 +25,27 @@ Your app is ready to be deployed!
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 
-# AWS
-The app is deployed to AWS ec2 instance via elastic beanstalk and we are using nginx as our server
+## AWS
+The app is deployed to aws ec2 instance via elastic beanstalk and we are using nginx as our server
 
-## Architecture: CodePipeline
+# Architecture
+
+## CodePipeline:
 
 ### Source: V2 GitHub  (org connection)
 ### Build: CodeBuild
   - Uses buildspec.yml
-    1. login to aws using CLI tool for ECR
-    2. we use the first 7 characters of the commit hash as our tag
-    3. Pull `Dockerrun.aws.json` from specified s3 buckets path (`params` and will need IAM permission)
-    4. Inject vite params for FE (`params`)
-    5. Run Docker build
-    6. Tag the image we just built with "latest" too for `Dockerrun.aws.json`
-    7. Push the image to ECR for Beanstalk (`params`)
-    8. Set the artifact as `Dockerrun.aws.json`
+    1. login to aws using cli tool for ECR
+    2. we use first 7 characters of commit hash as our tag
+    3. Docker build image
+    4. Tag the image we just built with "latest" too for Dockerrun.aws.json
+    5. Push the image to ECR for beanstalk
+    6. Set artifact as Dockerrun.aws.json
 
 ### Deploy: Elastic Beanstalk
-  - Retrieve the artifacts: `Dockerrun.aws.json`
-  - Runs `Dockerrun.aws.json` file to tell EBS which ECR to pull the image from (security is done via IAM)
-  - Run the docker container
+  - Retrieve the artifacts: Dockerrun.aws.json
+  - Runs Dockerrun.aws.json file to tell EBS which ECR to pull image from (security is done via IAM)
+  - Run docker container
 
 ### just some side nodes:
   - Need to give EB role to access ECR

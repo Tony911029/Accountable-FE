@@ -1,0 +1,56 @@
+.table-row{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 20% 0 10%;
+    align-items: center;
+}
+
+.table-text{
+    font-size: 20px;
+    font-weight: 600;
+    align-items: center;
+    display: flex;
+}
+
+/*TODO: Current Row doesn't have hover affect*/
+
+.classroom-row{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 5% 0 5%;
+    align-items: center;
+    box-shadow: 0 5px 21px 0 #FF990033;
+    height: 80%;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #FF9900
+}
+
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #C19D72;
+    padding-left: 50px
+}
+
+.add-class-btn{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row-reverse;
+    width: 60%;
+}
+
+
+.classname-width{
+    width: 10%;
+    /*overflow: clip;*/
+    text-align: start;
+}

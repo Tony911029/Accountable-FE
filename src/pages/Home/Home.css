@@ -193,7 +193,7 @@
 
   .mb-30 {
     margin-bottom: 30px; /* Decrease margin for smaller screens */
-    font-size: 28px;
+    font-size: 105%;
     font-weight: bold;
     color: #ff9900;
   }
