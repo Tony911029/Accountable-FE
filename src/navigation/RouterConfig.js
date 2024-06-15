@@ -44,7 +44,7 @@ const LearningCenterContainer = lazy(() =>
   import(/* webpackChunkName: "LearningCenterContainer" */ 'src/pages/Home/LearningCenter'))
 
 const DailySpeakingPage = lazy(() =>
-  import(/* webpackChunkName: "DailySpeakingPage" */ 'src/pages/Assignment/DailySpeakingPage'))
+  import(/* webpackChunkName: "DailySpeakingPage" */ 'src/pages/Assignment/DailySpeakingPageNLP'))
 
 const Home = lazy(() =>
   import(/* webpackChunkName: "HOME" */ 'src/pages/Home/HomeContainer'))
