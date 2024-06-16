@@ -131,10 +131,18 @@ function DailySpeakingPageNLP() {
       webSocketRef.current.onmessage = event => {
         const data = JSON.parse(event.data)
         if (data) {
-          setMessages(prevMessages => [...prevMessages, data])
+          setMessages(data.message)
           console.log('data', data)
         }
       }
+
+      // turn off mic after 30 seconds
+      setTimeout(() => {
+        if (mediaRecorderRef.current) {
+          mediaRecorderRef.current.stop()
+          mediaStreamRef.current.getTracks().forEach(track => track.stop())
+        }
+      }, 30000)
     }
 
     if (isRecording) {
@@ -208,13 +216,7 @@ function DailySpeakingPageNLP() {
                   className='content answer-card'
                 >
                   {/* <div>{isRecording ? pendingRef.current : answers[index]}</div> */}
-                  <div>
-                    <ul>
-                      {messages.map((msg, index) => (
-                        <li key={index}>{msg.text}</li>
-                      ))}
-                    </ul>
-                  </div>
+                  <div>{messages}</div>
                 </AssignmentContentCard>
               </div>
             </div>
