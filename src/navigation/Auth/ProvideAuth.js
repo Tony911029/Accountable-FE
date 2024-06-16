@@ -123,6 +123,10 @@ export function ProvideAuth({ children }) {
     localStorage.clear()
     await auth.signIn(username, password)
     await getCurrentUser()
+
+    // TODO: I think this is fundamentally flawed ???
+    //  Technically anyone can pass any valid token from somewhere else
+    //  and our system will still think this is a new user but HOW?
     if (isFirstTime) {
       const newUser = await createNewUser(createUserPayload(awsUser))
       setUser(newUser)

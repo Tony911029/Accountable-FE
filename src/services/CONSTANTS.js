@@ -26,3 +26,15 @@ export const BACKEND_URL = `http://localhost:8080`
 
 // This will include orgId
 export const API_URL = `${BACKEND_URL}/org/{{orgId}}`
+
+export const findWebSocketUrl = () => {
+  // TODO: Fix this function
+  return `ws://localhost:8000/`
+  // if (process.env.NODE_ENV === 'development') {
+  //   return `wss://localhost:4000/service/`
+  // }
+  // const location = document.location
+  // const protocol = location.protocol === 'http:' ? 'ws:' : 'wss:'
+  // const host = location.host
+  // return `${protocol}//${host}/service/`
+}
