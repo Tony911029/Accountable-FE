@@ -1,3 +1,7 @@
+/**
+ * This is the old implementation using only JS native library
+ * */
+
 // import { useCallback, useEffect, useMemo } from 'react'
 // import useState from 'react-usestateref'
 // import './DailyGoal.css'

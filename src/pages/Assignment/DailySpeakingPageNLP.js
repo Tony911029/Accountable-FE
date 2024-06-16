@@ -89,6 +89,11 @@ function DailySpeakingPageNLP() {
   const mediaStreamRef = useRef(null)
   const [messages, setMessages] = useState([])
 
+  /**
+   * TODO: Things to consider:
+   *  1. Silent detection
+   *  2. Used audioWorklet, AudioContext, MediaStreamSource for more granular audio stream control?
+   * **/
   useEffect(() => {
     const startStreaming = async () => {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
@@ -248,104 +253,3 @@ function DailySpeakingPageNLP() {
 }
 
 export default DailySpeakingPageNLP
-
-// const startStreaming = async () => {
-//   const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-//   const mediaRecorder = new MediaRecorder(stream)
-//   webSocketRef.current = new WebSocket(
-//       `${findWebSocketUrl()}speech_to_text/ws`
-//   )
-//
-//   mediaRecorder.ondataavailable = event => {
-//     if (webSocketRef.current.readyState === WebSocket.OPEN) {
-//       webSocketRef.current.send(event.data)
-//     }
-//   }
-//
-//   mediaRecorder.onstop = () => {
-//     if (webSocketRef.current.readyState === WebSocket.OPEN) {
-//       webSocketRef.current.close()
-//     }
-//     setIsRecording(false)
-//   }
-//
-//   webSocketRef.current.onopen = async () => {
-//     mediaRecorder.start(250) // Send data every 250ms
-//   }
-//
-//   webSocketRef.current.onclose = () => {
-//     setIsConnected(false)
-//     console.log('WebSocket connection closed')
-//   }
-//
-//   webSocketRef.current.onerror = error => {
-//     console.error('WebSocket error:', error)
-//     webSocketRef.current.close()
-//   }
-//
-//   webSocketRef.current.onmessage = async event => {
-//     const data = JSON.parse(event.data)
-//     if (data) {
-//       setMessages(prevMessages => [...prevMessages, data])
-//       console.log('data', data)
-//     }
-//   }
-//
-//   // // Get user media (microphone)
-//   // mediaStreamRef.current = await navigator.mediaDevices.getUserMedia({
-//   //   audio: true
-//   // })
-//   //
-//   // // Create AudioContext for audio processing
-//   // audioContextRef.current = new (window.AudioContext ||
-//   //   window.webkitAudioContext)()
-//   //
-//   // // Load the audio worklet processor
-//   // await audioContextRef.current.audioWorklet.addModule(
-//   //   '/audioWorkletProcessor.js'
-//   // )
-//   //
-//   // // Represent the captured audio stream
-//   // audioInputRef.current = audioContextRef.current.createMediaStreamSource(
-//   //   mediaStreamRef.current
-//   // )
-//   //
-//   // workletNodeRef.current = new AudioWorkletNode(
-//   //   audioContextRef.current,
-//   //   'audio-processor'
-//   // )
-//   //
-//   // workletNodeRef.current.port.onmessage = event => {
-//   //   const audioData = event.data
-//   //   // console.log('Captured audio data:', audioData)
-//   //   const float32Array = new Float32Array(audioData)
-//   //   if (webSocketRef.current.readyState === WebSocket.OPEN) {
-//   //     webSocketRef.current.send(float32Array.buffer)
-//   //   }
-//   // }
-//   //
-//   // // Connect source node -> audioWorkletNode
-//   // audioInputRef.current.connect(workletNodeRef.current)
-// }
-//
-// startStreaming()
-//
-// return () => {
-//   // Cleanup on component unmount
-//   // if (audioInputRef.current) {
-//   //   audioInputRef.current.disconnect()
-//   // }
-//   // if (workletNodeRef.current) {
-//   //   workletNodeRef.current.disconnect()
-//   // }
-//   // if (webSocketRef.current) {
-//   //   webSocketRef.current.close()
-//   // }
-//   // if (audioContextRef.current) {
-//   //   audioContextRef.current.close()
-//   // }
-//   // if (mediaStreamRef.current) {
-//   //   mediaStreamRef.current.getTracks().forEach(track => track.stop())
-//   // }
-// }
-// }, [isRecording])
