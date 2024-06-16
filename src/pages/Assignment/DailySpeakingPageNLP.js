@@ -84,33 +84,43 @@ function DailySpeakingPageNLP() {
     fetchData()
   }, [fetchData])
 
-  const audioContextRef = useRef(null)
-  const mediaStreamRef = useRef(null)
   const webSocketRef = useRef(null)
-  const audioInputRef = useRef(null)
-  const workletNodeRef = useRef(null)
-  const [isConnected, setIsConnected] = useState(false)
+  const mediaRecorderRef = useRef(null)
+  const mediaStreamRef = useRef(null)
+  const [messages, setMessages] = useState([])
 
   useEffect(() => {
-    if (!isRecording) {
-      return
-    }
-
     const startStreaming = async () => {
-      // Initialize WebSocket connection
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      const mediaRecorder = new MediaRecorder(stream, {
+        mimeType: 'audio/webm'
+      })
+      mediaRecorderRef.current = mediaRecorder
+      mediaStreamRef.current = stream
       webSocketRef.current = new WebSocket(
         `${findWebSocketUrl()}speech_to_text/ws`
       )
 
       webSocketRef.current.onopen = () => {
-        setIsConnected(true)
-        console.log('WebSocket open')
+        mediaRecorder.start(250) // Send data every 250ms
+      }
+
+      mediaRecorder.ondataavailable = event => {
+        if (webSocketRef.current.readyState === WebSocket.OPEN) {
+          webSocketRef.current.send(event.data)
+        }
+      }
+
+      mediaRecorder.onstop = () => {
+        if (webSocketRef.current.readyState === WebSocket.OPEN) {
+          webSocketRef.current.close()
+        }
+        stream.getTracks().forEach(track => track.stop())
+        setIsRecording(false)
       }
 
       webSocketRef.current.onclose = () => {
-        setIsConnected(false)
         console.log('WebSocket connection closed')
-        // setTimeout(startStreaming, 1000)
       }
 
       webSocketRef.current.onerror = error => {
@@ -118,62 +128,31 @@ function DailySpeakingPageNLP() {
         webSocketRef.current.close()
       }
 
-      // Get user media (microphone)
-      mediaStreamRef.current = await navigator.mediaDevices.getUserMedia({
-        audio: true
-      })
-
-      // Create AudioContext for audio processing
-      audioContextRef.current = new (window.AudioContext ||
-        window.webkitAudioContext)()
-
-      // Load the script
-      await audioContextRef.current.audioWorklet.addModule(
-        '/audioWorkletProcessor.js'
-      )
-
-      // represent the captured audio stream
-      audioInputRef.current = audioContextRef.current.createMediaStreamSource(
-        mediaStreamRef.current
-      )
-
-      workletNodeRef.current = new AudioWorkletNode(
-        audioContextRef.current,
-        'audio-processor'
-      )
-
-      workletNodeRef.current.port.onmessage = event => {
-        const audioData = event.data
-        const float32Array = new Float32Array(audioData)
-        const arrayBuffer = float32Array.buffer
-        if (webSocketRef.current.readyState === WebSocket.OPEN) {
-          console.log('Streaming...')
-          webSocketRef.current.send(arrayBuffer)
+      webSocketRef.current.onmessage = event => {
+        const data = JSON.parse(event.data)
+        if (data) {
+          setMessages(prevMessages => [...prevMessages, data])
+          console.log('data', data)
         }
       }
-
-      // Connect source node -> audioWorkletNode (instead of destination to avoid playback, we only want to stream)
-      audioInputRef.current.connect(workletNodeRef.current)
     }
 
-    startStreaming()
+    if (isRecording) {
+      startStreaming()
+    }
 
     return () => {
-      // Cleanup on component unmount
-      if (audioInputRef.current) {
-        audioInputRef.current.disconnect()
-      }
-      if (workletNodeRef.current) {
-        workletNodeRef.current.disconnect()
-      }
-      if (webSocketRef.current) {
-        webSocketRef.current.close()
-      }
-      if (audioContextRef.current) {
-        audioContextRef.current.close()
+      if (
+        mediaRecorderRef.current &&
+        mediaRecorderRef.current.state !== 'inactive'
+      ) {
+        mediaRecorderRef.current.stop()
       }
       if (mediaStreamRef.current) {
         mediaStreamRef.current.getTracks().forEach(track => track.stop())
+      }
+      if (webSocketRef.current) {
+        webSocketRef.current.close()
       }
     }
   }, [isRecording])
@@ -229,7 +208,13 @@ function DailySpeakingPageNLP() {
                   className='content answer-card'
                 >
                   {/* <div>{isRecording ? pendingRef.current : answers[index]}</div> */}
-                  <div>Fake answers</div>
+                  <div>
+                    <ul>
+                      {messages.map((msg, index) => (
+                        <li key={index}>{msg.text}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </AssignmentContentCard>
               </div>
             </div>
@@ -261,3 +246,104 @@ function DailySpeakingPageNLP() {
 }
 
 export default DailySpeakingPageNLP
+
+// const startStreaming = async () => {
+//   const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+//   const mediaRecorder = new MediaRecorder(stream)
+//   webSocketRef.current = new WebSocket(
+//       `${findWebSocketUrl()}speech_to_text/ws`
+//   )
+//
+//   mediaRecorder.ondataavailable = event => {
+//     if (webSocketRef.current.readyState === WebSocket.OPEN) {
+//       webSocketRef.current.send(event.data)
+//     }
+//   }
+//
+//   mediaRecorder.onstop = () => {
+//     if (webSocketRef.current.readyState === WebSocket.OPEN) {
+//       webSocketRef.current.close()
+//     }
+//     setIsRecording(false)
+//   }
+//
+//   webSocketRef.current.onopen = async () => {
+//     mediaRecorder.start(250) // Send data every 250ms
+//   }
+//
+//   webSocketRef.current.onclose = () => {
+//     setIsConnected(false)
+//     console.log('WebSocket connection closed')
+//   }
+//
+//   webSocketRef.current.onerror = error => {
+//     console.error('WebSocket error:', error)
+//     webSocketRef.current.close()
+//   }
+//
+//   webSocketRef.current.onmessage = async event => {
+//     const data = JSON.parse(event.data)
+//     if (data) {
+//       setMessages(prevMessages => [...prevMessages, data])
+//       console.log('data', data)
+//     }
+//   }
+//
+//   // // Get user media (microphone)
+//   // mediaStreamRef.current = await navigator.mediaDevices.getUserMedia({
+//   //   audio: true
+//   // })
+//   //
+//   // // Create AudioContext for audio processing
+//   // audioContextRef.current = new (window.AudioContext ||
+//   //   window.webkitAudioContext)()
+//   //
+//   // // Load the audio worklet processor
+//   // await audioContextRef.current.audioWorklet.addModule(
+//   //   '/audioWorkletProcessor.js'
+//   // )
+//   //
+//   // // Represent the captured audio stream
+//   // audioInputRef.current = audioContextRef.current.createMediaStreamSource(
+//   //   mediaStreamRef.current
+//   // )
+//   //
+//   // workletNodeRef.current = new AudioWorkletNode(
+//   //   audioContextRef.current,
+//   //   'audio-processor'
+//   // )
+//   //
+//   // workletNodeRef.current.port.onmessage = event => {
+//   //   const audioData = event.data
+//   //   // console.log('Captured audio data:', audioData)
+//   //   const float32Array = new Float32Array(audioData)
+//   //   if (webSocketRef.current.readyState === WebSocket.OPEN) {
+//   //     webSocketRef.current.send(float32Array.buffer)
+//   //   }
+//   // }
+//   //
+//   // // Connect source node -> audioWorkletNode
+//   // audioInputRef.current.connect(workletNodeRef.current)
+// }
+//
+// startStreaming()
+//
+// return () => {
+//   // Cleanup on component unmount
+//   // if (audioInputRef.current) {
+//   //   audioInputRef.current.disconnect()
+//   // }
+//   // if (workletNodeRef.current) {
+//   //   workletNodeRef.current.disconnect()
+//   // }
+//   // if (webSocketRef.current) {
+//   //   webSocketRef.current.close()
+//   // }
+//   // if (audioContextRef.current) {
+//   //   audioContextRef.current.close()
+//   // }
+//   // if (mediaStreamRef.current) {
+//   //   mediaStreamRef.current.getTracks().forEach(track => track.stop())
+//   // }
+// }
+// }, [isRecording])
