@@ -1,9 +1,7 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react'
-import useState from 'react-usestateref'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import './DailyGoal.css'
 import { genRandQuestions } from 'src/services/questionService'
 import { AppLayout } from 'src/components/AppLayout/AppLayout'
-import { QUESTION_CONSTANT } from 'src/pages/Assignment/QuestionsSample'
 import AssignmentContentCard from 'src/components/Cards/AssignmentContentCard'
 import {
   MdKeyboardDoubleArrowLeft,
@@ -66,13 +64,17 @@ function DailySpeakingPageNLP() {
   const [index, setIndex] = useState(0)
   const [isSubmitted, setIsSubmitted] = useState(false)
 
+  const webSocketRef = useRef(null)
+  const mediaRecorderRef = useRef(null)
+  const mediaStreamRef = useRef(null)
+
   const queAnswerNum = useMemo(
     () => answers?.filter(answer => answer !== '').length
   )
   const isLastPage = useMemo(() => index === MAX_QUESTION_NUM - 1, [index])
 
   const fetchData = useCallback(async () => {
-    let genQuestions = await genRandQuestions(MAX_QUESTION_NUM)
+    let genQuestions = await genRandQuestions(MAX_QUESTION_NUM, 'random')
     if (!genQuestions) {
       genQuestions = new Array(MAX_QUESTION_NUM).fill('')
     }
@@ -83,11 +85,6 @@ function DailySpeakingPageNLP() {
     // resetStats();
     fetchData()
   }, [fetchData])
-
-  const webSocketRef = useRef(null)
-  const mediaRecorderRef = useRef(null)
-  const mediaStreamRef = useRef(null)
-  const [messages, setMessages] = useState([])
 
   /**
    * TODO: Things to consider:
@@ -103,7 +100,7 @@ function DailySpeakingPageNLP() {
       mediaRecorderRef.current = mediaRecorder
       mediaStreamRef.current = stream
       webSocketRef.current = new WebSocket(
-        `${findWebSocketUrl()}speech_to_text/ws`
+        `${findWebSocketUrl()}/speech_to_text/ws`
       )
 
       webSocketRef.current.onopen = () => {
@@ -124,30 +121,31 @@ function DailySpeakingPageNLP() {
         setIsRecording(false)
       }
 
-      webSocketRef.current.onclose = () => {
-        console.log('WebSocket connection closed')
-      }
+      webSocketRef.current.onclose = () => {}
 
       webSocketRef.current.onerror = error => {
-        console.error('WebSocket error:', error)
         webSocketRef.current.close()
       }
 
       webSocketRef.current.onmessage = event => {
         const data = JSON.parse(event.data)
         if (data) {
-          setMessages(data.message)
           console.log('data', data)
+          setAnswers(prevAnswers => {
+            const newAnswers = [...prevAnswers]
+            newAnswers[index] = data.message
+            return newAnswers
+          })
         }
-      }
 
-      // turn off mic after 30 seconds
-      setTimeout(() => {
-        if (mediaRecorderRef.current) {
-          mediaRecorderRef.current.stop()
-          mediaStreamRef.current.getTracks().forEach(track => track.stop())
-        }
-      }, 30000)
+        // turn off mic after 30 seconds
+        setTimeout(() => {
+          if (mediaRecorderRef.current) {
+            mediaRecorderRef.current.stop()
+            mediaStreamRef.current.getTracks().forEach(track => track.stop())
+          }
+        }, 30000)
+      }
     }
 
     if (isRecording) {
@@ -170,14 +168,6 @@ function DailySpeakingPageNLP() {
     }
   }, [isRecording])
 
-  function handlePreQue() {
-    if (index > 0) setIndex(index - 1)
-  }
-
-  function handleNextQue() {
-    if (index < MAX_QUESTION_NUM - 1) setIndex(index + 1)
-  }
-
   return (
     <AppLayout showSubHeader subHeaderLabel='EXIT' isPracticing>
       {!isSubmitted ? (
@@ -188,7 +178,11 @@ function DailySpeakingPageNLP() {
               label='Go to Previous Question'
               // onClick={handlePreviousQuestion}
               iconSize='5rem'
-              onClick={handlePreQue}
+              onClick={() => {
+                if (index > 0) {
+                  setIndex(index - 1)
+                }
+              }}
               disabled={index === 0}
             />
 
@@ -208,7 +202,7 @@ function DailySpeakingPageNLP() {
                   title={`Question ${Number(index) + 1}`}
                   className='content'
                 >
-                  <div>{questions[index]?.questionText}</div>
+                  <div>{questions[index]}</div>
                 </AssignmentContentCard>
 
                 <AssignmentContentCard
@@ -220,15 +214,18 @@ function DailySpeakingPageNLP() {
                   onClick={() => setIsRecording(prevState => !prevState)}
                   className='content answer-card'
                 >
-                  {/* <div>{isRecording ? pendingRef.current : answers[index]}</div> */}
-                  <div>{messages}</div>
+                  <div>{answers[index]}</div>
                 </AssignmentContentCard>
               </div>
             </div>
             <ArrowLabel
               IconComponent={MdKeyboardDoubleArrowRight}
               label='Go to Next Question'
-              onClick={handleNextQue}
+              onClick={() => {
+                if (index < MAX_QUESTION_NUM - 1) {
+                  setIndex(index + 1)
+                }
+              }}
               iconSize='5rem'
               disabled={isLastPage}
             />

@@ -33,7 +33,7 @@ function AssignmentContentCard({
       textDecoration: 'none !important',
       boxShadow: '0px 10px 30px 0px #FF99004A !important',
       borderRadius: '8px',
-      padding: '50px 50px 30px 50px',
+      padding: '35px 30px 40px 30px',
       marginBottom: '30px'
     },
     title: {
@@ -42,7 +42,7 @@ function AssignmentContentCard({
       flexDirection: 'row',
       width: '100%',
       justifyContent: 'space-between',
-      marginBottom: '40px'
+      marginBottom: '15px'
     },
     footer: {
       fontSize: '1rem',
@@ -66,7 +66,7 @@ function AssignmentContentCard({
   return (
     <div className={classes.card}>
       <div className={classes.title}>
-        <div className='kk'>{title}</div>
+        <div>{title}</div>
         {button && <MainButton btnLabel={buttonText} onClick={onClick} />}
       </div>
       <div className={className}>{children}</div>

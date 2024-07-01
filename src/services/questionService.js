@@ -1,28 +1,31 @@
 import axios from 'axios'
 import { QUESTION_CONSTANT } from 'src/pages/Assignment/QuestionsSample'
-import { API_URL } from './CONSTANTS'
+import { API_URL, ML_SERVICE_URL } from './CONSTANTS'
 
 /**
  * @param {number} questionNum - number of questions to fetch
+ * @param {string} topic - topic to generate
  * @param {boolean} force - force to fetch new questions
- * @returns {Promise<Awaited<any>>}
+ * @returns {Promise<Awaited<any>>} - an array of questions
  */
-export const genRandQuestions = (questionNum, force = false) => {
+export const genRandQuestions = (questionNum, topic, force = false) => {
   const cachedQuestions = JSON.parse(
-    localStorage.getItem(QUESTION_CONSTANT.GEN_QUESTION)
+    localStorage.getItem(QUESTION_CONSTANT.QUESTIONS)
   )
   if (cachedQuestions && !force) {
     return Promise.resolve(cachedQuestions)
   }
 
-  axios.get(`${API_URL}/questionGen/${questionNum}`).then(response => {
-    const genQuestions = response?.data?.data
-    localStorage.setItem(
-      QUESTION_CONSTANT.GEN_QUESTION,
-      JSON.stringify(genQuestions)
-    )
-    return genQuestions
-  })
+  return axios
+    .get(`${ML_SERVICE_URL}/questions/generate_question`)
+    .then(response => {
+      const genQuestions = response?.data?.data?.questions
+      localStorage.setItem(
+        QUESTION_CONSTANT.QUESTIONS,
+        JSON.stringify(genQuestions)
+      )
+      return genQuestions
+    })
 }
 
 export const getCallTesting = () =>

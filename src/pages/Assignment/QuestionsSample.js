@@ -1,5 +1,5 @@
 export const QUESTION_CONSTANT = {
-  GEN_QUESTION: 'genQuestions',
+  QUESTIONS: 'questions',
   STORE_ANSWER: 'storedAns',
   COUNT: 'count'
 }
@@ -96,3 +96,22 @@ export const sampleQuestions = [
   'If you could spend a day with any fictional character, who would it be and what would you do?',
   "What is something you've always wanted to do but haven't yet? Why haven't you done it?"
 ]
+
+export const response = {
+  status: 200,
+  data: {
+    question: [
+      '1. What is the most exciting part of watching a baseball game?',
+      '2. Can you describe a typical baseball field?',
+      '3. What is the role of the pitcher in a baseball game?',
+      '4. How do you think the game of baseball has changed over time?',
+      '5. What is the most important skill for a baseball player to have?',
+      '6. Can you explain the concept of "stealing bases" in baseball?',
+      '7. What is the purpose of the "umpire" in a baseball game?',
+      '8. How does the game of baseball relate to American culture?',
+      '9. What are some common phrases or idioms used in the context of baseball?',
+      '10. Can you imagine a scenario where a baseball game is not just about winning, but about something else, such as community or personal growth? What would that look like?'
+    ]
+  },
+  timestamp: '2024-06-30T21:41:03.007446'
+}
