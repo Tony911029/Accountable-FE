@@ -67,6 +67,7 @@ function DailySpeakingPageNLP() {
   const webSocketRef = useRef(null)
   const mediaRecorderRef = useRef(null)
   const mediaStreamRef = useRef(null)
+  const timeoutRef = useRef(null)
 
   const queAnswerNum = useMemo(
     () => answers?.filter(answer => answer !== '').length
@@ -81,10 +82,23 @@ function DailySpeakingPageNLP() {
     setQuestions(genQuestions)
   }, [])
 
+  // TODO: Needs to stop recording when user click on next
   useEffect(() => {
     // resetStats();
     fetchData()
   }, [fetchData])
+
+  const resetTimeout = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+    timeoutRef.current = setTimeout(() => {
+      if (mediaRecorderRef.current) {
+        mediaRecorderRef.current.stop()
+        mediaStreamRef.current.getTracks().forEach(track => track.stop())
+      }
+    }, 30 * 1000)
+  }
 
   /**
    * TODO: Things to consider:
@@ -130,29 +144,24 @@ function DailySpeakingPageNLP() {
       webSocketRef.current.onmessage = event => {
         const data = JSON.parse(event.data)
         if (data) {
-          console.log('data', data)
           setAnswers(prevAnswers => {
             const newAnswers = [...prevAnswers]
             newAnswers[index] = data.message
             return newAnswers
           })
         }
-
-        // turn off mic after 30 seconds
-        setTimeout(() => {
-          if (mediaRecorderRef.current) {
-            mediaRecorderRef.current.stop()
-            mediaStreamRef.current.getTracks().forEach(track => track.stop())
-          }
-        }, 30000)
       }
     }
 
     if (isRecording) {
+      resetTimeout()
       startStreaming()
     }
 
     return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
       if (
         mediaRecorderRef.current &&
         mediaRecorderRef.current.state !== 'inactive'
@@ -166,7 +175,7 @@ function DailySpeakingPageNLP() {
         webSocketRef.current.close()
       }
     }
-  }, [isRecording])
+  }, [index, isRecording])
 
   return (
     <AppLayout showSubHeader subHeaderLabel='EXIT' isPracticing>
