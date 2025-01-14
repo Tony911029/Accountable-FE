@@ -1,57 +1,24 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `yarn install`
-Install all the dependencies
-
-### `yarn start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Demo
+### Home page
+https://github.com/user-attachments/assets/9d228098-374c-4f54-96b9-ee3e1b8c3180
 
 
-## AWS
-The app is deployed to aws ec2 instance via elastic beanstalk and we are using nginx as our server
 
-# Architecture
+### Signup flow
+https://github.com/user-attachments/assets/0ec46eb7-fa55-46d9-b463-973117a716e2
 
-## CodePipeline:
 
-### Source: V2 GitHub  (org connection)
-### Build: CodeBuild
-  - Uses buildspec.yml
-    1. login to aws using cli tool for ECR
-    2. we use first 7 characters of commit hash as our tag
-    3. Docker build image
-    4. Tag the image we just built with "latest" too for Dockerrun.aws.json
-    5. Push the image to ECR for beanstalk
-    6. Set artifact as Dockerrun.aws.json
+### Login (AWS Cognito is used here to authenticate users)
+![Screenshot 2025-01-14 at 9 22 59 AM](https://github.com/user-attachments/assets/1ff090a8-e491-4008-b8aa-3f4a1f025650)
 
-### Deploy: Elastic Beanstalk
-  - Retrieve the artifacts: Dockerrun.aws.json
-  - Runs Dockerrun.aws.json file to tell EBS which ECR to pull image from (security is done via IAM)
-  - Run docker container
+### Student - Learning center
+ - Grey cards are under development
+ - Daily Speaking Practice Zone allows students to practice English by generating random topics
+ - Students can toggle which classroom they want to practice
+     - Default one is self growing zone where students can practice freely
+     - This particular student has Math101 (demo purpose) where they can practice course-related content (WIP)
+![Screenshot 2025-01-14 at 9 23 59 AM](https://github.com/user-attachments/assets/0bb73aac-1317-4d29-8491-5ca21f3d5779)
 
-### just some side nodes:
-  - Need to give EB role to access ECR
-  - Potentially: log file to S3 bucket as well (future)
-  - In CodeBuild, double check where the artifact are sending to (should be in the bucket codepipeline created)
-  - Maybe s3 bucket as well (for storing artifacts?)
-  - Remember to add SLL certificate (can be obtained from certificate manager) and add listener (port 443) in EBS config
-  - Remember to use Route53 to route HTTP(S) to correct server
-  - EC2 Security Group: Inbound traffic: 22 (SSH), 80 (TCP) and 3000 (don't think is necessary?)
+### Real-time speech recognition
+https://github.com/user-attachments/assets/84267da2-50a5-41f8-a7af-2d799d8e9cd8
+
