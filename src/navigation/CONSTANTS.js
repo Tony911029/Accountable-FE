@@ -19,7 +19,7 @@ export const SUBMISSION = '/submission'
 export const PROGRESS = '/progress'
 export const LEADERBOARD = '/leaderboard'
 export const PROFILE = '/profile'
-export const INVITATION = ['/invite/org', '/invite/classroom']
+export const INVITATION = '/invite/org/invite/classroom'
 
 // Teacher Page
 export const TASK_CENTER = '/teacher/task_center'
