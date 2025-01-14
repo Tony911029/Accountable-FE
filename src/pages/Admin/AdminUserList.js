@@ -93,7 +93,7 @@ function AdminUserList() {
     >
       <div className='assignment-container'>
         <div className='assignment-section'>
-          <h1>Admin of {user.organization.orgName}</h1>
+          <h1>Admin of {user.organization?.orgName}</h1>
           <p className='mb-30'>
             {`you have ${
               rows.length

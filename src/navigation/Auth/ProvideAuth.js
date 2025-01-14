@@ -48,6 +48,11 @@ export function ProvideAuth({ children }) {
   const [user, setUser] = useState(null) // native user from db
   const [awsUser, setAwsUser] = useState(null) // user from aws
   const [role, setRole] = useState('') // native user from db
+
+  useEffect(() => {
+    setRole(user?.role)
+  }, [user])
+
   const isFirstTime = useMemo(
     () => user === null && awsUser !== null,
     [user, awsUser]
@@ -108,8 +113,6 @@ export function ProvideAuth({ children }) {
       } else {
         setUser(JSON.parse(cachedUser))
       }
-      setRole(user?.role)
-      console.log('user from database', user)
     }
     fetchLocalUser()
   }, [awsUser])
@@ -138,9 +141,10 @@ export function ProvideAuth({ children }) {
    * */
   const signOut = async () => {
     await auth.signOut()
+    localStorage.removeItem('cachedUser')
     setUser(null)
     setAwsUser(null)
-    localStorage.removeItem('cachedUser')
+    setRole(null)
   }
 
   /**

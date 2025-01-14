@@ -19,7 +19,7 @@ function LoginBlock() {
   const history = useHistory()
 
   const [signInErr, setSignInErr] = useState('')
-  const { signIn, isLoading } = useAuth()
+  const { signIn, isLoading, user } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword(show => !show)
   const handleMouseDownPassword = event => {

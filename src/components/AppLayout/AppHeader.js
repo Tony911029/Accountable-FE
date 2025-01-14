@@ -73,13 +73,7 @@ function AppHeader({
   const { user, signOut, role } = useAuth()
   const history = useHistory()
   const [profile, setProfile] = useState(false)
-  const isLearningPage = window.location.pathname.includes(LEARNING_CENTER)
-
-  const [userRole, setUserRole] = useState(role)
-
-  useEffect(() => {
-    setUserRole(role)
-  }, [role])
+  const userRole = useMemo(() => role, [role])
 
   const HOME_PAGE = useMemo(() => {
     if (userRole === ROLES.STUDENT) {
